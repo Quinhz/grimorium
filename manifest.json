@@ -1,0 +1,19 @@
+{
+  "name": "Grimoire",
+  "short_name": "Grimoire",
+  "description": "App de ficha de personagem para o sistema de RPG Grimório do Coração.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#c0c0c0",
+  "theme_color": "#000080",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
