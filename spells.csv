@@ -1,2 +1,380 @@
-nome,tipo,categorias,alcance,efeito,descrição,tier
-pulinpa,status,"mono,pânico,mental,(A),padrão","1 alvo dentro de 8m,até curar",chance de pânico-35+5TEC%,Uma série de flashes de luz surge ao redor do alvo.,1
+nome,tipo,categoria,tier,alcance,alvo,efeito
+Rachador de Crânios,Físico,"mono, atordoar, status (A)",1,1 alvo dentro de 5 metros,1 alvo,Acerto: FORd6 dano Físico e Chance de Atordoar: 20%. Adicione 5% para cada ponto da rolagem de acerto acima da esquiva do inimigo.
+Final Fatal,Físico,mono (A),2,1 alvo dentro de 2 metros,1 alvo,Acerto: FORd10+2 dano Físico.
+Corte Mental,Físico,"mono, pânico, status (A)",2,1 alvo adjacente,1 alvo,"Acerto: FORd8+7 dano Físico, Chance de Pânico: 10+2TEC%"
+Impulso Cruel,Físico,mono (A),2,1 alvo dentro de 6 metros,1 alvo,Acerto: FORd8+7 dano Físico.
+Facada Venenosa,Físico,"mono, veneno, status (A)",2,1 alvo dentro de 6 metros,1 alvo,Acerto: FORd6+8 dano Físico e Chance de Veneno: 15%. Adicione 5% para cada ponto de acerto rolado acima da esquiva do oponente.
+Chuva Aeon,Físico,"multi, arma (A)",2,Até 3 alvos dentro de 4 metros,Até 3 alvos,Acerto: FORd6+8 dano Físico.
+Caminho das Lâminas,Físico,multi (A),2,Qualquer número de alvos que você possa ficar adjacente durante seu movimento.,Alvos adjacentes,"Acerto: FORd8+2 dano Físico. Como parte da conjuração, realize seu movimento completo."
+Corrente da Loucura,Físico,"multi, fúria, status (A)",2,Qualquer número de alvos dentro de 6 metros,Todos os alvos,Acerto: FORd4+6 dano Físico. Chance de Fúria: 10%
+Bomba do Selo,Físico,"multi, pânico, status (A)",2,1 alvo e todos os adjacentes ao alvo dentro de 5 metros,1 alvo + adjacentes,Acerto: FORd8 dano Físico e Chance de Pânico: 15%+5% para cada 2 TEC.
+Golpe Hercúleo,Físico,total (A),2,Qualquer número de alvos que o conjurador possa ver.,Todos os alvos,Acerto: FORd6+4 dano Físico. Gaste 1 ponto de Energia para conjurar.
+Corte da Tempestade,Físico,"mono, combo (A)",3,1 alvo dentro de 3 metros,1 alvo,"Acerto: FORd8+5 dano Físico e role um segundo ataque, causando FORd4+5 dano Físico."
+Punho Gigantesco,Físico,"mono, derrubada (A)",3,1 alvo dentro de 2 metros.,1 alvo,Acerto: FORd10+5 dano Físico e Chance de Derrubada: 100%.
+Assalto Vil,Físico,mono (A),3,1 alvo dentro de 4 metros,1 alvo,Acerto: FORd12 dano Físico Extra: FOR+8 dano Físico se o inimigo estiver Derrubado.
+Navas Nebula,Físico,"multi, taru, debuff (A)",3,1 alvo e todos os adjacentes ao alvo dentro de 5 metros.,1 alvo + adjacentes,"Acerto: FORd12+10 dano Físico. Extra: Você pode gastar 2 pontos de Energia para aplicar os efeitos de Tarundamon contra o alvo. Tarundamon: -2 FOR, -2 MAG, 3 turnos"
+Corrente da Morte,Físico,- (A),3,1 alvo e todos os adjacentes ao alvo dentro de 3 metros.,1 alvo + adjacentes,Acerto: FORd10+5 dano Físico.
+Soco Desesperado,Físico,"mono, reprimir (A)",3,1 alvo dentro de 3 metros,1 alvo,Acerto: FORd12+10 dano Físico. Gaste 1 ponto de Energia: Extra: Causa +2FOR dano Físico para cada magia do seu deck que estiver Reprimida.
+Lâmina Vorpal,Físico,total (A),3,Qualquer número de alvos.,Todos os alvos,Acerto: FORd6+4 dano Físico.
+Arte de Akasha,Físico,combo (A),3,1 alvo dentro de 4 metros,1 alvo,Acerto: FORd12+8 dano Físico. Extra: Pague 1 ponto de Energia para atingir 1d3 alvos a mais.
+Agneystra,Físico,"multi, derrubada, realizada, status (A)",3,Qualquer número de alvos dentro de 8 metros,Todos os alvos,Acerto: FORd6 dano Físico
+Lâmina do Paraíso,Físico,mono (A),5,1 alvo dentro de 3 metros.,1 alvo,Acerto: FORd12+2FOR dano Físico. Crítico: FORd6+2 dano Físico adicional.
+Mão de Deus,Físico,mono (A),5,1 alvo adjacente,1 alvo,Acerto: FORd12+3FOR dano Físico. HDC +1
+Força Primal,Físico,"linha, derrubada (A)",5,Todos entre você e um ponto dentro de 8 metros,Área em linha,Acerto: FORd8+2 dano Físico e chance de Derrubada: 100%
+Pralaya,Físico,"total, medo (A)",5,Qualquer número de alvos dentro de 5 metros,Todos os alvos,Acerto: FORd8+4 dano Físico e chance de Medo: 15+2TEC%.
+Lâmina da Bravura,Físico,mono (A),5,1 alvo adjacente.,1 alvo,Acerto: FORd12+4FOR+5 dano Físico. HDC+1. Pague 1 Ponto de Aspecto para conjurar.
+Agi,Fogo,mono (A),1,1 alvo dentro de 8 metros,1 alvo,Acerto: MAGd6 dano de Fogo.
+Ha Agi,Fogo,multi (A),1,Até 3 alvos dentro de 7 metros,Até 3 alvos,Acerto: MAGd4+6 dano de Fogo.
+Maragi,Fogo,total (A),1,Qualquer número de alvos que possa ver.,Todos os alvos,Acerto: MAGd4 dano de Fogo.
+Agilao,Fogo,mono (A),2,1 alvo dentro de 8 metros,1 alvo,Acerto: MAGd8 dano de Fogo.
+Ha Agilao,Fogo,multi (A),2,Até 3 alvos dentro de 7 metros,Até 3 alvos,Acerto: MAGd6+6 dano de Fogo.
+Maragion,Fogo,total (A),2,Qualquer número de alvos que possa ver.,Todos os alvos,Acerto: MAGd4+6 dano de Fogo.
+Dança do Fogo,Fogo,combo (A),2,Dança: Até 1d6 alvos aleatórios dentro de 7 metros,Até 1d6 alvos,Acerto: MAGd6+6 dano de Fogo.
+Olhos de Fogo,Fogo,"única, reprimir (P)",2,Conjurador,Conjurador,"Você pode conjurar magias de Fogo, até Tier II, sem gastar seus usos ou Energia. Reprima qualquer magia conjurada por esse meio."
+Agidyne,Fogo,mono (A),3,1 alvo dentro de 8 metros,1 alvo,Acerto: MAGd10+2 dano de Fogo.
+Ha Agidyne,Fogo,multi (A),3,Até 3 alvos dentro de 7 metros,Até 3 alvos,Acerto: MAGd6+6 dano de Fogo.
+Maragidyne,Fogo,total (A),3,Qualquer número de alvos que possa ver.,Todos os alvos,Acerto: MAGd4+6 dano de Fogo.
+Pyriphlegton,Fogo,mono (A),5,1 alvo dentro de 10 metros,1 alvo,Acerto: MAGd12+ MAG dano de Fogo.
+Fúria do Cérbero,Fogo,multi (A),5,Até 3 alvos dentro de 7 metros.,Até 3 alvos,Acerto: MAGd12+ MAG dano de Fogo Gaste 1 ponto de Energia para conjurar.
+Ragnarök,Fogo,"total, reprimir (A)",5,Qualquer número de alvos que possa ver,Todos os alvos,Acerto: MAGd10+7 dano de Fogo Pague 1 Ponto de Aspecto: Você pode sacrificar usos de outras magias de Fogo para adicionar +3MAG dano de Fogo para cada magia sacrificada. Reprima essa magia.
+Titanomachia,Fogo,"total, medo, única (A)",5,Qualquer número de alvos que possa ver.,Todos os alvos,Acerto: MAGd12+ MAG+5 dano de Fogo e chance de Medo: 35+5TEC% Pague 1 Ponto de Aspecto para conjurar.
+Bufu,Gelo,mono (A),1,1 alvo dentro de 8 metros,1 alvo,Acerto: MAGd8 dano de Gelo
+Ha Bufu,Gelo,multi (A),1,Até 3 alvos dentro de 7 metros,Até 3 alvos,Acerto: MAGd4 dano de Gelo
+Mabufu,Gelo,total (A),1,Qualquer número de alvos visíveis,Todos os alvos,Acerto: MAGd4-5 dano de Gelo.
+Bufula,Gelo,mono (A),2,1 alvo dentro de 8 metros,1 alvo,Acerto: MAGd10+2 dano de Gelo
+Ha Bufula,Gelo,multi (A),2,Até 3 alvos dentro de 7 metros,Até 3 alvos,Acerto: MAGd4+8 dano de Gelo
+Mabufula,Gelo,total (A),2,Qualquer número de alvos visíveis.,Todos os alvos,Acerto: MAGd4 dano de Gelo.
+Valsa do Gelo,Gelo,combo (A),2,Dança: Até 1d6 alvos aleatórios dentro de 7 metros,Até 1d6 alvos,MAGd4+8 dano de Gelo.
+Dissipador de Calor,Gelo,"mono, realizada, lento, status (A)",2,1 alvo adjacente,1 alvo,"Acerto: Chance de Lento: 50+5MAG% Realizada: Calor é drenado do alvo, congelando-o internamente."
+Fortalecer Gelo,Gelo,"única, melhoria (P)",2,Conjurador,Conjurador,Magias de gelo que você conjura causam 25% mais dano. Não acumula com outros efeitos de categoria Melhoria.
+Olhar Glacial,Gelo,"única, reprimir (P)",2,Conjurador,Conjurador,"Você pode conjurar magias de Gelo, até Tier II, sem gastar seus usos ou Energia. Reprima qualquer magia conjurada com esse efeito."
+Bufudyne,Gelo,mono (A),3,1 alvo dentro de 8 metros,1 alvo,Acerto: MAGd12+8 dano de Gelo.
+Ha Bufudyne,Gelo,multi (A),3,Até 3 alvos dentro de 7 metros,Até 3 alvos,Acerto: MAGd6+6 dano de Gelo.
+Mabufudyne,Gelo,total (A),3,Qualquer número de inimigos visíveis,Todos os alvos,Acerto: MAGd4+6 dano de Gelo
+Zero Absoluto,Gelo,"multi, mover (A)",3,Até 4 alvos dentro de 7 metros,Até 4 alvos,"Acerto: MAGd6 dano de Gelo. Extra: Você pode diminuir o número de alvos atingidos para causar MAG dano de Gelo extra para cada inimigo. Caso você acerte apenas 1 inimigo, ele tem sua velocidade de deslocamento diminuída pela metade durante 3 turnos."
+Pó de Diamante,Gelo,"mono, realizada, única (A)",3,Um alvo que você possa ver.,1 alvo,Acerto: MAGd12+1 dano de Gelo Realizada: O espaço ocupado pelo alvo lentamente congela.
+Amplificar Gelo,Gelo,"única, melhoria (P)",3,Conjurador,Conjurador,Magias de Gelo que você conjura causam 50% mais dano. Não acumula com outros efeitos de categoria Melhoria.
+Niflheim,Gelo,mono (A),5,Um alvo dentro de 10 metros,1 alvo,Acerto: MAGd12+3MAG+5 dano de Gelo
+Baforada de Ymir,Gelo,multi (A),5,Até 3 alvos dentro de 5 metros,Até 3 alvos,Acerto: MAGd8+8 dano de Gelo
+Garu,Vento,mono (A),1,1 alvo dentro de 8 metros,1 alvo,Acerto: MAGd6 dano de Vento.
+Ha Garu,Vento,multi (A),1,Até 3 alvos dentro de 7 metros,Até 3 alvos,Acerto: MAGd4+6 dano de Vento.
+Magaru,Vento,total (A),1,Qualquer número de alvos que possa ver,Todos os alvos,Acerto: MAGd4+6 dano de Vento
+Garula,Vento,mono (A),2,1 alvo dentro de 8 metros,1 alvo,Acerto: MAGd8 dano de Vento.
+Ha Garula,Vento,multi (A),2,Até 3 alvos dentro de 7 metros,Até 3 alvos,Acerto: MAGd6+6 dano de Vento
+Magarula,Vento,total (A),2,Qualquer número de alvos que possa ver,Todos os alvos,Acerto: MAGd4+6 dano de Vento
+Tempestade,Vento,"mono, derrubar, status (A)",2,1 alvo dentro de 8 metros,1 alvo,Acerto: MAGd4+5 dano de Vento
+Amplificar Vento,Vento,"única, melhoria (P)",2,Conjurador,Conjurador,Magias de Vento que você conjura causam 50% mais dano. Não acumula com outros efeitos de categoria Melhoria.
+Garudyne,Vento,mono (A),3,1 alvo dentro de 8 metros,1 alvo,Acerto: MAGd10+2 dano de Vento
+Ha Garudyne,Vento,multi (A),3,Até 3 alvos dentro de 7 metros,Até 3 alvos,Acerto: MAGd6+6 dano de Vento
+Magarudyne,Vento,total (A),3,Qualquer número de alvos que possa ver,Todos os alvos,Acerto: MAGd4+6 dano de Vento
+Panta Rhei,Vento,mono (A),5,1 alvo dentro de 10 metros,1 alvo,Acerto: MAGd12+8 dano de Vento
+Vortex,Vento,- (A),5,Um ponto dentro de 10 metros,Área,"Gaste 1 ponto de Energia. Todos os inimigos dentro de um raio de 8 metros do ponto são arrastados até 5 espaços em direção ao centro, sem direito à esquiva. Depois, todos os inimigos dentro de um raio de 3 metros a partir do mesmo ponto sofrem MAGd10+4 dano de Vento no acerto. HDC +3"
+Zio,Raio,mono (A),1,1 alvo dentro de 8 metros,1 alvo,Acerto: MAGd6 dano de Raio Chance de Choque: 3MAG%
+Ha Zio,Raio,multi (A),1,Até 3 alvos dentro de 7 metros,Até 3 alvos,Acerto: MAGd4 dano de Raio Chance de Choque: 2MAG%
+Mazio,Raio,total (A),1,Qualquer número de alvos que possa ver,Todos os alvos,Acerto: MAGd4-5 dano de Raio Chance de Choque: MAG%
+Toque da Faísca,Raio,"mono, realizada (A)",1,1 alvo adjacente,1 alvo,Acerto: MAGd4+5 dano de Raio Realizada: O toque do conjurador entrega uma carga elétrica suficiente para destruir eletrônicos desprotegidos ou causar um arco de energia em metais fundidos.
+Zionga,Raio,mono (A),2,1 alvo dentro de 8 metros,1 alvo,Acerto: MAGd8 dano de Raio Chance de Choque: 6MAG%
+Ha Zionga,Raio,multi (A),2,Até 3 alvos dentro de 7 metros,Até 3 alvos,Acerto: MAGd4+8 dano de Raio Chance de Choque: 5MAG%
+Mazionga,Raio,total (A),2,Qualquer número de inimigos que você possa ver.,Todos os alvos,Acerto: MAGd4 dano de Raio Chance de Choque: 4MAG%
+Faina do Trovão,Raio,combo (A),2,Dança: Até 1d6 alvos aleatórios dentro de 9 metros,Até 1d6 alvos,Acerto: MAGd4+8 dano de Raio Chance de Choque: 3MAG%
+Fortalecer Raios,Raio,"única, melhoria (P)",2,Conjurador,Conjurador,Magias de Raio que você conjura causam 25% mais dano. Não acumula com outros efeitos de categoria Melhoria.
+Para-raios,Raio,"única, reprimir (P)",2,Conjurador,Conjurador,"Você pode conjurar magias de Raio, até Tier II, sem gastar usos ou Energia. Reprima qualquer magia conjurada dessa maneira."
+Ziodyne,Raio,mono (A),3,1 alvo dentro de 8 metros,1 alvo,Acerto: MAGd10+2 dano de Raio Chance de Choque: 8MAG%
+Ha Ziodyne,Raio,multi (A),3,Até 3 alvos dentro de 7 metros,Até 3 alvos,Acerto: MAGd6+6 dano de Raio Chance de Choque: 7MAG%
+Maziodyne,Raio,total (A),3,Qualquer número de alvos que possa ver,Todos os alvos,Acerto: MAGd4+6 dano de Raio Chance de Choque: 6MAG%
+Descarga,Raio,crítico (A),3,Qualquer número de alvos dentro de 5 metros,Todos os alvos,Chance de Choque: 10MAG%
+Amplificar Raio,Raio,"única, melhoria (P)",3,Conjurador,Conjurador,Magias de Raio que você conjura causam 50% mais dano. Não acumula com outros efeitos de categoria Melhoria.
+Corrente Elétrica,Raio,"mono, combo, reprimir (A)",3,1 alvo dentro de 8 metros,1 alvo,"Acerto: MAGd4+5 dano de Raio Gaste qualquer número de magias do seu deck. Para cada magia gasta, role mais um ataque dessa magia. Pague 1 Ponto de Aspecto ou Reprima essa magia."
+Reinado do Trovão,Raio,mono (A),5,1 alvo dentro de 10 metros,1 alvo,Acerto: MAGd12 dano de Raio Chance de Choque: 100%
+Cai Duas Vezes,Raio,reprimir (C),5,Conjurador,Conjurador,"Gaste 3 Energia e Reprima essa magia para conjurar. Você ganha a seguinte Condição: Uma vez por rodada, você pode conjurar uma magia de Raio como uma ação Rápida. No começo de cada turno sob esse efeito, gaste 3 Energia ou remova esse efeito."
+Freila,Nuclear,mono (A),1,1 alvo dentro de 8 metros,1 alvo,Acerto: MAGd6 dano Nuclear. Ganhe 1 contador de Acúmulo.
+Mafrei,Nuclear,"multi, acúmulo (A)",1,Até 3 alvos dentro de 8 metros,Até 3 alvos,Acerto: MAGd4 + MAG dano Nuclear Ganhe 1 contador de Acúmulo.
+Frei,Nuclear,"total, acúmulo (A)",1,Qualquer número de alvos dentro de 8 metros,Todos os alvos,Acerto: MAGd4 dano Nuclear. Ganhe 1 contador de Acúmulo.
+Fortalecer Nuclear,Nuclear,"única, melhoria (P)",1,Conjurador,Conjurador,Magias do Tipo Nuclear que você conjura causam 25% mais dano. Isso não acumula com outros efeitos de Melhoria.
+Bomba Beta,Nuclear,"buff, acúmulo (A)",1,Um aliado dentro de 6 metros,1 aliado,"Alvo ganha o seguinte efeito: Sempre que você acertar uma magia que cause dano a um alvo, essa magia causa +HAB dano Nuclear. Adicionalmente, conceda 1 contador de Acúmulo ao conjurador desse efeito."
+Metamorfose,Nuclear,"acúmulo, buff, debuff (A)",1,Conjurador,Conjurador,"Gaste 1 contador de Acúmulo e escolha: +3 FOR, -2 TEC"
+Freidyne,Nuclear,mono (A),3,1 alvo dentro de 8 metros,1 alvo,Acerto: MAGd10+2 dano Nuclear. Ganhe 1 contador de Acúmulo.
+Hafreidyne,Nuclear,"multi, acúmulo (A)",3,Até 3 alvos dentro de 8 metros,Até 3 alvos,Acerto: MAGd4 + MAG dano Nuclear Ganhe 1 contador de Acúmulo.
+Mafreidyne,Nuclear,"total, acúmulo (A)",3,Qualquer número de alvos dentro de 8 metros,Todos os alvos,Acerto: MAGd4+9 dano Nuclear. Ganhe 1 contador de Acúmulo.
+Ampliação Nuclear,Nuclear,"única, melhoria (P)",3,Conjurador,Conjurador,Magias do Tipo Nuclear que você conjura causam 50% mais dano. Isso não acumula com outros efeitos de Melhoria.
+Grandioso Gama,Nuclear,"acúmulo, lento, atordoado, choque, status (A)",3,1 alvo que você possa ver,1 alvo,Gaste 2 contadores de Acúmulo e escolha: Lento: 50+5TEC%
+Bombardeio Orbital,Nuclear,"mono, acúmulo, realizada (A)",5,Um alvo dentro de 10 metros,1 alvo,"Acerto: MAGd12 + MAG dano Nuclear. Ganhe 1 contador de Acúmulo. Você pode escolher Realizar: A energia desse ataque pode abrir um buraco em superfícies, criando um espaço de até 1 metro de profundidade e raio no impacto."
+Fim dos Dias,Nuclear,"única, multi, acúmulo, reprimir (A)",5,Até 3 alvos dentro de 8 metros,Até 3 alvos,Acerto: MAGd10 dano Nuclear. Ganhe 1 contador de Acúmulo. Você pode Reprimir para adicionar o seguinte efeito: Recupere 2 pontos de Energia para cada alvo morto por essa magia.
+Destruição Mutuamente Assegurada,Nuclear,acúmulo (A),5,Conjurador,Conjurador,"Após conjurar essa magia, quando você tomar dano de qualquer fonte, você pode gastar 1 Energia ou 2 contadores de Acúmulo: Conjure Frei contra um alvo, sem custo de ação, mas essa magia não pode causar dano Crítico."
+Colapso de Neutrões,Nuclear,"acúmulo, buff, debuff (A)",5,1 alvo que você pode ver,1 alvo,"Gaste 2 contadores de Acúmulo, e escolha: -3 FOR, -3 TEC"
+Psi,PSY,"mono, ampliar (A)",1,Um alvo dentro de 8 metros,1 alvo,Acerto: MAGd6+3 dano PSY e Amplie.
+Hapsi,PSY,"multi, ampliar (A)",1,Até 3 alvos dentro de 7 metros,Até 3 alvos,Acerto: MAGd4+2 dano PSY e Amplie.
+Mapsi,PSY,"total, ampliar (A)",1,Qualquer número de alvos dentro de 8 metros,Todos os alvos,Acerto: MAGd4-3 dano PSY e Amplie.
+Psio,PSY,"mono, ampliar (A)",2,Um alvo dentro de 8 metros,1 alvo,Acerto: MAGd8+3 dano PSY e Amplie.
+Hapsio,PSY,"multi, ampliar (A)",2,Até 3 alvos dentro de 7 metros,Até 3 alvos,Acerto: MAGd4+11 dano PSY e Amplie.
+Mapsio,PSY,"total, ampliar (A)",2,Qualquer número de alvos dentro de 8 metros,Todos os alvos,Acerto: MAGd4+4 dano PSY e Amplie.
+Evitar,PSY,"mono, status, cura, rápida (A)",2,Um alvo dentro de 8 metros,1 alvo,Escolha um Status que você esteja sofrendo. Cure esse Status em você e cause esse Status no alvo (sem direito a teste). Gaste 1 Energia: Isso é considerado uma ação Rápida e pode ser conjurada se você estiver sofrendo Pânico.
+Fortalecer PSY,PSY,"única, melhoria (P)",2,Conjurador,Conjurador,Magias PSY que você conjura causam 25% mais dano. Isso não acumula com outros efeitos de Categoria Melhoria.
+Psiodyne,PSY,"mono, ampliar (A)",3,Um alvo dentro de 8 metros,1 alvo,Acerto: MAGd10+5 dano PSY e Amplie.
+Hapsiodyne,PSY,"multi, ampliar (A)",3,Até 3 alvos dentro de 7 metros,Até 3 alvos,Acerto: MAGd8 dano PSY e Amplie.
+Mapsidyne,PSY,"total, ampliar (A)",3,Qualquer número de alvos dentro de 8 metros,Todos os alvos,Acerto: MAGd6 dano PSY e Amplie.
+Gravar,PSY,"status, ampliar (A)",3,Um alvo dentro de 8 metros,1 alvo,"Escolha 1 Status que o alvo estiver sofrendo. Então, escolha outro alvo em 8 metros. O segundo alvo sofre o Status escolhido, então Amplie esse efeito em ambos os alvos, se possível."
+Ampliar PSY,PSY,"única, melhoria (P)",3,Conjurador,Conjurador,Magias PSY que você conjura causam 50% mais dano. Isso não acumula com outros efeitos de Categoria Melhoria.
+Força Psíquica,PSY,"mono, ampliar (A)",5,Um alvo dentro de 8 metros,1 alvo,Acerto: MAGd12+10 dano PSY e Amplie.
+Explosão Psíquica,PSY,"total, ampliar (A)",5,Qualquer número de alvos dentro de 7 metros,Todos os alvos,Acerto: MAGd10+MAG dano PSY e Amplie.
+Histeria em Massa,PSY,"total, ampliar (A)",5,Qualquer número de alvos dentro de 5 metros,Todos os alvos,"Essa magia não permite testes de esquiva. Pela duração, alvos atingidos por essa magia não podem realizar testes de SOR para evitar Status e não podem se recuperar de Status."
+Hama,Luz,mono (A),1,Um alvo,1 alvo,"Causa 20+3TEC% do PV atual do alvo como dano, máx. 40%."
+Ha Hama,Luz,multi (A),1,Um alvo e todos os alvos adjacentes,1 alvo + adjacentes,"Causa 10+2TEC% do PV atual do alvo como dano, máx. 30%"
+Mahama,Luz,total (A),1,Qualquer número de alvos,Todos os alvos,"Causa 10+TEC% do PV atual do alvo como dano, máx. 30%"
+Firmamento Radiante,Luz,"única, zênite (A)",1,Um espaço dentro de TEC/2 (Mín. 1) metros.,1 espaço,"Essa magia custa zero PM para adquirir e seu custo de Energia sempre é zero. Essa magia não pode ser Reprimida. Coloque um Zênite da Luz em um espaço desocupado dentro do alcance dessa magia, ou mova seu Zênite até TEC metros em qualquer direção."
+Kouha,Luz,"mono, bênção (A)",2,Um alvo dentro de 6 metros,1 alvo,Acerto: MAGd6 dano de Luz. Bênção: Qualquer número de alvos dentro do alcance do seu Zênite ganha Fortificar Todos MAG/2 (Mínimo 1). Isso é considerado um efeito de Buff que acumula com outros efeitos de Buff.
+Hakouha,Luz,"mono, bênção (A)",2,Um alvo dentro de 6 metros,1 alvo,"Acerto: MAGd4 dano de Luz. Bênção: Inimigos não podem entrar no alcance do seu Zênite. Se alvos já estiverem dentro desse alcance, eles são movidos para o ponto mais próximo possível fora do alcance, sem teste."
+Makouha,Luz,"mono, bênção (A)",2,Um alvo dentro de 6 metros,1 alvo,"Acerto: MAGd4-5 dano de Luz. Bênção: Estenda a duração de efeitos Buff Taru, Raku e Suku ativos nos alvos dentro do alcance por 1 rodada."
+Kouga,Luz,"mono, bênção (A)",2,Um alvo dentro de 6 metros,1 alvo,Acerto: MAGd8 dano de Luz. Bênção: Qualquer número de alvos dentro do alcance do seu Zênite ganha Evadir I contra um Tipo da escolha do alvo. Isso é considerado um efeito de Buff que acumula com outros efeitos de Buff.
+Hakouga,Luz,"multi, bênção (A)",2,Até 3 alvos dentro de 6 metros,Até 3 alvos,"Acerto: MAGd4+5 dano de Luz. Bênção: Inimigos não podem entrar na alcance do seu Zênite. Se alvos já estiverem dentro do alcance, eles são movidos para o ponto mais próximo possível fora do alcance e tomam MAG dano de Luz, sem teste."
+Makouga,Luz,"total, bênção (A)",2,Qualquer número de alvos,Todos os alvos,"Acerto: MAGd4 dano de Luz. Bênção: Estende a duração de efeitos Buff Taru, Raku e Suku Tier II ativos nos alvos dentro do alcance do seu Zênite por 1 rodada."
+Pulso Imaculado,Luz,zênite (A),2,Conjurador,Conjurador,"Gaste 1 Energia. Bênção: Sempre que um aliado dentro do alcance do seu Zênite declara um ataque, esse ataque causa +MAG dano de Luz no acerto. Cada Usuário só pode se beneficiar do efeito dessa magia uma vez por rodada, mesmo se estiver dentro do alcance de mais de um Zênite."
+Hamoon,Luz,mono (A),3,1 alvo,1 alvo,"Causa 40+3TEC% do PV atual do alvo como dano, máx. 70%"
+Ha Hamoon,Luz,multi (A),3,Um alvo e todos os adjacentes,1 alvo + adjacentes,"Causa 20+2TEC% do PV atual do alvo como dano, máx. 50%"
+Mahamoon,Luz,total (A),3,Qualquer número de alvos,Todos os alvos,"Causa 10+TEC% do PV atual do alvo como dano, máx. 50%"
+Flechas Brilhantes,Luz,combo (A),3,Dança: Até 1d6 alvos dentro de 5 metros,Até 1d6 alvos,Causa 15% do PV atual do alvo como dano.
+Kougaon,Luz,"mono, bênção (A)",3,Um alvo dentro de 6 metros,1 alvo,Acerto: MAGd10 dano de Luz. Bênção: Qualquer número de alvos dentro do alcance do seu Zénite toma metade do próximo dano que eles tomaram.
+Hakougaon,Luz,"multi, bênção (A)",3,Até 3 alvos dentro de 6 metros,Até 3 alvos,"Acerto: MAGd6+5 dano de Luz. Bênção: Se um inimigo declarar um ataque contra um alvo dentro do alcance do seu Zénite, aquele alvo toma MAG dano de Luz, uma vez por rodada."
+Makougaon,Luz,"total, bênção (A)",3,Qualquer número de alvos dentro de 6 metros,Todos os alvos,"Acerto: MAGd4+6 dano de Luz. Bênção: Estende a duração de efeitos de Buff Tartu, Raku e Suku Tier III ativos em alvos no alcance do seu Zénite por 1 rodada."
+Bênção do Dourado,Luz,"zênite, defesa (C)",3,Zénite,Zénite,"Bênção: Concede ao seu Zénite um escudo com PV igual a (MAG + PNv.) * 2. Sempre que um aliado dentro do alcance do seu Zénite tomar dano, ele pode escolher subtrair qualquer quantidade desse dano do escudo do seu Zénite ao invés disso. Cada personagem só pode receber esse efeito uma vez por rodada, mesmo se entrar no alcance de outro Zénite."
+Expulsão,Luz,"mono, reprimir (A)",5,1 alvo,1 alvo,"Reduza o PV do alvo para 1. Se essa magia não for refletida ou anulada, Reprimir."
+Pecado Inocente,Luz,- (A),5,Um alvo,1 alvo,"Causa 50+3TEC% do PV atual do alvo como dano, sem limite."
+Equalizar,Luz,"total, reprimir (A)",5,Qualquer número de alvos,Todos os alvos,"Soma o PV atual dos alvos e redistribui igualmente para todos, contanto que a quantidade de PV de cada alvo não exceda seu PV máximo. Caso isso ocorra, todos os alvos ficam com o PV igual ao maior PV possível e pontos extras são desconsiderados. Reprima essa magia."
+Sampara,Luz,total (A),5,Qualquer número de alvos,Todos os alvos,"Pague 1 Ponto de Aspecto: Causa 20+2TEC% do PV atual do alvo como dano, sem limite."
+Joia Eterna,Luz,"mono, bênção, reprimir (A)",5,Um alvo dentro de 6 metros,1 alvo,Acerto: MAGd12+MAG dano de Luz. Reprimir para Bênção: Qualquer número de alvos dentro do alcance de Luz e do seu Zênite tem todas as suas interações de Fraqueza alteradas para Neutro.
+Momento Final,Luz,"multi, bênção, morte, reprimir (A)",5,Até 3 alvos dentro de 6 metros,Até 3 alvos,"Acerto: MAGd8+4 dano de Luz. Bênção: Qualquer número de alvos dentro do alcance do seu Zênite recebe 2MAG dano de Luz, sem teste. Depois disso, Reprima para Bênção: Qualquer número de alvos cujo PV esteja abaixo de 20% que entrarem no alcance do Zênite morrem instantaneamente."
+O Terceiro Segredo,Luz,"total, bênção, reprimir (A)",5,Qualquer número de alvos dentro de 6 metros,Todos os alvos,"Acerto: MAGd8 dano de Luz. Bênção: Estende a duração de todos os efeitos de Buff Taru, Raku e Suku de aliados dentro do seu alcance por 1 rodada. Reprima para Bênção: Qualquer número de alvos dentro do alcance do seu Zênite recupera 2 Energia cada."
+Eiha,Trevas,mono (A),1,1 alvo dentro de 8 metros,1 alvo,Acerto: MAGd4+2 dano de Trevas. Maldição: Causa MAGd4 dano a todas as unidades adjacentes ao alvo original.
+Maeiha,Trevas,"total, maldição (A)",1,Qualquer número de alvos dentro de 2TEC metros,Todos os alvos,Acerto: MAG dano de Trevas. Maldição: Causa MAGd4 dano a todas as unidades adjacentes ao alvo original.
+Amplificar Mudo,Trevas,"única, melhoria (P)",1,Conjurador,Conjurador,Aumente o limite máximo de todas as suas magias de Morte em 5%. Magias de Maldição que você conjura causam 15% mais dano inicial. Ambos desses efeitos acumulam com Amplificar Mudo+
+Eiga,Trevas,mono (A),2,1 alvo dentro de 8 metros,1 alvo,Acerto: MAGd6 dano de Trevas. Maldição: O próximo ataque do alvo causa MAG menos dano (isso é um efeito de Debuff)
+Haeiga,Trevas,"multi, maldição (A)",2,Até 3 alvos dentro de TEC metros,Até 3 alvos,Acerto: MAGd4 dano de Trevas. Maldição: MAG+8 dano.
+Maeiga,Trevas,"total, maldição (A)",2,Qualquer número de alvos dentro de 2TEC metros,Todos os alvos,Acerto: 2MAG dano de Trevas. Maldição: Causa MAGd4 dano a todas as unidades dentro de 2 metros de cada unidade Amaldiçoada.
+Firmeza da Chave Menor,Trevas,"total, reprimir, status (A)",2,Qualquer número de alvos,Todos os alvos,Gaste 2 Energia por alvo selecionado. Maldição: O alvo é movido até TEC metros em qualquer direção (sua escolha) e seu movimento é reduzido para 1 até o final do seu próximo turno.
+Mudoon,Trevas,"mono, morte (A)",3,Um alvo,1 alvo,"Mata instantaneamente alvos com o PV até 30+3TEC% abaixo do PV máximo, máx. 80%"
+Ha Mudoon,Trevas,morte (A),3,Um alvo e todos os adjacentes dentro de 8 metros,1 alvo + adjacentes,"Mata instantaneamente alvos com o PV até 25+2TEC% abaixo do PV máximo, máx. 50%"
+Mamudoon,Trevas,morte (A),3,Qualquer número de alvos,Todos os alvos,"Mata instantaneamente alvos com o PV até 20+TEC% abaixo do PV máximo, máx. 50%"
+Amplificar Mudo+,Trevas,"única, melhoria, morte (P)",3,Conjurador,Conjurador,Considere o cálculo para Morte de todas as suas magias de Trevas 5% mais alto. Magias de Maldição que você conjura causam 15% mais dano inicial.
+Eigaon,Trevas,"mono, maldição (A)",3,Um alvo dentro de TEC metros,1 alvo,Acerto: MAGd8 dano de Trevas. Maldição: MAGd4 dano.
+Haegaon,Trevas,"multi, maldição (A)",3,Até 3 alvos dentro de TEC metros,Até 3 alvos,Acerto: MAGd4 dano de Trevas. Maldição: MAGd4 dano
+Maeigaon,Trevas,"total, maldição (A)",3,Qualquer número de alvos dentro de 2TEC metros,Todos os alvos,Acerto: 2MAG dano de Trevas. Maldição: Causa 2MAG dano a todas as unidades dentro de TEC/2 (Mínimo 1) metros de cada unidade Amaldiçoada.
+Zai Aku Tou Ten,Trevas,"única, maldição (P)",3,Conjurador,Conjurador,"Sempre que você conjura uma magia que Amaldiçoe uma unidade e cuja Maldição cause dano, você pode gastar X Energia: Estenda a Maldição no alvo por X rodadas."
+Astraydne,Onipotente,mono (E),1,1 alvo dentro de 8 metros,1 alvo,Conjurar: Acerto: MAGd8+2 dano Onipotente.
+Ha Astraydne,Onipotente,"multi, debuff (E)",1,Até 3 alvos dentro de 8 metros,Até 3 alvos,Conjurar: Acerto: MAGd6+2 dano Onipotente. Explosão: Acerto: MAGd6 dano Onipotente e aplica Rakundamon (Fortificar Físico e Elementos -8 por 3 rodadas)
+Ma Astraydne,Onipotente,"total, status (E)",1,Qualquer número de alvos dentro de 8 metros,Todos os alvos,"Conjurar: Acerto: MAGd4+4 dano Onipotente. Explosão: Acerto: MAG dano Onipotente, chance de Derrubada: 20%"
+Megido,Onipotente,área (A),2,1 alvo dentro de 8 metros e todos os alvos adjacentes,1 alvo + adjacentes,Gaste 1 Energia para conjurar. Acerto: MAGd10+2 dano Onipotente.
+Você Já Está Morto,Onipotente,morte (E),3,1 alvo dentro de 6 metros,1 alvo,"Conjurar: Acerto: 1d6 dano Onipotente. Explosão: Não testa acerto: MAGd4 dano Onipotente, mata instantaneamente alvos abaixo de 15+2TEC% PV."
+Megidola,Onipotente,área (A),2,Um alvo dentro de 8 metros e todos dentro de um raio de 2 metros a partir do alvo (incluindo aliados),1 alvo + área,Acerto: MAGd10+MAG dano Onipotente Gaste 1 ponto de Energia para conjurar
+Megidolaon,Onipotente,área (A),6,Um alvo dentro de 8 metros e todos dentro de um raio de 2 metros a partir do alvo (incluindo aliados),1 alvo + área,Acerto: MAGd12+MAG+5 dano Onipotente Pague 1 Ponto de Aspecto
+Víbora Negra,Onipotente,reprimir (A),6,Um alvo dentro de 10 metros,1 alvo,Acerto: MAGd12+4MAG dano Onipotente. Pague 1 Ponto de Aspecto para não Reprimir.
+Última Palavra,Onipotente,"mono, luz, trevas, morte (A)",6,Um alvo dentro de 10 metros,1 alvo,"Pague 1 Ponto de Aspecto. Acerto: MAGd12+2MAG dano Onipotente. Alvo sofre os efeitos de Hamaon, então Mudoon. Resistir Luz/Trevas é ignorado. Resistências acima de Resistir são tratadas como Resistir."
+Estrela do Amanhecer,Onipotente,"total, realizada, reprimir (A)",6,Qualquer número de alvos em 3 metros ou uma explosão com 5 metros de raio dentro de 8 metros,Área,Acerto: MAGd12+7MAG dano Onipotente. Sacrifique todos os usos de todas as suas outras magias e gaste 2 pontos de Energia. Reprimir: Essa magia ganha Realizada.
+Portas de Hades,Onipotente,"trevas, morte (A)",6,Um alvo e todos os adjacentes ao alvo dentro de 5 metros.,1 alvo + adjacentes,Acerto: MAGd12+2MAG dano Onipotente. Pague 1 Ponto de Aspecto: Conjure Mudoon em todos os alvos atingidos.
+Dia,Cura,mono (A),1,1 alvo dentro de 8 metros,1 alvo,Recupera MAGd6 + PNv*2 PV
+Ha Dia,Cura,multi (A),1,Todos os alvos dentro de 4 metros,Todos os alvos,Recupera MAGd6 + PNv PV
+Media,Cura,total (A),1,"Todos os aliados, até aqueles fora da zona de combate",Todos os aliados,Recupera MAGd4 PV
+Soma,Cura,"mono, rápida, status (A)",1,Um alvo adjacente,1 alvo,"Remove todos os status negativos, exceto Derrubado"
+Ha Soma,Cura,"multi, status (A)",1,O conjurador e todos os aliados dentro de 4 metros,Conjurador + aliados,"Remove todos os status negativos, exceto Derrubado"
+Recarm,Cura,"mono, reviver (A)",1,Um alvo dentro de 5 metros,1 alvo,Revive o alvo com 50% do seu PV máximo.
+Limiar da Morte,Cura,"mono, rápida, reviver (A)",1,Um alvo,1 alvo,Revive o alvo com 1 PV.
+Diarama,Cura,mono (A),2,1 alvo dentro de 8 metros,1 alvo,Recupera MAGd8 + PNv*4 PV
+Ha Diarama,Cura,multi (A),2,Conjurador e todos aliados dentro de 4m,Conjurador + aliados,Recupera MAGd8 + PNv * 2 PV
+Mediarama,Cura,total (A),2,"Todos os aliados, até aqueles fora da zona de combate principal.",Todos os aliados,Recupera MAGd6 + MAG PV
+Me Soma,Cura,"total, status (A)",2,"Todos os aliados, até aqueles fora da zona de combate principal.",Todos os aliados,"Remove todos os status negativos, exceto Derrubado."
+Fonte de Higia,Cura,"única, melhoria (P)",2,Conjurador,Conjurador,Magias de Cura que você conjura são 25% mais fortes. Não acumula com outros efeitos de Melhoria.
+Caduceus,Cura,"única, reprimir (P)",2,Conjurador,Conjurador,Você pode conjurar magias de Cura até Tier III sem gastar usos ou Energia. Reprima qualquer magia conjurada dessa maneira.
+Diaraja,Cura,mono (A),3,Um alvo dentro de 6 metros,1 alvo,Recupera MAGd10 + PNv*5 PV
+Ha Diaraja,Cura,multi (A),3,O conjurador e todos os aliados dentro de 4 metros,Conjurador + aliados,Recupera MAGd10 + 3MAG PV
+Mediaraja,Cura,total (A),3,"Todos os aliados, até aqueles fora da zona de combate principal.",Todos os aliados,Recupera MAGd10 PV
+Amrita,Cura,"total, status (A)",3,Todos os alvos dentro de 5 metros,Todos os alvos,Remove todos os status negativos.
+Mãos de Asclépio,Cura,"única, melhoria (P)",3,Conjurador,Conjurador,Magias de Cura que você conjura recuperam 50% mais PV. Não acumula com outros efeitos de Melhoria.
+Diarahan,Cura,mono (A),5,Um alvo dentro de 8 metros,1 alvo,Recupera 100% PV
+Ha Diarahan,Cura,multi (A),5,Qualquer número de alvos dentro de 4 metros,Todos os alvos,Recupera 100% PV. Pague 1 Ponto de Aspecto
+Mediarahan,Cura,"total, reprimir (A)",5,"Todos os aliados, até aqueles fora da zona de combate principal.",Todos os aliados,Recupera 100% PV. Reprima.
+Pluma do Alvorecer,Cura,"reprimir, reviver, total, status (A)",5,"Todos os aliados, até aqueles fora da zona de combate principal.",Todos os aliados,"Pague 1 Ponto de Aspecto. Pague 1 Ponto de Aspecto a mais para cada aliado abaixo de 1 PV no qual você deseja aplicar esse efeito. Remova todos os status negativos, exceto Derrubado e recupere 100% do PV. Reprima."
+Tarukaja,Buff,"mono, taru (A)",1,1 alvo que você possa ver,1 alvo,+1 FOR / +1 MAG
+Sukukaja,Buff,"mono, suku (A)",1,1 alvo que você possa ver,1 alvo,+1 AGI / +1 TEC
+Rakukaja,Buff,"mono, raku (A)",1,1 alvo que você possa ver,1 alvo,Fortificar Físico +4 / Fortificar Elementos +4
+Dekaja,Buff,remoção (A),1,Qualquer número de alvos,Todos os alvos,"Remove todos os efeitos positivos de magias Taru, Suku e Raku"
+Tarukajamon,Buff,"mono, taru (A)",2,1 alvo que você possa ver,1 alvo,+2 FOR / +2 MAG
+Auto-Tarukaja,Buff,"única, auto, taru (P)",2,Conjurador,Conjurador,+1 FOR / +1 MAG
+Ha Tarukaja,Buff,"taru, multi (A)",2,Até 2 alvos que você possa ver,Até 2 alvos,+1 FOR / +1 MAG
+Sukukajamon,Buff,"mono, suku (A)",2,1 alvo que você possa ver,1 alvo,+2 AGI / +2 TEC
+Auto-Sukukaja,Buff,"única, auto, suku (P)",2,Conjurador,Conjurador,+1 AGI / +1 TEC
+Ha Sukukaja,Buff,"suku, multi (A)",2,Até 2 aliados que você possa ver,Até 2 aliados,+1 AGI / +1 TEC
+Rakukajamon,Buff,"mono, raku (A)",2,1 alvo que você possa ver,1 alvo,Fortificar Físico +8 / Fortificar Elementos +8
+Auto-Rakukaja,Buff,"única, auto, raku (P)",2,Conjurador,Conjurador,Fortificar Físico +4 / Fortificar Elementos +4
+Ha Rakukaja,Buff,"raku, multi (A)",2,Até 2 alvos que você possa ver,Até 2 alvos,Fortificar Físico +4 / Fortificar Elementos +4
+Rebelião,Buff,"total, sorte, rápida (A)",2,Todos os combatentes,Todos os combatentes,Concede 2 Cargas de Sorte adicionais
+Tarukajaou,Buff,"mono, taru (A)",3,1 alvo que você possa ver,1 alvo,+3 FOR / +3 MAG
+Auto-Tarukajamon,Buff,"única, auto, taru (P)",3,Conjurador,Conjurador,+2 FOR / +2 MAG
+Ha Tarukajamon,Buff,"taru, multi (A)",3,Até 2 alvos que você possa ver,Até 2 alvos,+2 FOR / +2 MAG
+Matarukaja,Buff,"taru, total (A)",3,"Todos os aliados, até aqueles fora da zona de combate principal",Todos os aliados,+1 FOR / +1 MAG
+Sukukajaou,Buff,"mono, suku (A)",3,1 alvo que você possa ver,1 alvo,+3 AGI / +3 TEC
+Auto-Sukukajamon,Buff,"única, auto, suku (P)",3,Conjurador,Conjurador,+2 AGI / +2 TEC
+Ha Sukukajamon,Buff,"suku, multi (A)",3,Até 2 aliados que você possa ver,Até 2 aliados,+2 AGI / +2 TEC
+Masukukaja,Buff,"suku, total (A)",3,"Todos os aliados, até aqueles fora da zona de combate principal",Todos os aliados,+1 AGI / +1 TEC
+Rakukajaou,Buff,"mono, raku (A)",3,1 alvo que você possa ver,1 alvo,Fortificar Físico +12 / Fortificar Elementos +12
+Auto-Rakukajamon,Buff,"única, auto, raku (P)",3,Conjurador,Conjurador,Fortificar Físico +8 / Fortificar Elementos +8
+Ha Rakukajamon,Buff,"raku, multi (A)",3,Até 2 alvos que você possa ver,Até 2 alvos,Fortificar Físico +8 / Fortificar Elementos +8
+Marakukaja,Buff,"raku, total (A)",3,"Todos os aliados, até aqueles fora da zona de combate principal",Todos os aliados,Fortificar Físico +4 / Fortificar Elementos +4
+Revolução,Buff,"crítico, única (P)",3,Conjurador,Conjurador,Margem de Crítico +1
+Intensificar,Buff,"única, mono, taru, suku, raku (A)",5,Um alvo que você possa ver,1 alvo,"+2 FOR, +2 MAG, +2 TEC, +2 AGI, Fortificar Físico e Elementos +8"
+Tarukajyne,Buff,"mono, taru (A)",5,1 alvo que você possa ver,1 alvo,+4 FOR / +4 MAG
+Auto-Tarukajaou,Buff,"única, auto, taru (P)",5,Conjurador,Conjurador,+3 FOR / +3 MAG
+Ha Tarukajaou,Buff,"taru, multi (A)",5,Até 2 alvos que você possa ver,Até 2 alvos,+3 FOR / +3 MAG
+Matarukajamon,Buff,"taru, total (A)",5,"Todos os aliados, até aqueles fora da zona de combate principal",Todos os aliados,+2 FOR / +2 MAG
+Sukukajyne,Buff,"mono, suku (A)",5,1 alvo que você possa ver,1 alvo,+4 AGI / +4 TEC
+Auto-Sukukajaou,Buff,"única, auto, suku (P)",5,Conjurador,Conjurador,+3 AGI / +3 TEC
+Ha Sukukajaou,Buff,"suku, multi (A)",5,Até 2 aliados que você possa ver,Até 2 aliados,+3 AGI / +3 TEC
+Masukukajamon,Buff,"suku, total (A)",5,"Todos os aliados, até aqueles fora da zona de combate principal",Todos os aliados,+2 AGI / +2 TEC
+Rakukajyne,Buff,"mono, raku (A)",5,1 alvo que você possa ver,1 alvo,Fortificar Físico +24 / Fortificar Elementos +24
+Auto-Rakukajaou,Buff,"única, auto, raku (P)",5,Conjurador,Conjurador,Fortificar Físico +12 / Fortificar Elementos +12
+Ha Rakukajaou,Buff,"raku, multi (A)",5,Até 2 alvos que você possa ver,Até 2 alvos,Fortificar Físico +12 / Fortificar Elementos +12
+Marakukajamon,Buff,"raku, total (A)",5,"Todos os aliados, até aqueles fora da zona de combate principal",Todos os aliados,Fortificar Físico +8 / Fortificar Elementos +8
+Cataclisma,Buff,"total, sorte, rápida (A)",5,Todos os combatentes,Todos os combatentes,Marge de Crítico +1 Concede 3 Cargas de Sorte
+Tarunda,Debuff,"mono, taru (A)",1,1 alvo que você possa ver,1 alvo,-1 FOR / -1 MAG
+Sukunda,Debuff,"mono, suku (A)",1,1 alvo que você possa ver,1 alvo,-1 AGI / -1 TEC
+Rakunda,Debuff,"mono, raku (A)",1,1 alvo que você possa ver,1 alvo,Fortificar Físico -4 / Fortificar Elementos -4
+Dekunda,Debuff,"remoção, total (A)",1,"Todos os seus aliados, inclusive aqueles fora da zona de combate principal",Todos os aliados,"Remove todos os efeitos negativos das Categorias Taru, Suku e Raku"
+Tarundamon,Debuff,"mono, taru (A)",2,1 alvo que você possa ver,1 alvo,-2 FOR / -2 MAG
+Ha Tarunda,Debuff,"taru, multi (A)",2,Até 2 alvos que você possa ver,Até 2 alvos,-1 FOR / -1 MAG
+Sukundamon,Debuff,"mono, suku (A)",2,1 alvo que você possa ver,1 alvo,-2 AGI / -2 TEC
+Ha Sukunda,Debuff,"suku, multi (A)",2,Até 2 alvos que você possa ver,Até 2 alvos,-1 AGI / -1 TEC
+Rakundamon,Debuff,"mono, raku (A)",2,1 alvo que você possa ver,1 alvo,Fortificar Físico -8 / Fortificar Elementos -8
+Ha Rakunda,Debuff,"raku, multi (A)",2,Até 2 alvos que você possa ver,Até 2 alvos,Fortificar Físico -4 / Fortificar Elementos -4
+Cessar Rebelião,Debuff,"total, crítico (A)",2,Qualquer número de alvos,Todos os alvos,Margem de Crítico -1
+Tarundaou,Debuff,"mono, taru (A)",3,1 alvo que você possa ver,1 alvo,-3 FOR / -3 MAG
+Ha Tarundamon,Debuff,"taru, multi (A)",3,Até 2 alvos que você possa ver,Até 2 alvos,-2 FOR / -2 MAG
+Matarunda,Debuff,"taru, total (A)",3,Todos os inimigos,Todos os inimigos,-1 FOR / -1 MAG
+Sukundaou,Debuff,"mono, suku (A)",3,1 alvo que você possa ver,1 alvo,-3 AGI / -3 TEC
+Ha Sukundamon,Debuff,"suku, multi (A)",3,Até 2 alvos que você possa ver,Até 2 alvos,-2 AGI / -2 TEC
+Masukunda,Debuff,"suku, total (A)",3,Todos os inimigos,Todos os inimigos,-1 AGI / -1 TEC
+Rakundaou,Debuff,"mono, raku (A)",3,1 alvo que você possa ver,1 alvo,Fortificar Físico -12 / Fortificar Elementos -12
+Ha Rakundamon,Debuff,"raku, multi (A)",3,Até 2 alvos que você possa ver,Até 2 alvos,Fortificar Físico -8 / Fortificar Elementos -8
+Marakunda,Debuff,"raku, total (A)",3,Todos os inimigos,Todos os inimigos,Fortificar Físico -4 / Fortificar Elementos -4
+Tarundyne,Debuff,"mono, taru (A)",5,1 alvo que você possa ver,1 alvo,-4 FOR / -4 MAG
+Ha Tarundaou,Debuff,"taru, multi (A)",5,Até 2 alvos que você possa ver,Até 2 alvos,-3 FOR / -3 MAG
+Matarundamon,Debuff,"taru, total (A)",5,Todos os inimigos,Todos os inimigos,-2 FOR / -2 MAG
+Sukundyne,Debuff,"mono, suku (A)",5,1 alvo que você possa ver,1 alvo,-4 AGI / -4 TEC
+Ha Sukundaou,Debuff,"suku, multi (A)",5,Até 2 alvos que você possa ver,Até 2 alvos,-3 AGI / -3 TEC
+Masukundamon,Debuff,"suku, total (A)",5,Todos os inimigos,Todos os inimigos,-2 AGI / -2 TEC
+Rakundyne,Debuff,"mono, raku (A)",5,1 alvo que você possa ver,1 alvo,Fortificar Físico -24 / Fortificar Elementos -24
+Ha Rakundaou,Debuff,"raku, multi (A)",5,Até 2 alvos que você possa ver,Até 2 alvos,Fortificar Físico -12 / Fortificar Elementos -12
+Marakundamon,Debuff,"raku, total (A)",5,Todos os inimigos,Todos os inimigos,Fortificar Físico -8 / Fortificar Elementos -8
+Debilitar,Debuff,"raku, suku, taru, única, reprimir (A)",5,1 alvo que você possa ver,1 alvo,"-3 FOR, -3 MAG, -3 AGI, -3 TEC, Fortificar Físico -8, Fortificar Elementos -8, Reprima e pague 3 Energia para conjurar."
+Pulinpa,Status,"mono, pânico, mental (A)",1,1 alvo dentro de 8 metros,1 alvo,Chance de Pânico: 35+5TEC%
+Toque Maligno,Status,"mono, medo, mental (A)",1,1 alvo dentro de 8 metros,1 alvo,Chance de Medo: 25+5TEC%
+Enfurecer,Status,"mono, fúria, mental (A)",1,1 alvo dentro de 8 metros,1 alvo,Chance de Fúria: 35+5TEC%
+Poisma,Status,"mono, veneno (A)",1,1 alvo dentro de 6 metros,1 alvo,Chance de Veneno: 20+5TEC%
+Abatma,Status,"mono, lento, nervoso (A)",1,1 alvo dentro de 6 metros,1 alvo,Chance de Lento: 20+5TEC%
+Confunda,Status,"mono, atordoar, nervoso (A)",1,1 alvo dentro de 5 metros,1 alvo,Chance de Atordoar: 15+5TEC%
+Ar Estagnado,Status,total (A),2,Todos os combatentes,Todos os combatentes,Considere sua SOR como 2 pontos abaixo do valor original para determinar a esquiva de todos os Status negativos.
+Baforada Vil,Status,total (A),2,Todos os combatentes,Todos os combatentes,Considere sua SOR como 1 ponto abaixo do valor original para determinar a esquiva de todos os Status negativos. Considere a TEC do conjurador como 1 ponto acima do valor original para determinar o limite de acerto de magias de Luz e Trevas.
+Marin Karin,Status,"mono, charme, mental (A)",2,Um alvo dentro de 6 metros,1 alvo,Chance de Charme: 30+5TEC%
+Dança Sensual,Status,"total, charme, mental (A)",2,Qualquer número de alvos dentro de 6 metros,Todos os alvos,Chance de Charme: 10+5TEC%
+Tentarafoo,Status,"total, pânico, mental (A)",2,Qualquer número de alvos dentro de 6 metros,Todos os alvos,Chance de Pânico: 20+5TEC%
+Sorriso Maligno,Status,"total, medo, mental (A)",2,Qualquer número de alvos dentro de 6 metros,Todos os alvos,Chance de Medo: 10+5TEC%
+Enfuriar,Status,"multi, fúria, mental (A)",2,Qualquer número de alvos dentro de 6 metros,Todos os alvos,Chance de Fúria: 15+5TEC%
+Pulinpaja,Status,"mono, pânico, mental (A)",2,1 alvo dentro de 8 metros,1 alvo,Chance de Pânico: 50+5TEC%
+Poismaja,Status,"mono, veneno (A)",2,1 alvo dentro de 8 metros,1 alvo,Chance de Veneno: 45+5TEC%
+Ha Poisma,Status,"multi, veneno (A)",2,Até 2 alvos dentro de 8 metros,Até 2 alvos,Chance de Veneno: 15+5TEC%
+Abatmaja,Status,"mono, lento, nervoso (A)",2,Um alvo dentro de 6 metros,1 alvo,Chance de Lento: 40+5TEC%
+Mabatma,Status,"multi, lento, nervoso (A)",2,Até 2 alvos dentro de 6 metros,Até 2 alvos,Chance de Lento: 25+5TEC%
+Maconfunda,Status,"multi, atordoar, nervoso (A)",3,Até 2 alvos dentro de 6 metros,Até 2 alvos,Chance de Atordoar: 15+5TEC%
+Baforada Venenosa,Status,"total, veneno (A)",3,Qualquer número de alvos dentro de 6 metros,Todos os alvos,Chance de Veneno: 15+5TEC%
+Fascínio Terrível,Status,"multi, charme, mental (A)",3,Qualquer número de alvos dentro de 6 metros,Todos os alvos,Chance de Charme: 20+5TEC%
+Visão Aterrorizante,Status,"multi, medo, mental (A)",3,Qualquer número de alvos dentro de 6 metros,Todos os alvos,Chance de Medo: 25+5TEC%
+Espinho Venenoso,Status,"mono, veneno (A)",3,1 alvo dentro de 6 metros,1 alvo,Chance de Veneno: 80+5TEC%
+Força Esmagadora,Status,"mono, atordoar, nervoso (A)",3,1 alvo dentro de 8 metros,1 alvo,Chance de Atordoar: 75+5TEC%
+Lamento Fantasmagórico,Status,"reprimir, morte, total (A)",5,Qualquer número de alvos,Todos os alvos,"Acerto: Mata instantaneamente todos os alvos sob o efeito de Status. Reprima e Pague 1 PA para ignorar o teste de esquiva de cada alvo. Contra Tiranos e Sombras Definitivas, HDC -1 e causa 10% do PV atual do alvo como dano Status caso o alvo esteja sofrendo pelo menos um Status ao invés do efeito normal."
+Percepção,Intel,"única, percepção, contadores (P)",1,Conjurador,Conjurador,"No começo de cada um dos seus turnos, adicione 1 contador à reserva de percepção do seu grupo."
+Análise Ágil,Intel,"percepção, contadores (A)",1,Conjurador,Conjurador,Ganhe a mesma quantidade de contadores que você ganhou no começo do turno mais uma vez.
+Análise Tática,Intel,"mono, análise (A)",1,1 alvo que você possa ver,1 alvo,Pague 1 contador. Revela uma magia Ativa do deck do alvo.
+Analisar Mitos,Intel,"mono, análise (A)",1,1 alvo que você possa ver,1 alvo,Pague 1 contador Revela a Habilidade Natural do alvo.
+Monitor,Intel,"mono, análise (A)",1,1 alvo que você possa ver ou se comunicar,1 alvo,Pague 1 contador Você tem acesso à todas as informações que o alvo consentir em compartilhar com você.
+Simulação,Intel,"mono, análise (A)",1,1 alvo que você possa ver,1 alvo,"Pague 1 contador Revela uma das interações elementais do alvo, à sua escolha"
+Marcar para o Abate,Intel,"mono, única (P)",1,1 alvo que você possa ver,1 alvo,Pague 1 contador quando um ataque for realizado contra um alvo Analisado para conceder Margem de Crítico +1 ao atacante. Esse efeito só pode ser aplicado uma vez por ataque.
+Selar Destino,Intel,mono (P),1,1 alvo que você possa ver,1 alvo,Pague 1 contador para aumentar a chance de sucesso de um status negativo em 20%. Esse efeito só pode ser aplicado uma vez por ataque.
+Névoa de Guerra,Intel,"visão, buff (C)",1,Conjurador,Conjurador,Uma área ao seu redor com raio de 5m fica obscurecida para todas as unidades. Qualquer alvo obscurecido recebe DCC+1
+Luzes Atordoantes,Intel,"mono, desmaio (A)",1,1 alvo que você possa ver,1 alvo,Page X contadores. Alvos com PV 15+5X% abaixo do máximo ficam inconscientes (Não podem realizar ações ou se mover até serem atacados)
+Disfarce,Intel,visão (A),1,Qualquer número de aliados que você possa ver,Aliados,"Você pode mudar as vestimentas e detalhes menores como cores dos olhos, cabelo e pele dos alvos que consentirem, incluindo o conjurador."
+Capa das Sombras,Intel,"mono, visão, buff (C)",1,1 alvo que você possa ver,1 alvo,Page 1 contador. O alvo ganha DDC+1 contra alvos Analisados. Page 1 contador para estender o efeito dessa magia como uma ação rápida.
+Cegar,Intel,"mono, visão, debuff (A)",1,1 alvo Analisado que você possa ver.,1 alvo,Page 1 contador ou dissipe esse efeito. HDC-1
+Conexão Sensorial,Intel,única (P),1,Todos os seus aliados,Aliados,"Todos os seus aliados podem conversar entre si e privadamente, compartilhando suas percepções sensoriais, desconsiderando a distância entre os indivíduos, enquanto o conjurador e os envolvidos estiverem conscientes e consentidos."
+Terreno Ilusório,Intel,realizada (A),1,Um espaço vazio que você possa ver.,1 espaço,"Distorce uma seção do cenário a sua escolha que ocupe até TEC/2 espaços em qualquer configuração, como uma cobertura, pilar ou buraco. Alvos completamente obscurecidos pelo cenário não podem ser escolhidos como alvos para ataques, mas ainda são afetados por magias que atingem alvos adjacentes a alvos expostos. Esse terreno possui PV igual a metade do PV máximo do conjurador e 1 AGI para os propósitos de ser destruído."
+Veias do Mártir,Intel,"mono, dano (A)",1,1 alvo dentro de 6 metros,1 alvo,"Quando um aliado recebe dano de um ataque, você pode transferir uma quantidade do dano para você ao invés do alvo original (Mínimo: 50%)"
+Imagem Silenciosa,Intel,"mono, visão (A)",1,1 espaço vazio,1 espaço,Cria a projeção de um objeto que o usuário já tenha visto. O objeto só pode ser visualmente distinguido do objeto real se o observador passar um teste de TECd6 contra TECd6 do conjurador. O objeto não é tangível e dissipa quando qualquer criatura tocar nele.
+Reorganizar,Intel,"mono, rápida, iniciativa (A)",1,Um aliado que você pode ver,1 aliado,Pague 1 contador. Você pode alterar a iniciativa de um alvo para posicioná-lo em qualquer lugar na ordem de iniciativa do combate. Esse efeito só se aplica no começo da próxima rodada.
+Visão Vital,Intel,"mono, visão (A)",1,1 alvo que você possa ver,1 alvo,Pague 1 contador. Revela a pontuação máxima de PV do alvo.
+Percepção Poderosa,Intel,"única, percepção, contadores (P)",2,Conjurador,Conjurador,"No começo de cada turno, adicione 2 contadores à reserva de contadores do grupo. Essa magia anula os efeitos da magia Percepção no seu deck."
+Análise Estratégica,Intel,"mono, análise (A)",2,1 alvo que você possa ver,1 alvo,Revela até 3 magias Ativas do deck do alvo.
+Analisar Especialidades,Intel,"mono, análise (A)",2,1 alvo que você possa ver,1 alvo,Revela todas as magias Passivas do alvo.
+Análise Constante,Intel,análise (P),2,Conjurador,Conjurador,"Quando qualquer alvo for atingido por uma magia ou ataque, você pode imediatamente descobrir a interação Elemental com o Tipo do ataque."
+Percepção Materialista,Intel,análise (P),2,Conjurador,Conjurador,Você sabe identificar qualquer item e suas utilidades com alguns momentos de investigação. Você recebe dicas adicionais sobre itens de interesse e onde encontra-los.
+Bênção do Mentiroso,Intel,mono (P),2,1 alvo Analisado,1 alvo,"Quando um alvo é Analisado, você pode escolher pagar 1 contador para passar informações erradas. Role Nvd6 contra Nvd6 contra o conjurador original. Em caso de falha, o conjurador percebe que a informação é falsa e pode tentar novamente."
+Caleidoscópio,Intel,"visão, ação, debuff (A)",2,Qualquer número de alvos que você possa ver,Todos os alvos,"Antes de realizar uma ação padrão, cada alvo tem 33% chance de falhar a ação completamente. Contra alvos com Resistências Tirânicas, essa chance é 10%."
+Esmaecer,Intel,visão (A),2,Conjurador,Conjurador,O alvo se torna invisível e não pode ser escolhido como alvos para ataques
+Escudo do Mártir,Intel,"mono, dano, interromper (A)",2,1 alvo dentro de 6 metros,1 alvo,"Quando um aliado for atingido por um ataque, você pode transferir qualquer quantidade do dano para você ou qualquer outro aliado. (Mínimo: 50%)"
+Quebrar Limites,Intel,"interromper, dano (A)",2,Todos os seus aliados,Aliados,Todos os alvos ganham a seguinte habilidade: Pague 2 contadores e 2 pontos de Energia para ganhar os efeitos de Carga Mental ou Carga Poderosa.
+Vigor Ilusório,Intel,"mono, energia (A)",2,"1 alvo, até mesmo se estiver fora da zona de combate principal.",1 alvo,"O alvo não recebe penalidades por ultrapassar seus limites de Energia. No final do combate, a penalidade de Energia volta a ser aplicada e o alvo afetado recebe dano do tipo Onipotente igual aos seus pontos de Energia negativos multiplicados por 10, sem direito à esquiva e ignorando a redução de dano."
+Loquacidade,Intel,"mono, negociação (A)",2,1 alvo,1 alvo,Pague 3 contadores. O alvo pode iniciar negociação com qualquer alvo consciente.
+Geas,Intel,"mono, ação, interromper (A)",2,1 aliado que você possa ver,1 aliado,"Pague 2 contadores. Quando um aliado acerta um ataque contra um alvo Analisado, aumente o dano causado em 50%"
+Percepção Absoluta,Intel,"única, contadores, percepção (P)",3,Conjurador,Conjurador,"No começo de cada turno, adicione 3 contadores à reserva do seu grupo. Essa magia anula os efeitos das magias Percepção e Percepção Poderosa no seu deck."
+Pulso de Análise,Intel,"rápida, análise, contadores (A)",3,Conjurador,Conjurador,Adicione a mesma quantidade de contadores adicionados no começo desse turno mais uma vez.
+Monitor Vital,Intel,"mono, análise (A)",3,1 alvo que você possa ver,1 alvo,Pague 2 contadores Revela o PV atual do alvo
+Decifrar Técnicas,Intel,"mono, análise (A)",3,1 alvo que possa ver,1 alvo,Pague 2 contadores Revela todas as magias do deck do alvo
+Apagar da Cognição,Intel,"mono, visão (A)",3,1 alvo que você possa ver,1 alvo,O alvo se torna invisível e não pode ser escolhido como um alvo para ataques ou magias. Gaste 2 Energia para estender esse efeito depois do primeiro turno como uma ação Rápida. Esse custo de Energia aumenta em 1 em cada turno subsequente.
+Fobia Assassina,Intel,"mono, visão (C)",3,1 alvo,1 alvo,"O alvo deve rolar um ataque que causa FORD6 ou MAG6 contra si mesmo, qualquer que for mais alto, com direito à esquiva."
+Quebrar Limites+,Intel,"interromper, dano (A)",3,Todos os seus aliados,Aliados,"Pague 4 contadores: Quando você ou um aliado inicia um ataque contra um alvo Analisado, o conjurador ou quem iniciar o ataque paga 2 pontos de Energia para ganhar os efeitos de Carga Mental ou Carga Poderosa."
+Gaiola Psicológica,Intel,"mono, visão (A)",3,1 alvo dentro de 6 metros,1 alvo,"Cerca o alvo por uma ilusão que representa algo que ele tema ou não consiga atravessar naturalmente. O alvo sofre MAGd6 ou FORd6, ambos do conjurador e qualquer que seja mais alto, caso ele se mova do seu ponto original naturalmente. No final de cada um dos seus turnos, o alvo tem 33% chance de se recuperar do efeito."
+Gênesis Cognitivo,Intel,realizada (A),3,Um espaço vazio que você possa ver,1 espaço,"Cria um objeto tangível inanimado, que o conjurador já tenha visto, que ocupa até TEC/2 espaços vazios, em qualquer configuração. A resistência física desse objeto é baseada no objeto real, mas possui PV, para os propósitos de receber ataques, equivalente à metade do PV máximo do conjurador."
+Projeção Aterrorizante,Intel,"mental, medo, status (A)",3,"Qualquer alvo que ficar adjacente à sua posição, incluindo durante todo seu movimento",Alvos adjacentes,Chance de Medo: 15+5TEC%. Realize sua ação de movimento completa enquanto conjura essa magia.
+Olho de Prometeus,Intel,"única, percepção, contadores (P)",5,Conjurador,Conjurador,"No começo do seu turno, adicione 4 contadores à reserva de contadores do seu grupo. Essa magia anula os efeitos das magias Percepção, Percepção Poderosa e Percepção Absoluta no seu deck."
+Desvendar Fraqueza,Intel,"mono, análise (A)",5,1 alvo que você possa ver,1 alvo,Revela todas as interações elementais do alvo
+Precognição,Intel,"rápida, reprimir (A)",5,Qualquer número de alvos que você possa ver,Todos os alvos,"Reprima, pague 1 ponto de Energia e 6 contadores. Os cinco próximos testes de esquiva do seu grupo consideram, automaticamente, o valor maximizado dos dados. Gaste 3 pontos de Energia para aplicar esse efeito para mais um teste, podendo repetir esse pagamento mais vezes."
+Anulação de <Elemento>,Defesa,"mono, anular (A)",1,Um alvo,1 alvo,Concede Anular <Elemento>
+Reflexão de <Elemento>,Defesa,"mono, refletir (A)",1,Um alvo,1 alvo,Concede Refletir <Elemento>
+Drenagem de <Elemento>,Defesa,"mono, drenar (A)",1,Um alvo,1 alvo,Concede Drenar <Elemento> Deve ser ensinado para cada elemento individualmente.
+Makarakarn,Defesa,"mono, refletir, karn (A)",1,Um alvo,1 alvo,Gaste 1 ponto de Energia. Concede Refletir Elementos e Status para o próximo ataque desses Tipos declarado contra o alvo.
+Tetrakarn,Defesa,"mono, refletir, karn (A)",1,Um alvo,1 alvo,Concede Refletir Físico para o próximo ataque desse Tipo declarado contra o alvo.
+Contra-Ataque,Miscelânea,"única, contra (P)",1,Conjurador,Conjurador,Contra (30%)
+Avanço Cruel,Miscelânea,"única, crítico (P)",1,Conjurador,Conjurador,Margem de Crítico +1
+Previsão,Miscelânea,"única, intel, sorte (P)",1,Conjurador,Conjurador,"Ganhe 3 Cargas de Sorte adicionais no começo de cada batalha. Uma vez por dia, você pode gastar uma Carga de Sorte para re-rolar um teste qualquer a sua escolha, obrigatoriamente escolhendo o segundo resultado."
+Asas Magníficas,Miscelânea,"única, movimento (P)",1,Conjurador,Conjurador,"Considere sua AGI como 3 pontos acima do seu valor base para calcular sua distância de movimento, inclusive para magias que requerem deslocamento."
+Aura Intoxicante,Miscelânea,"única, status (P)",1,Conjurador,Conjurador,Você pode optar por ativar qualquer efeito secundário das suas magias antes de calcular o dano.
+Lâmina Fantasma,Miscelânea,melhoria (A),1,Conjurador ou um alvo aliado adjacente,Conjurador ou aliado,Pague 2 pontos de Energia. Você pode usar MAG ao invés de FOR para todos os testes relevantes.
+Derrapada Elétrica,Miscelânea,"única, raio, movimento (A)",1,Conjurador,Conjurador,Mova o alvo até 3 espaços em qualquer direção. Todos os inimigos dentro de 3 metros ao redor do alvo recebem MAG dano de Raio.
+Bênção,Miscelânea,"mono, única, esquiva, sorte (A)",1,Um inimigo que você pode ver,1 inimigo,Gaste 1 Carga de Sorte. Force o alvo a re-rolar esquiva contra um de seus ataques.
+Terror Mortal,Miscelânea,"única, medo, mortal (P)",1,Conjurador,Conjurador,Seus ataques ganham Crítico FORd10/2+10 contra alvos sofrendo os efeitos de Medo
+Menis,Miscelânea,"única, fúria, mental, status (P)",1,Conjurador,Conjurador,Soffer os efeitos de Fúria não reduz sua HDC
+Geada,Miscelânea,"única, buff, gelo (A)",1,Você e qualquer número de alvos dentro de 3 metros da sua posição,Você + aliados,Aliados recebem +MAG (do conjurador) dano de Gelo para todos os ataques até o final do seu próximo turno. Sombras sofrem: Chance de Lento: 60+5TEC%
+Chuva de Fogo,Miscelânea,"única, buff, fogo (C)",1,Qualquer número de alvos dentro de 5 metros,Todos os alvos,Aliados dentro da área de efeito recebem Resistir Fogo até o final do seu turno. Cause MAG dano de fogo no final do turno de cada inimigo afetado. Pague 2 pontos de Energia: Estenda o efeito dessa magia como uma ação rápida.
+Túnel de Vento,Miscelânea,"única, vento, movimento (A)",1,Um aliado adjacente ou o conjurador,1 aliado,"Mova o alvo até 3 espaços em qualquer direção. Todos os inimigos dentro de 2 metros ao redor do alvo dessa magia, inclusive durante o movimento, são empurrados 2 espaços"
+Irradiar,Miscelânea,"única, nuclear, interromper (P)",1,Conjurador,Conjurador,"Quando você escolhe alvo(s) para uma magia, você pode escolher uma das unidades alvo e aplicar a seguinte Condição: No começo do próximo turno dessa unidade, causa HAB (do conjurador) dano Nuclear a unidades adjacentes, e remove essa Condição."
+Internalizar,Miscelânea,"psy, rápida, status (A)",1,Um alvo em 5 metros,1 alvo,"Escolha um alvo sob o efeito de pelo menos um Status. Aplique esse Status em você. Até o final dessa rodada, você é imune aos efeitos desse Status."
+Desafiar,Miscelânea,"fúria, mental, combo, status (A)",1,O conjurador e um alvo dentro de 6m,1 alvo,Chance de Fúria: 45+5TEC% O conjurador pode escolher falhar o teste de esquiva
+Carga Poderosa,Miscelânea,dano (A),1,Conjurador,Conjurador,Multiplique o dano do seu próximo ataque básico ou magia Física por 2.5. Isso não acumula com outros efeitos de Categoria Carga.
+Carga Mental,Miscelânea,dano (A),1,Conjurador,Conjurador,"Multiplique o dano da sua próxima magia de Fogo, Gelo, Vento, Raio, Nuclear ou PSY por 2.5. Isso não acumula com outros efeitos de Categoria Carga."
+Desespero,Miscelânea,"buff, debuff (A)",1,Conjurador,Conjurador,"+2 FOR, +2 TEC, +2 MAG -3 AGI, Fortalecer (Todos) -4, -2 SOR"
+Roubar os Méritos,Miscelânea,"mono, morte (A)",1,Um aliado,1 aliado,"Quando um aliado derrotar uma Sombra em combate, o conjurador é considerado como o causador dessa morte. Esse efeito ativa quaisquer habilidades passivas do conjurador e cancela efeitos semelhantes do aliado original. Adicionalmente, esse efeito concede Pontos de Magia a Usuários Emergentes de acordo com Cognição Receptiva."
+Revés,Miscelânea,contra (P),1,Conjurador,Conjurador,"Contra (30%) Ao invés de declarar um ataque básico quando esse efeito ativar, você pode conjurar uma magia Física que cause dano do seu deck. Interage com Hyper-Contra: 30% de chance de ativar Hyper-Contra, 20% chance de ativar Revés. Cancela o efeito de efeitos Contra de Tier inferiores."
+Hyper-Contra,Miscelânea,"única, contra (P)",1,Conjurador,Conjurador,Contra (50%) Cancela o efeito de efeitos de Contra de Tier inferiores.
+Asas Magnificas+,Miscelânea,"única, movimento (P)",1,Conjurador,Conjurador,Considera sua AGI como 2 pontos mais altos para determinar seu movimento. Movimento pode ignorar alvices com altura igual ou menor que a do conjurador.
+Compreensão de Glauco,Miscelânea,"única, cura, mental (P)",1,Conjurador,Conjurador,Aumente a chance de se recuperar de Status Mentais para 50%
+Bênção do Styx,Miscelânea,"única, raku (P)",1,Conjurador,Conjurador,Você ganha Fortificar Físico 5
+Mão Orientadora,Miscelânea,"mono, única, esquiva, sorte (A)",1,Um aliado rolando esquiva,1 aliado,"Gaste 1 Carga de Sorte. O alvo pode re-rolar sua esquiva, escolhendo obrigatoriamente o segundo resultado."
+Hora de Acertar as Contas,Miscelânea,"mono, única, esquiva, sorte (A)",1,Um alvo que você possa ver,1 alvo,Gaste 1 Carga de Sorte. Force um inimigo a re-rolar esquiva contra um ataque de qualquer aliado.
+Roque,Miscelânea,"interromper, movimento (A)",1,Um alvo dentro de VIT metros,1 alvo,Gaste 1 Carga de Sorte. O conjurador é movido para o espaço do alvo e o alvo é movido para o espaço do conjurador.
+Carga Poderosa+,Miscelânea,"rápida, dano (A)",1,Conjurador,Conjurador,Multiplique o dano do seu próximo ataque básico ou magia Física por 2.5. Isso não acumula com outros efeitos de Carga.
+Carga Mental+,Miscelânea,"rápida, dano (A)",1,Conjurador,Conjurador,"Multiplique o dano da sua próxima magia de Fogo, Gelo, Raio, Vento, Nuclear ou PSY por 2.5. Isso não acumula com outros efeitos de Categoria Carga."
+Zanshin,Miscelânea,"única, reprimir, buff (P)",1,Conjurador,Conjurador,Fortificar Todos X. X é o número de magias do seu deck que estão Reprimidas.
+Alto-Contra,Miscelânea,"única, contra (P)",1,Conjurador,Conjurador,Contra (70%) Cancela o efeito de efeitos Contra de Tier inferiores.
+Hyper-Revés,Miscelânea,"única, contra (P)",1,Conjurador,Conjurador,"Contra (50%) Ao invés de declarar um ataque básico quando esse efeito ativar, você pode conjurar uma magia Física que cause dano do seu deck. Interage com Alto-Contra: 50% de chance de ativar Alto-Contra, 20% chance de ativar Hyper-Revés. Cancela o efeito de efeitos Contra de Tier inferiores."
+Liderança,Miscelânea,"única, mental, status (P)",1,Conjurador e todos os seus aliados,Conjurador + aliados,Você e todos os seus aliados têm 50% de chance de se recuperar de status Mentais no final de cada turno.
+Segunda Face,Miscelânea,única (P),1,Conjurador,Conjurador,"Se equipar essa Persona for uma ação padrão, considere equipar essa Persona como uma Ação Rápida. Se equipar essa Persona for uma ação padrão, considere equipar essa Persona como umaa ação Livre."
+Lâmina Serrada,Miscelânea,"mono, marcar (C)",1,Um alvo que você possa ver,1 alvo,O alvo causa +3MAG (do conjurador) dano Onipotente extra.
+Deslize Quântico,Miscelânea,"mono, movimento (A)",1,Um aliado que você possa ver,1 aliado,Mova o alvo até 5 espaços em qualquer direção. Pague 2 Energia: Estenda o efeito dessa magia como uma ação Rápida.
+Revés Perfeito,Miscelânea,"única, contra (P)",1,Conjurador,Conjurador,"Contra (70%) Ao invés de declarar um ataque básico quando esse efeito ativar, você pode conjurar uma magia Física que cause dano do seu deck. Cancelada demais efeitos de Contra."
+Última Legião,Miscelânea,"mono, movimento, raku (A)",1,Um aliado dentro de TEC metros,1 aliado,Troque de lugar com um alvo e recebe qualquer ataque que ele fosse receber nesse turno. Fortificar Todos 5MAG para o conjurador contra o próximo ataque rolado contra ele.
+Iluminismo,Miscelânea,reprimir (A),1,Conjurador,Conjurador,"Recupere até seis usos de magias, inclusive Reprimidas, de Tier III ou abaixo."
