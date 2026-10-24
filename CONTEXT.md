@@ -1,4 +1,4 @@
-# CONTEXT — Grimório do Coração (App Web)
+# CONTEXT — Yuki (App Web)
 
 > Documento para continuidade entre sessões e IAs. **Atualize** ao final de cada iteração significativa.
 
@@ -6,7 +6,7 @@
 
 ## TL;DR
 
-App web (PWA) de ficha de personagem para o sistema de RPG **Grimório do Coração**. HTML/JS puro, sem frameworks, sem build. Roda abrindo `index.html`. Dados ficam no navegador (`localStorage` para fichas/configurações, `IndexedDB` para PDFs). Autor é designer, não programador — **prefere find & replace** em vez de receber o arquivo inteiro.
+App web (PWA) de ficha de personagem para o sistema de RPG **Grimório do Coração**. HTML/JS puro, sem frameworks, sem build. Roda abrindo `index.html`. Dados ficam no navegador (`localStorage` para fichas/configurações/perfil/magias-custom, `IndexedDB` para PDFs). Autor é designer, não programador — **prefere find & replace** em vez de receber o arquivo inteiro.
 
 ---
 
@@ -15,10 +15,11 @@ App web (PWA) de ficha de personagem para o sistema de RPG **Grimório do Coraç
 - **Autor do projeto**: designer, aprendendo a programar com IA. Não é programador.
 - **Colaborador ("boss")**: amigo que jogou/criou o sistema e revisa regras. Manda feedback com mudanças pontuais.
 - **Idioma do app**: português (Brasil). Manter todos os textos, comentários e strings em PT-BR.
-- **Estilo atual**: "web antiga" (fundo cinza `#c0c0c0`, botões bevel, Times New Roman nos títulos). Tema chamado **Alpha**.
-- **Prioridade**: funcionalidade > design. Design será refeito depois (tema Alpha é provisório).
-- **Nome do app**: **Grimorium** (não definitivo — escolher antes do lançamento público para evitar conflito de marca).
-- **Versão atual**: `0.4.0-valpha` (constante `APP_VERSION` no topo do JS).
+- **Nome do app**: **Yuki** (oficial).
+- **Nome do sistema de RPG**: **Grimório do Coração** (não confundir — esse é o sistema, não o app).
+- **Versão atual**: `0.4.0-alpha` (constante `APP_VERSION` no topo do JS).
+- **Estilo atual**: "web antiga" (fundo cinza `#c0c0c0`, botões bevel, Times New Roman). Tema chamado **Alpha**.
+- **Prioridade**: funcionalidade > design. Design será refeito depois com tema próprio.
 
 ---
 
@@ -28,8 +29,10 @@ App web (PWA) de ficha de personagem para o sistema de RPG **Grimório do Coraç
 |---|---|
 | `index.html` | App inteiro (CSS + JS inline). Fonte única de verdade. |
 | `manifest.json` | PWA manifest. |
-| `sw.js` | Service Worker (cache offline). Versão atual do cache: `grimorium-v5`. |
-| `favicon/favicon.ico` | Ícone (referenciado no `<head>`). |
+| `sw.js` | Service Worker (cache offline). Cache atual: `yuki-v1`. |
+| `favicon/favicon.ico` | Ícone. |
+| `spells.csv` | **Opcional**. Presets de magia (CSV). Se não existir, aba "Magias" fica vazia com aviso. |
+| `spells/index.json` | **Opcional**. Lista de CSVs (`["a.csv","b.csv"]`) para carregar múltiplos arquivos da pasta `spells/`. |
 | `CONTEXT.md` | Este arquivo. |
 
 **CDN externo (única dependência de rede)**:
@@ -45,6 +48,7 @@ App web (PWA) de ficha de personagem para o sistema de RPG **Grimório do Coraç
 4. **Find & replace para o usuário**. Não mandar arquivo completo a menos que ele peça explicitamente. Fornecer blocos `**Find:**` / `**Replace:**` claros.
 5. **Português no código**. Nomes de campos podem ser em inglês (`name`, `level`), mas labels, títulos, comentários e alertas em PT-BR.
 6. **Não renomear estruturas existentes** sem pedir. O usuário valoriza consistência.
+7. **Ao refatorar assinaturas de função, conferir se o find está no cabeçalho E no corpo**. (Bug do pfp foi causado por replace parcial: o `onConfirm` chegou no handler interno mas não na assinatura → `typeof onConfirm === 'function'` sempre `false`.)
 
 ---
 
@@ -52,9 +56,14 @@ App web (PWA) de ficha de personagem para o sistema de RPG **Grimório do Coraç
 
 | Chave | Storage | Conteúdo |
 |---|---|---|
-| `grimorio_do_coracao_v1` | localStorage | `{ characters: [...] }` — todas as fichas |
-| `grimorio_settings_v1` | localStorage | `{ template, splitRatio, theme }` |
-| `grimorio_books` (DB) | IndexedDB | Object store `books`, keyPath `id`, contém `{id, name, blob, addedAt}` |
+| `grimoire_v1` | localStorage | `{ characters: [...] }` — todas as fichas |
+| `grimoire_settings_v1` | localStorage | `{ template, splitRatio, theme, showWelcome }` |
+| `grimoire_user_v1` | localStorage | `{ pfp, username }` — perfil do usuário (app-level) |
+| `grimorio_custom_spells_v1` | localStorage | `[]` — biblioteca "Minhas Magias" (custom spells, global) |
+| `grimoire_welcome_seen_v1` | localStorage | flag `'1'` — usuário já viu welcome pelo menos 1× |
+| `grimorio_books` (DB) | IndexedDB | Object store `books`, keyPath `id`, `{id, name, blob, addedAt}` |
+
+> **Atenção**: `grimoire_*` (com `e`) e `grimorio_*` (com `o`) **coexistem por legado**. Não unificar sem migração explícita (quebra dados salvos).
 
 Se mudar o formato de `characters`, atualizar `normalizeCharacter()` com migração para campos antigos.
 
@@ -69,16 +78,28 @@ state = {
   view: 'list',        // 'welcome' | 'list' | 'sheet' | 'books' | 'reader' | 'split'
   tab: 'identidade',   // aba atual da ficha
   currentBookId: null, // id do PDF aberto
+
   settings: {
     template: 'single',   // 'single' | 'split'
     splitRatio: 0.5,      // 0.2–0.8
     theme: 'alpha',       // 'alpha' (único por enquanto)
-    showWelcome: true     // exibir tela de boas-vindas ao abrir
+    showWelcome: true     // exibir welcome ao abrir
   },
-  showSettings: false, // modal de config aberto
-  showDice: false,     // modal de dados aberto
-  diceSides: 6,        // tipo do dado selecionado
-  diceHistory: []      // últimas 20 rolagens
+
+  user: { pfp: '', username: '' },  // perfil do usuário (app-level, NÃO vai no export de ficha)
+
+  showSettings: false,
+  showDice: false,
+  showPrintPreview: false,
+  diceSides: 6,
+  diceHistory: [],              // últimas 20 rolagens
+  customSpells: [],             // biblioteca "Minhas Magias"
+  spellPresets: [],             // carregadas de spells.csv
+  spellPresetsLoading: false,
+  showAddSpellModal: false,
+  addSpellPersonaIdx: null,
+  addSpellTab: 'presets',       // 'presets' | 'custom'
+  addSpellDraft: null           // rascunho de nova magia
 }
 ```
 
@@ -91,11 +112,11 @@ Runtime do leitor de PDF (fora de `state`, module-scoped):
 
 ```js
 {
-  id, creationMode: bool,           // true = em criação (limites ativos)
+  id, creationMode: bool,
   name, class, level, arcana, player,
-  attributes: { FOR, MAG, TEC, AGI, VIT, SOR },  // min 1 em criação
-  pv: { current, max, maxBonus },   // max = 25 + ((5+VIT)×Nível) + maxBonus
-  energia: { current, max, maxBonus }, // max = VIT + ⌊Nível/2⌋ + maxBonus
+  attributes: { FOR, MAG, TEC, AGI, VIT, SOR },
+  pv: { current, max, maxBonus },        // max = 25 + ((5+VIT)×Nível) + maxBonus
+  energia: { current, max, maxBonus },   // max = VIT + ⌊Nível/2⌋ + maxBonus
   iniciativaBonus, rd, ptsAspec,
   conviction, aspects: [4 strings],
   social: { Conhecimento, Disciplina, Empatia, Charme, Expressão, Coragem },
@@ -104,7 +125,7 @@ Runtime do leitor de PDF (fora de `state`, module-scoped):
   equipment: { weapon, secondaryAttack, armor, accessory, mixedEquip, items: [{name, qty}], feats },
   confidants: [{ arcana, name, rank }],
   extra: { pronouns, age, ... ~50 campos },
-  portraitImage,  // data URL (base64 JPEG), redimensionado para max 400x400, vazio = sem imagem
+  portraitImage,  // data URL JPEG (crop 400×400). Vazio = sem imagem.
   createdAt, updatedAt
 }
 ```
@@ -112,12 +133,12 @@ Runtime do leitor de PDF (fora de `state`, module-scoped):
 ### Persona
 ```js
 { id, name, level, pm, pmBonus, conviction, naturalAbility,
-  // pm = 5 + level + pmBonus (recalculado em recalc()); pmBonus começa em 0
-  types: [],               // até 3 (Emergente: ilimitado)
-  resistances: [],         // array; 1 em criação, ilimitado depois
-  weaknesses: [],          // idem
-  spells: [até 8] }
+  types: [],          // até 3 (Emergente: ilimitado)
+  resistances: [],    // array; 1 em criação, ilimitado depois
+  weaknesses: [],     // idem
+  spells: [] }        // até 8
 ```
+`pm = 5 + level + pmBonus` (recalculado em `recalc()`).
 
 ### Spell
 ```js
@@ -125,8 +146,8 @@ Runtime do leitor de PDF (fora de `state`, module-scoped):
 ```
 
 ### Modo de criação (`creationMode`)
-- **Só** restringe durante `true`: 18 pts de atributos, 7 pts sociais, 1 resistência + 1 fraqueza por persona, PV/Energia ≤ máx.
-- **Depois** (`false`): tudo editável sem limite (exceto: atributos min 1, sociais min −2 e max 25 = Tier 5).
+- **Só** restringe durante `true`: 18 pts de atributos (mín. 1, máx. 5), 7 pts sociais, 1 resistência + 1 fraqueza por persona, PV/Energia ≤ máx.
+- **Depois** (`false`): tudo editável sem limite (exceto: atributos min 1, sociais min −2 e max 25).
 - Botão verde "Concluir Criação" no cabeçalho e nas Configurações. Reabrir via ⚙ → Personagem atual → "Reabrir Criação".
 - Personagens importados sem o campo → `creationMode = false` (migração em `normalizeCharacter`).
 
@@ -134,92 +155,133 @@ Runtime do leitor de PDF (fora de `state`, module-scoped):
 
 ## Navegação (views)
 
-`state.view` controla o que `render()` monta em `#app`:
-
 | View | Renderiza |
 |---|---|
-| `list` | `renderList` — lista de fichas + botões (novo, importar, livros, config) |
+| `welcome` | `renderWelcome` — tela de boas-vindas (só quando `settings.showWelcome`) |
+| `list` | `renderList` — lista de fichas + botões + chip do usuário |
 | `sheet` | `renderSheet` — ficha em coluna única |
 | `books` | `renderBooks` — biblioteca de PDFs |
 | `reader` | `renderReader` — PDF fullscreen |
 | `split` | `renderSplit` — ficha (esq) + PDF (dir) com divisória arrastável |
 
-**Só existe split se `window.innerWidth >= 700`** (`canUseSplit()`). Abaixo disso, cai pra `sheet` automaticamente.
+`canUseSplit()` exige `window.innerWidth >= 700`. Abaixo disso, `split` cai pra `sheet` automaticamente.
 
-`state.tab` (só em `sheet`/`split`): `identidade`, `atributos`, `aspectos`, `sociais`, `personas`, `equipamento`, `confidentes`, `extras`.
+`state.tab`: `identidade`, `atributos`, `aspectos`, `sociais`, `personas`, `equipamento`, `confidentes`, `extras`.
 
 ---
 
 ## Feature checklist
 
 - [x] Fichas ilimitadas, salvas localmente
-- [x] Exportar/importar JSON (individual ou lote `{characters:[...]}`)
+- [x] Exportar/importar JSON (individual e lote `{characters:[...]}`)
 - [x] Cálculo automático de PV, Energia, Iniciativa
 - [x] Múltiplas personas por personagem
 - [x] Magias com Tier consumindo PM
-- [x] Presets de magia carregados de CSV externo (spells.csv ou spells/index.json) + biblioteca "Minhas Magias" (custom, global, em localStorage)
-- [x] PM de persona calculado automaticamente (5 + nível + bônus)
+- [x] Presets de magia via CSV externo (`spells.csv` ou `spells/index.json`)
+- [x] Biblioteca "Minhas Magias" (global, em localStorage)
+- [x] PM de persona calculado (5 + nível + bônus)
 - [x] Habilidades sociais com Tier automático (5 pts = 1 Tier)
 - [x] Modo de criação com limites + reabertura
 - [x] Leitor de PDF (IndexedDB + PDF.js)
-- [x] Modo dividido (ficha + PDF) com divisor arrastável
-- [x] Rolagem de dados (d4–d100, quantidade, modificador)
-- [x] Configurações (template, tema)
-- [x] Retrato do personagem com crop quadrado 1:1 (drag + slider)
-- [x] Exportação em PDF via preview modal + `window.print()` (todas as abas numa folha A4)
-- [x] Tela de boas-vindas (aparece 1× por padrão; reativável nas Configurações)
+- [x] Modo dividido com divisor arrastável
+- [x] Rolagem de dados (d4–d100, quantidade, modificador, histórico)
+- [x] Configurações (template, tema, welcome, perfil)
+- [x] Retrato do personagem com crop quadrado 1:1
+- [x] Perfil do usuário (pfp + username, app-level)
+- [x] Exportação em PDF via preview + `window.print()` (A4)
+- [x] Tela de boas-vindas (1× por padrão; reativável nas Configurações)
 - [x] PWA (offline após primeiro carregamento)
+- [ ] Tema visual próprio (próximo passo)
+- [ ] Multi-sistema (planejado, não iniciado)
 - [ ] Banco de habilidades pré-carregadas
 - [ ] Swipe horizontal no leitor PDF
-- [ ] Mais temas (visual — refazer do zero, tema Alpha é provisório)
 
 ---
 
 ## Padrões de código
 
-- **`render()` re-renderiza tudo**. Não há reconciliação. Qualquer mudança de estado → chamar `render()`.
-- **Event delegation em `document.body`**: `click`, `input`, `change` → handlers `handleClick`, `handleInput`, `handleChange`. Botões têm `data-action="..."`; campos têm `data-bind="path.to.field"`.
+- **`render()` re-renderiza tudo**. Não há reconciliação. Qualquer mudança de estado → `render()`.
+- **Event delegation em `document.body`**: `click`, `input`, `change` → `handleClick`, `handleInput`, `handleChange`. Botões têm `data-action="..."`; campos têm `data-bind="path.to.field"`.
+- **`handleInput` tem 3 prefixos**:
+  1. `addSpellDraft.*` → `state.addSpellDraft` (não salva, não recalcula).
+  2. `user.*` → `state.user` + `saveUser()` (não salva ficha, não recalcula).
+  3. Padrão → `getCurrent()` + `setPath(c, ...)` + `recalc(c)` + `updateDerivedDisplays()` + `save()`.
 - **`setPath(obj, 'a.b.c', value)`** navega e seta em objetos aninhados.
-- **Helpers de UI**: `fieldText(label, bind, value, placeholder)`, `fieldNumber(...)`, `fieldSelect(...)` retornam strings HTML.
-- **`esc(s)`** escapa HTML — **sempre** usar ao interpolar dados do usuário em templates.
-- **`uid()`** gera IDs únicos.
-- **`getCurrent()`** retorna a ficha aberta.
-- **`save()`** persiste após qualquer mutação.
-- **`recalc(c)`** recalcula PV/Energia/Iniciativa — chamar após qualquer input numérico relevante.
-- **`updateDerivedDisplays()`** atualiza labels/aviso sem re-renderizar (chamado após `handleInput`).
+- **Helpers**: `fieldText`, `fieldNumber`, `fieldSelect` retornam strings HTML.
+- **`esc(s)`** escapa HTML — **sempre** usar ao interpolar dados do usuário.
+- **`uid()`, `getCurrent()`, `save()`, `saveUser()`, `saveCustomSpells()`, `saveSettings()`** — chamar após mutação.
+- **`recalc(c)`** recalcula PV/Energia/Iniciativa **e PM de todas as personas**.
+- **`updateDerivedDisplays()`** atualiza labels sem re-render (chamado após `handleInput`).
 
 ---
 
 ## Armadilhas e decisões já tomadas
 
-- **SVG inline, não emoji**. Reforçando: qualquer UI nova, zero emoji.
-- **`textContent` vs `innerHTML`**: se o conteúdo tem SVG/markup, usar `innerHTML`. Ex.: o aviso `#attr-warn` usa `innerHTML` porque inclui SVG de aviso.
-- **`handleInput` clampa com `min`/`max` do input**. Mas `max` em PV/Energia só existe em modo criação — fora de criação o usuário pode digitar acima do máximo.
-- **Resistências/Fraquezas são arrays** (`resistances`, `weaknesses`), não strings. Import antigo com `resistance: 'Fogo'` migra pra `['Fogo']`.
-- **PM de persona = `5 + nível + pmBonus`**. Antes era fixo em 6. `pmBonus` substitui o campo editável antigo; o total é recalculado em `recalc()` (que percorre `c.personas`) e atualizado no DOM via `updateDerivedDisplays` (id `pm-total-${idx}`). Migração em `normalizeCharacter` infere `pmBonus = max(0, pmAntigo − 5 − nível)` para preservar overrides existentes.
-- **Presets de magia são carregados de CSV externo** (não há mais `SPELL_PRESETS` hardcoded). Ordem: (a) `spells.csv` na raiz, (b) se existir `spells/index.json` (`["a.csv","b.csv"]`), cada CSV em `spells/` é carregado e concatenado. Nenhum dos dois → aba "Magias" mostra aviso e fica vazia. Carregamento é assíncrono em `init()` (`loadSpellPresets()` não é awaited); se o modal abrir antes de terminar, mostra "Carregando...". SW faz **network-first para `.csv`** — atualizações do arquivo aparecem sem bump de cache.
-- **Schema CSV** (header lowercase, trimado; aceita PT e EN): `nome|name`, `tipo|type`, `categoria|category`, `tier`, `alcance|range`, `alvo|target`, `usos|uses`, `reprimir|repress`, `efeito|effect`. Colunas ausentes = vazio; extras = ignoradas; linhas começando com `#` = comentário. BOM UTF-8 é removido. `spells.csv.example` é o template (renomear para `spells.csv` para ativar).
-- **"Minhas Magias"** é uma biblioteca **global** (compartilhada entre personagens), persistida em `localStorage` sob `grimorio_custom_spells_v1`. Adicionar preset/custom a uma persona faz uma **cópia** (`copySpell`) — editar a cópia na persona não altera a biblioteca.
-- **Adicionar magia agora abre um modal** (não cria um card em branco direto). Fluxo: botão + → modal → tab "Magias" (presets) ou "Minhas Magias" (custom com criar/excluir). Nova magia criada no modal é salva na biblioteca **e** na persona. Fecha sozinho quando a persona chega em 8 magias.
-- **Formulário de nova magia usa `data-bind="addSpellDraft.*"`** — `handleInput` detecta esse prefixo e atualiza `state.addSpellDraft` (não o personagem).
-- **Sociais**: `min="-2"` sempre. `max="25"` só fora de criação. Tier exibido é `max(0, floor(pontos/5))` — negativos viram 0.
-- **`openBook` chamado do `renderBooks`** vai para `reader` fullscreen. **`openBook` chamado do split** → `renderReader(app, rc, true)` (embedded, sem botões de split).
-- **`leaveReader()`** destrói PDF em memória. Chamar ao sair do leitor para liberar RAM.
-- **Token pattern**: `pdfRenderToken` e `openBookToken` previnem race conditions em operações assíncronas (PDF.js carrega devagar).
-- **`window.addEventListener('resize')`** tem dois listeners: um redefine split→sheet se < 700px, outro refaz fit do PDF.
-- **Crop do retrato**: implementação própria (sem lib externa). Modal aberto via `openCropModal(file)` → `showCropModal(img)` (DOM criado direto no `document.body`, fora do `render()`, para não ser limpo por re-render). Seleção quadrada 1:1 arrastável com `pointer events` + slider de tamanho; overlay escuro via `box-shadow: 0 0 0 9999px rgba(0,0,0,0.55)` no `.crop-selection`. Resultado: canvas 400×400 → data URL JPEG (0.85) salvo em `portraitImage`. `resizeImageFile` foi removido junto.
-- **Retrato fica em `.sheet-body`** (flex: retrato à esquerda, `.panel` à direita com `flex:1; min-width:0`). Não está mais no cabeçalho — o cabeçalho voltou a ser só `.row-between` com h1 + botões.
-- **Export PDF usa `window.print()`** — sem libs. O preview é um modal que monta `buildPrintSheetHTML(c)` (todas as abas numa folha A4 com cores do tema). `@media print` esconde `body > *:not(.print-preview-overlay)` e mantém só o `#print-sheet`. `-webkit-print-color-adjust: exact` preserva os fundos coloridos. **Não adicionamos** html2pdf/jsPDF: sairia imagem (sem `Ctrl+F`, 5–10× maior). Se algum dia o usuário pedir download direto sem o diálogo do sistema, aí sim adicionar html2pdf.js.
-- **`buildPrintSheetHTML`** monta seções que pulam conteúdo vazio (Aspectos/Equipamento/Confidentes/Extras só aparecem se preenchidos). Cada `.print-section` tem `page-break-inside: avoid` para não quebrar no meio. Cada persona-card também.
-- **Tela de boas-vindas (`view === 'welcome'`)** é controlada por `settings.showWelcome` (default `true`). Aparece na primeira abertura. Checkbox "Não mostrar novamente" tem comportamento híbrido: **primeira visita = marcado por padrão** (flag `grimorium_welcome_seen_v1` no `localStorage`); **visitas seguintes = `!showWelcome`**. Ao entrar: `showWelcome = !checkbox.checked` + flag é gravada. Configurações → Boas-vindas: toggle direto + botão "Ver boas-vindas agora" (só navega, não altera). FAB de dados é omitido em `welcome`. CSS `.welcome-screen/.welcome-card/.welcome-title/...` no final do `<style>`.
+- **SVG inline, não emoji**.
+- **`textContent` vs `innerHTML`**: se o conteúdo tem SVG/markup, usar `innerHTML` (ex.: `#attr-warn`).
+- **`handleInput` clampa com `min`/`max` do input**. Mas `max` em PV/Energia só existe em `creationMode`.
+- **Resistências/Fraquezas são arrays**, não strings.
+- **Sociais**: `min="-2"` sempre; `max="25"` só fora de criação. Tier exibido = `max(0, floor(pontos/5))`.
+- **`openBook` chamado do `renderBooks`** vai fullscreen. **Do split** → `renderReader(app, rc, true)`.
+- **`leaveReader()`** destrói PDF em memória. Chamar ao sair.
+- **Token pattern**: `pdfRenderToken` / `openBookToken` previnem race conditions em PDF.js.
+- **Crop**: `openCropModal(file, onConfirm)` → `showCropModal(img, onConfirm)`. **Sem `onConfirm`** → grava em `c.portraitImage`. **Com `onConfirm`** → chama callback (usado para `state.user.pfp`). Sem lib externa. Overlay escuro via `box-shadow`.
+- **Retrato fica em `.sheet-body`** (flex: retrato à esquerda, `.panel` à direita).
+- **Export PDF usa `window.print()`** — sem libs. `@media print` esconde `body > *:not(.print-preview-overlay)`. `-webkit-print-color-adjust: exact` preserva cores.
+- **`buildPrintSheetHTML`** pula seções vazias. Cada `.print-section` tem `page-break-inside: avoid`.
+- **Welcome**: `settings.showWelcome` (default `true`). Checkbox "Não mostrar novamente" = **primeira visita marcado** (flag `grimoire_welcome_seen_v1`); **visitas seguintes = `!showWelcome`**. Configs → Boas-vindas: toggle + "Ver boas-vindas agora".
+- **Presets de magia via CSV externo**. Ordem: `spells.csv` (raiz) e/ou `spells/index.json` (lista de arquivos em `spells/`). SW faz **network-first para `.csv`**. Carregamento assíncrono em `init()`.
+- **Schema CSV**: `nome|name`, `tipo|type`, `categoria|category`, `tier`, `alcance|range`, `alvo|target`, `usos|uses`, `reprimir|repress`, `efeito|effect`. Colunas ausentes = vazio; extras = ignoradas; linhas `#` = comentário. BOM removido.
+- **"Minhas Magias"**: biblioteca global, `localStorage`. Adicionar a persona faz **cópia** (`copySpell`) — editar cópia não afeta biblioteca.
+- **Adicionar magia** abre modal (tabs "Magias" / "Minhas Magias"). Nova magia criada no modal é salva na biblioteca **e** na persona.
+- **Formulário de nova magia** usa `data-bind="addSpellDraft.*"`.
+- **Perfil do usuário** (`state.user`) é **app-level**: persistido em `grimoire_user_v1`, **não** vai no export JSON de personagem. Não confundir com `character.player`.
+- **Chip do usuário** no topo da lista (`.user-chip`, clique → Configurações).
+- **Atenção ao refatorar assinatura de função**: conferir **cabeçalho E corpo**. (Bug do pfp foi causado por replace parcial.)
+
+---
+
+## Changelog
+
+> Versões anteriores a `v0.4.0` são reconstruídas do estado documentado (sem tags formais no Git).
+
+### v0.4.0-alpha (atual)
+- Rename oficial: **Yuki** (nome do app). Sistema permanece **Grimório do Coração**.
+- **Bug fix**: `showCropModal(img)` → `showCropModal(img, onConfirm)`. Sem isso, pfp do usuário não era salvo (caía no `else`, gravava em `c.portraitImage`).
+- Perfil do usuário (pfp + username, app-level, visível no topo da lista, editável nas Configurações)
+- Tela de boas-vindas (1× por padrão, reativável, checkbox híbrido)
+- Presets de magia via CSV externo
+- Biblioteca "Minhas Magias" (custom spells, global)
+- PM de persona calculado (5 + nível + bônus)
+- Exportação em PDF via preview + `window.print()`
+- Retrato do personagem com crop quadrado 1:1
+
+### v0.3.0
+- Leitor de PDF (IndexedDB + PDF.js)
+- Modo dividido (ficha + PDF)
+- Rolagem de dados
+- Modal de configurações (template + tema)
+- Lista de personagens
+
+### v0.2.0
+- Export/import JSON
+- Múltiplas personas
+- Magias com Tier consumindo PM
+- Modo de criação com limites + reabertura
+
+### v0.1.0
+- Criação de fichas (localStorage)
+- Atributos (FOR/MAG/TEC/AGI/VIT/SOR), sociais, aspectos
+- Cálculos: PV, Energia, Iniciativa
 
 ---
 
 ## Próximos passos / ideias futuras
 
-- **Design/visual completo**: refazer tema Alpha ou criar Beta/Gamma. CSS já tem `[data-theme]` no body preparado.
-- **Banco de habilidades pré-carregadas**: JSON embutido + botão "importar habilidade" na ficha.
-- **Swipe horizontal** no leitor PDF para virar página.
+- **Tema visual próprio** (principal). CSS já tem `[data-theme]` no body preparado.
+- **Multi-sistema**: app vai suportar vários sistemas depois. Planejar estrutura de dados para isso antes de codar.
+- **Banco de habilidades pré-carregadas** (além de magias).
+- **Swipe horizontal** no leitor PDF.
 - **Índice/sumário** no leitor PDF.
 - **Busca de texto** no PDF (precisa de text layer).
 - **Exportação em lote** de todas as fichas.
@@ -231,5 +293,5 @@ Runtime do leitor de PDF (fora de `state`, module-scoped):
 1. **Ler este CONTEXT.md** antes de mexer.
 2. **Pedir o estado atual** de `index.html` se não estiver visível.
 3. **Fornecer find & replace** (blocos `**Find:**` / `**Replace:**`) — nunca o arquivo completo sem pedido explícito.
-4. **Testar mentalmente**: (a) o replace não vai colidir com outros pontos do arquivo? (b) o código de `handleClick`/`handleChange` está no lugar certo? (c) precisa de CSS novo?
-5. **Atualizar CONTEXT.md** ao final se a mudança for estrutural (novo campo de estado, nova feature, nova convenção).
+4. **Testar mentalmente**: (a) o replace não colide com outros pontos? (b) o código de `handleClick`/`handleChange` está no lugar certo? (c) precisa de CSS novo? (d) **se for refatorar assinatura de função, o find do cabeçalho também está incluído?**
+5. **Atualizar CONTEXT.md** ao final se a mudança for estrutural.

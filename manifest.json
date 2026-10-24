@@ -1,6 +1,6 @@
 {
-  "name": "Grimoire",
-  "short_name": "Grimoire",
+  "name": "Yuki",
+  "short_name": "Yuki",
   "description": "App de ficha de personagem para o sistema de RPG Grimório do Coração.",
   "start_url": "./index.html",
   "scope": "./",

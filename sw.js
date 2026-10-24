@@ -1,5 +1,5 @@
 /* Service Worker simples — cache offline */
-const CACHE = 'grimoire-v5';
+const CACHE = 'yuki-v1';
 const ASSETS = ['./', './index.html', './manifest.json', './icon.svg'];
 
 self.addEventListener('install', (e) => {

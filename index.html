@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#000080">
-<title>Grimoire</title>
+<title>Yuki</title>
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="favicon/favicon.ico" type="image/x-icon">
 <style>
@@ -458,6 +458,70 @@
     cursor: pointer;
   }
   .welcome-enter:hover { background: #0000b0; }
+
+  /* Chip do perfil do usuário */
+  .user-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 10px 4px 4px;
+    background: #d4d0c8;
+    border: 2px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    cursor: pointer;
+    user-select: none;
+    max-width: 220px;
+  }
+  .user-chip:hover { background: #e0e0e0; }
+  .user-chip-pfp {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    background: #fff;
+    border: 2px solid;
+    border-color: #808080 #ffffff #ffffff #808080;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .user-chip-pfp img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .user-chip-pfp svg { color: #888; }
+  .user-chip-name {
+    font-family: Verdana, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .user-chip-empty .user-chip-name { font-weight: normal; color: #666; }
+
+  /* Seção de perfil nas Configurações */
+  .user-edit-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+    background: #e8e8e8;
+    border: 1px solid #808080;
+    margin: 8px 0;
+  }
+  .user-edit-pfp {
+    width: 64px;
+    height: 64px;
+    flex-shrink: 0;
+    background: #fff;
+    border: 2px solid;
+    border-color: #808080 #ffffff #ffffff #808080;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .user-edit-pfp img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .user-edit-pfp svg { color: #888; }
+  .user-edit-buttons { display: flex; flex-direction: column; gap: 4px; }
   @media (max-width: 600px) {
     .welcome-card { padding: 24px 20px; }
     .welcome-title { font-size: 32px; }
@@ -476,7 +540,7 @@
 
 /* ---------- Constantes ---------- */
 const APP_VERSION = '0.4.0-alpha';
-const STORAGE_KEY = 'grimoire_v1';
+const STORAGE_KEY = 'yuki_v1';
 const CLASSES = ['Emergentes', 'Cartas-Coringa', 'Sombras', 'Supressores', 'Tochas'];
 const ARCANA_OPTIONS = ['', 'O Tolo', 'O Mago', 'A Sacerdotisa', 'A Imperatriz', 'O Imperador',
   'O Hierofante', 'Os Amantes', 'A Carruagem', 'A Justiça', 'O Eremita', 'A Fortuna',
@@ -624,6 +688,7 @@ let state = {
   tab: 'identidade',
   currentBookId: null,
   settings: { template: 'single', splitRatio: 0.5, theme: 'alpha', showWelcome: true },
+  user: { pfp: '', username: '' },
   showSettings: false,
   showDice: false,
   showPrintPreview: false,
@@ -704,6 +769,26 @@ function load() {
     }
   } catch (e) {
     console.error('Erro ao carregar:', e);
+  }
+}
+
+/* ---------- Persistência: Perfil do usuário ---------- */
+const USER_STORAGE_KEY = 'yuki_user_v1';
+function loadUser() {
+  try {
+    const raw = localStorage.getItem(USER_STORAGE_KEY);
+    if (raw) state.user = Object.assign({ pfp: '', username: '' }, JSON.parse(raw));
+  } catch (e) {
+    console.error('Erro ao carregar perfil do usuário:', e);
+    state.user = { pfp: '', username: '' };
+  }
+}
+function saveUser() {
+  try {
+    localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(state.user));
+  } catch (e) {
+    console.error('Erro ao salvar perfil do usuário:', e);
+    alert('Não foi possível salvar o perfil. O armazenamento local pode estar cheio.');
   }
 }
 
@@ -1102,11 +1187,11 @@ function fieldSelect(label, bind, value, options) {
 
    /* ---------- Tela de boas-vindas ---------- */
    function renderWelcome(app) {
-     const firstVisit = !localStorage.getItem('grimoire_welcome_seen_v1');
+     const firstVisit = !localStorage.getItem('yuki_welcome_seen_v1');
      const checkboxChecked = firstVisit ? true : !state.settings.showWelcome;
      let html = `<div class="welcome-screen">`;
      html += `<div class="welcome-card">`;
-     html += `<h1 class="welcome-title">Grimoire</h1>`;
+     html += `<h1 class="welcome-title">Yuki</h1>`;
      html += `<p class="welcome-version">v${APP_VERSION}</p>`;
      html += `<p class="welcome-greeting">Bem vindo(a)! (≧▽≦)</p>`;
      html += `<p class="welcome-desc">Seu grimório digital de fichas de RPG.<br>Crie personagens, gerencie personas, consulte livros de referência e role dados.</p>`;
@@ -1121,9 +1206,23 @@ function fieldSelect(label, bind, value, options) {
    
    /* ---------- Lista de personagens ---------- */
    function renderList(app) {
-  let html = `<h1>Grimoire</h1>`;
-  html += `<div class="muted">Ficha de personagem — dados salvos localmente no seu navegador.</div>`;
-  html += `<hr>`;
+     const hasPfp = !!state.user.pfp;
+     const uname = state.user.username ? esc(state.user.username) : 'Sem nome';
+     let html = `<div class="row-between" style="align-items:flex-start;">`;
+     html += `<div>`;
+     html += `<h1 style="margin-top:0;">Yuki</h1>`;
+     html += `<div class="muted">Ficha de personagem — dados salvos localmente no seu navegador.</div>`;
+     html += `</div>`;
+     html += `<div class="user-chip ${hasPfp || state.user.username ? '' : 'user-chip-empty'}" data-action="edit-user" title="Editar perfil">`;
+     if (hasPfp) {
+       html += `<div class="user-chip-pfp"><img src="${state.user.pfp}" alt="Perfil"></div>`;
+     } else {
+       html += `<div class="user-chip-pfp"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>`;
+     }
+     html += `<div class="user-chip-name">${uname}</div>`;
+     html += `</div>`;
+     html += `</div>`;
+     html += `<hr>`;
   html += `<div class="panel row-between">`;
   html += `<div>`;
   html += `<button data-action="new-char">+ Novo Personagem</button> `;
@@ -1157,7 +1256,7 @@ function fieldSelect(label, bind, value, options) {
     html += `</tbody></table></div>`;
   }
 
-  html += `<div class="footer">© ${new Date().getFullYear()} Grimoire</div>`;
+  html += `<div class="footer">© ${new Date().getFullYear()} Yuki</div>`;
   app.innerHTML = html;
 }
 
@@ -1207,7 +1306,7 @@ async function renderBooks(app) {
     html += `</tbody></table></div>`;
   }
 
-  html += `<div class="footer">© ${new Date().getFullYear()} Grimoire</div>`;
+  html += `<div class="footer">© ${new Date().getFullYear()} Yuki</div>`;
   app.innerHTML = html;
 }
 
@@ -1566,6 +1665,24 @@ function settingsModalHTML() {
   return `
     <div class="modal">
       <h2><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-4px;"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96a7.03 7.03 0 00-1.62-.94l-.36-2.54a.484.484 0 00-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg> Configurações</h2>
+      <h3>Perfil do usuário</h3>
+      <p class="muted">Identidade de quem usa o app neste dispositivo (não vai no export das fichas).</p>
+      <div class="user-edit-row">
+        <div class="user-edit-pfp">
+          ${state.user.pfp
+            ? `<img src="${state.user.pfp}" alt="Perfil">`
+            : `<svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>`}
+        </div>
+        <div class="user-edit-buttons">
+          <button data-action="edit-user-pfp">${state.user.pfp ? 'Trocar foto' : 'Adicionar foto'}</button>
+          ${state.user.pfp ? `<button class="danger" data-action="remove-user-pfp">Remover foto</button>` : ''}
+        </div>
+      </div>
+      <input type="file" id="user-pfp-file" accept="image/*" style="display:none" onchange="uploadUserPfp(event)">
+      <div class="field">
+        <label>Nome de usuário</label>
+        <input type="text" data-bind="user.username" value="${esc(state.user.username)}" placeholder="Como quer ser chamado?" maxlength="40">
+      </div>
       <h3>Template</h3>
       <p class="muted">Escolha o layout da ficha.</p>
       <div class="modal-radio ${state.settings.template === 'single' ? 'selected' : ''}" data-action="set-template" data-template="single">
@@ -1828,7 +1945,7 @@ function buildPrintSheetHTML(c) {
   }
 
   // Rodapé
-  h += `<div style="margin-top:16px;padding-top:6px;border-top:1px solid #999;font-size:9px;color:#666;text-align:center;">© ${year} Grimoire — ${esc(c.name) || 'Sem nome'}</div>`;
+  h += `<div style="margin-top:16px;padding-top:6px;border-top:1px solid #999;font-size:9px;color:#666;text-align:center;">© ${year} Yuki — ${esc(c.name) || 'Sem nome'}</div>`;
 
   return h;
 }
@@ -1900,7 +2017,7 @@ function renderSheet(app, target) {
   }
   html += `</div>`;
   html += `</div>`;
-  html += `<div class="footer">© ${new Date().getFullYear()} Grimoire</div>`;
+  html += `<div class="footer">© ${new Date().getFullYear()} Yuki</div>`;
 
   targetEl.innerHTML = html;
   updateDerivedDisplays();
@@ -2386,11 +2503,11 @@ function exportChar(id) {
   URL.revokeObjectURL(url);
 }
 
-function openCropModal(file) {
+function openCropModal(file, onConfirm) {
   const reader = new FileReader();
   reader.onload = () => {
     const img = new Image();
-    img.onload = () => showCropModal(img);
+    img.onload = () => showCropModal(img, onConfirm);
     img.onerror = () => alert('Arquivo de imagem inválido.');
     img.src = reader.result;
   };
@@ -2398,7 +2515,7 @@ function openCropModal(file) {
   reader.readAsDataURL(file);
 }
 
-function showCropModal(img) {
+function showCropModal(img, onConfirm) {
   const old = document.getElementById('crop-modal');
   if (old) old.remove();
 
@@ -2506,14 +2623,22 @@ function showCropModal(img) {
     out.width = outSize;
     out.height = outSize;
     out.getContext('2d').drawImage(img, sx, sy, sSize, sSize, 0, 0, outSize, outSize);
-    const c = getCurrent();
-    if (c) {
-      try {
-        c.portraitImage = out.toDataURL('image/jpeg', 0.85);
+    let dataUrl;
+    try {
+      dataUrl = out.toDataURL('image/jpeg', 0.85);
+    } catch (err) {
+      alert('Erro ao gerar a imagem.');
+      modal.remove();
+      return;
+    }
+    if (typeof onConfirm === 'function') {
+      onConfirm(dataUrl);
+    } else {
+      const c = getCurrent();
+      if (c) {
+        c.portraitImage = dataUrl;
         save();
         render();
-      } catch (err) {
-        alert('Erro ao gerar a imagem.');
       }
     }
     modal.remove();
@@ -2533,6 +2658,25 @@ function uploadPortrait(e) {
     return;
   }
   openCropModal(file);
+}
+
+function uploadUserPfp(e) {
+  const file = e.target.files && e.target.files[0];
+  e.target.value = '';
+  if (!file) return;
+  if (!file.type.startsWith('image/')) {
+    alert('Selecione um arquivo de imagem.');
+    return;
+  }
+  if (file.size > 20 * 1024 * 1024) {
+    alert('Imagem muito grande (máx. 20 MB).');
+    return;
+  }
+  openCropModal(file, (dataUrl) => {
+    state.user.pfp = dataUrl;
+    saveUser();
+    render();
+  });
 }
 
 function importChar(e) {
@@ -2584,6 +2728,21 @@ function handleInput(e) {
       }
     }
     setPath(state.addSpellDraft, bind.replace('addSpellDraft.', ''), dval);
+    return;
+  }
+
+  // Perfil do usuário (app-level)
+  if (bind.startsWith('user.')) {
+    let uval = el.value;
+    if (el.type === 'number') {
+      if (el.value === '') uval = 0;
+      else {
+        uval = Number(el.value);
+        if (isNaN(uval)) uval = 0;
+      }
+    }
+    setPath(state.user, bind.replace('user.', ''), uval);
+    saveUser();
     return;
   }
 
@@ -2701,7 +2860,7 @@ function handleClick(e) {
   case 'welcome-enter': {
     const cb = document.getElementById('welcome-dont-show');
     state.settings.showWelcome = cb ? !cb.checked : false;
-    try { localStorage.setItem('grimoire_welcome_seen_v1', '1'); } catch (e) {}
+    try { localStorage.setItem('yuki_welcome_seen_v1', '1'); } catch (e) {}
     saveSettings();
     state.view = 'list';
     render();
@@ -2739,10 +2898,26 @@ function handleClick(e) {
           render();
         }
         break;
-      case 'open-settings':
-        state.showSettings = true;
-        render();
-        break;
+        case 'open-settings':
+          state.showSettings = true;
+          render();
+          break;
+        case 'edit-user':
+          state.showSettings = true;
+          render();
+          break;
+        case 'edit-user-pfp': {
+          const uf = document.getElementById('user-pfp-file');
+          if (uf) uf.click();
+          break;
+        }
+        case 'remove-user-pfp':
+          if (confirm('Remover a foto de perfil?')) {
+            state.user.pfp = '';
+            saveUser();
+            render();
+          }
+          break;
       case 'close-settings':
         state.showSettings = false;
         render();
@@ -3042,6 +3217,7 @@ function handleClick(e) {
 function init() {
   load();
   loadSettings();
+  loadUser();
   loadCustomSpells();
   loadSpellPresets();
   applyTheme();
