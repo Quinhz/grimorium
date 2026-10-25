@@ -4,7 +4,58 @@
    ============================================================ */
 
 /* ---------- Constantes ---------- */
-const APP_VERSION = '0.6.0-alpha';
+const APP_VERSION = '0.7.0-alpha';
+
+const CHANGELOG = [
+  { 
+    version: 'v0.7.0-alpha', 
+    date: 'Atual', 
+    changes: [
+      'Adicionado: Tela "Sobre" com Changelog integrado.',
+      'Adicionado: Histórico completo de versões no Changelog.',
+      'Fix: O scroll do Changelog não vaza mais para o fundo da tela.',
+      'Fix: Botão "Concluir Criação" e ícones ajustados nos temas.',
+      'Fix: Botão "Sobre" centralizado apenas nas Configurações.'
+    ]
+  },
+  { 
+    version: 'v0.6.0-alpha', 
+    date: '20/10', 
+    changes: [
+      'Adicionado: Tema Yuki (Dark Brutalist) com Sidebar e Grid.',
+      'Adicionado: Perfil do usuário (foto + nome) no topo da tela.',
+      'Adicionado: Tela de boas-vindas com opção de ocultar.'
+    ]
+  },
+  { 
+    version: 'v0.5.0-alpha', 
+    date: '15/10', 
+    changes: [
+      'Adicionado: Exportação em PDF com prévia.',
+      'Adicionado: Retrato do personagem com ferramenta de recorte (crop).',
+      'Adicionado: Presets de magia via arquivo CSV.'
+    ]
+  },
+  { 
+    version: 'v0.4.0-alpha', 
+    date: '10/10', 
+    changes: [
+      'Adicionado: Nome provisório "Yuki" e refatoração (HTML/CSS/JS separados).',
+      'Adicionado: Biblioteca "Minhas Magias".',
+      'Fix: Cálculo de PM das Personas (5 + nível + bônus).'
+    ]
+  },
+  { 
+    version: 'v0.3.0-alpha', 
+    date: '05/10', 
+    changes: [
+      'Adicionado: Leitor de PDF.',
+      'Adicionado: Modo dividido (Ficha + Leitor).',
+      'Adicionado: Rolagem de dados (d4 a d100).'
+    ]
+  }
+];
+
 const STORAGE_KEY = 'yuki_v1';
 const CLASSES = ['Emergentes', 'Cartas-Coringa', 'Sombras', 'Supressores', 'Tochas'];
 const ARCANA_OPTIONS = ['', 'O Tolo', 'O Mago', 'A Sacerdotisa', 'A Imperatriz', 'O Imperador',
@@ -156,6 +207,7 @@ let state = {
   settings: { template: 'single', splitRatio: 0.5, theme: 'alpha', showWelcome: true },
   user: { pfp: '', username: '' },
   showSettings: false,
+  showAbout: false,
   showDice: false,
   showPrintPreview: false,
   diceSides: 6,
@@ -594,6 +646,22 @@ function fieldSelect(label, bind, value, options) {
        document.body.appendChild(modal);
      }
    
+     const oldAbout = document.getElementById('about-modal');
+     if (oldAbout) oldAbout.remove();
+     if (state.showAbout) {
+       const modal = document.createElement('div');
+       modal.id = 'about-modal';
+       modal.className = 'modal-overlay';
+       modal.innerHTML = aboutModalHTML();
+       modal.addEventListener('click', (e) => {
+         if (e.target === modal) {
+           state.showAbout = false;
+           modal.remove();
+         }
+       });
+       document.body.appendChild(modal);
+     }
+
      if (state.showDice) {
        const modal = document.createElement('div');
        modal.id = 'dice-modal';
@@ -1171,6 +1239,35 @@ function setupSplitDivider() {
   divider.addEventListener('pointercancel', stopDrag);
 }
 
+/* ---------- Sobre (About) ---------- */
+function aboutModalHTML() {
+  const changelogHtml = CHANGELOG.map(log => `
+    <div class="changelog-block">
+      <h4>${log.version} <span class="muted">(${log.date})</span></h4>
+      <ul>
+        ${log.changes.map(c => `<li>${esc(c)}</li>`).join('')}
+      </ul>
+    </div>
+  `).join('');
+
+  return `
+    <div class="modal about-modal">
+      <div class="about-header">
+        <img src="icon.svg" alt="Yuki" class="about-icon">
+        <h2>Yuki</h2>
+        <p class="about-version">Versão ${APP_VERSION}</p>
+      </div>
+      <h3 class="about-changelog-title">Changelog</h3>
+      <div class="about-changelog">
+        ${changelogHtml}
+      </div>
+      <div class="modal-actions">
+        <button data-action="close-about">Fechar</button>
+      </div>
+    </div>
+  `;
+}
+
 /* ---------- Configurações ---------- */
 function settingsModalHTML() {
   const splitDisabled = !canUseSplit();
@@ -1228,8 +1325,9 @@ function settingsModalHTML() {
       </div>
       <div style="margin-top:8px;"><button data-action="preview-welcome">Ver boas-vindas agora</button></div>
       ${charSection}
-      <div class="modal-actions">
-        <button data-action="close-settings">Fechar</button>
+      <div class="modal-actions" style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border, #ccc); padding-top: 16px; margin-top: 20px;">
+        <button data-action="open-about" style="background: transparent; border: 1px solid var(--border, #ccc);">Sobre o App</button>
+        <button data-action="close-settings" class="btn-accent">Fechar</button>
       </div>
     </div>`;
 }
@@ -2426,10 +2524,19 @@ function handleClick(e) {
           state.showSettings = true;
           render();
           break;
-        case 'edit-user':
-          state.showSettings = true;
-          render();
-          break;
+          case 'edit-user':
+            state.showSettings = true;
+            render();
+            break;
+          case 'open-about':
+            state.showSettings = false;
+            state.showAbout = true;
+            render();
+            break;
+          case 'close-about':
+            state.showAbout = false;
+            render();
+            break;
         case 'edit-user-pfp': {
           const uf = document.getElementById('user-pfp-file');
           if (uf) uf.click();
