@@ -1,5 +1,5 @@
 /* Service Worker simples — cache offline */
-const CACHE = 'yuki-v2';
+const CACHE = 'yuki-v4';
 const ASSETS = [
   './',
   './index.html',

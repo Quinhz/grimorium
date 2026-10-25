@@ -4,7 +4,7 @@
    ============================================================ */
 
 /* ---------- Constantes ---------- */
-const APP_VERSION = '0.4.0-alpha';
+const APP_VERSION = '0.6.0-alpha';
 const STORAGE_KEY = 'yuki_v1';
 const CLASSES = ['Emergentes', 'Cartas-Coringa', 'Sombras', 'Supressores', 'Tochas'];
 const ARCANA_OPTIONS = ['', 'O Tolo', 'O Mago', 'A Sacerdotisa', 'A Imperatriz', 'O Imperador',
@@ -26,7 +26,8 @@ const ATTR_INFO = [
 ];
 
 const THEMES = [
-  { id: 'alpha', name: 'Alpha', description: 'Tema clássico — visual de "web antiga", funcional e leve.' }
+  { id: 'alpha', name: 'Alpha', description: 'Tema clássico — visual de "web antiga", funcional e leve.' },
+  { id: 'yuki', name: 'Yuki', description: 'Tema oficial — não é oficial oficial, a IA meteu o loko, mas relaxa, o designer aqui tá cooking.' }
 ];
 
 const CUSTOM_SPELLS_KEY = 'grimorio_custom_spells_v1';
@@ -673,6 +674,64 @@ function fieldSelect(label, bind, value, options) {
    function renderList(app) {
      const hasPfp = !!state.user.pfp;
      const uname = state.user.username ? esc(state.user.username) : 'Sem nome';
+     
+     // LAYOUT EXCLUSIVO DO TEMA YUKI
+     if (state.settings.theme === 'yuki') {
+       let html = `<div class="yuki-layout">`;
+       
+       // Sidebar
+       html += `<aside class="yuki-sidebar">`;
+       html += `<div class="yuki-profile" data-action="edit-user">`;
+       if (hasPfp) {
+         html += `<img src="${state.user.pfp}" class="yuki-avatar" alt="Perfil">`;
+       } else {
+         html += `<div class="yuki-avatar"><svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>`;
+       }
+       html += `<div class="yuki-username">${uname}</div>`;
+       html += `</div>`;
+
+       html += `<nav class="yuki-nav">`;
+       html += `<button data-action="go-books"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V4a2 2 0 00-2-2zm-1 18H7V4h10v16z"/></svg> Livros</button>`;
+       html += `<button onclick="document.getElementById('import-file').click()"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> Importar</button>`;
+       html += `<button data-action="open-settings"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96a7.03 7.03 0 00-1.62-.94l-.36-2.54a.484.484 0 00-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg> Configs.</button>`;
+       html += `</nav></aside>`;
+       html += `<input type="file" id="import-file" accept=".json,application/json" style="display:none" onchange="importChar(event)">`;
+
+       // Main Content
+       html += `<main class="yuki-main">`;
+       html += `<header class="yuki-header">`;
+       html += `<h2 class="yuki-title">Fichas</h2>`;
+       html += `<div class="yuki-header-bar">`;
+       html += `<span>Fichas: ${state.characters.length}</span>`;
+       html += `<button class="btn-accent" data-action="new-char">Novo</button>`;
+       html += `</div></header>`;
+
+       html += `<div class="yuki-grid">`;
+       state.characters.forEach(c => {
+         html += `<div class="yuki-card">`;
+         if (c.portraitImage) {
+           html += `<img src="${c.portraitImage}" class="yuki-card-img" alt="Retrato">`;
+         } else {
+           html += `<div class="yuki-card-img">Sem imagem</div>`;
+         }
+         html += `<div class="yuki-card-title">${esc(c.name) || 'Sem nome'}</div>`;
+         html += `<div class="yuki-card-class">${esc(c.class) || 'Classe'}</div>`;
+         html += `<button class="btn-accent" data-action="open-char" data-id="${c.id}">Abrir</button>`;
+         html += `</div>`;
+       });
+       
+       // Espaços vazios (estética da grid)
+       for (let i = 0; i < 3; i++) {
+         html += `<div class="yuki-card empty"></div>`;
+       }
+       html += `</div>`;
+       html += `<div class="footer">© ${new Date().getFullYear()} Yuki</div>`;
+       html += `</main></div>`;
+       app.innerHTML = html;
+       return; // Encerra a função aqui pro Yuki não renderizar o layout antigo
+     }
+
+     // LAYOUT ANTIGO (TEMA ALPHA)
      let html = `<div class="row-between" style="align-items:flex-start;">`;
      html += `<div>`;
      html += `<h1 style="margin-top:0;">Yuki</h1>`;
@@ -1121,7 +1180,7 @@ function settingsModalHTML() {
     charSection = `<hr><h3>Personagem atual: ${esc(cur.name) || 'sem nome'}</h3>`;
     if (cur.creationMode) {
       charSection += `<p class="muted">Este personagem está em modo de criação.</p>`;
-      charSection += `<button data-action="conclude-creation" style="background:#ccffcc;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;"><polyline points="20 6 9 17 4 12"/></svg> Concluir Criação</button>`;
+      charSection += `<button data-action="conclude-creation" class="btn-accent"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;"><polyline points="20 6 9 17 4 12"/></svg> Concluir Criação</button>`;
     } else {
       charSection += `<p class="muted">Reabrir a criação permite ajustar atributos e habilidades sociais com os limites de criação.</p>`;
       charSection += `<button data-action="reopen-creation">Reabrir Criação</button>`;
@@ -1439,7 +1498,7 @@ function renderSheet(app, target) {
   html += `<div>`;
   html += `<button data-action="go-list">← Lista</button> `;
   if (c.creationMode) {
-    html += `<button data-action="conclude-creation" style="background:#ccffcc;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;"><polyline points="20 6 9 17 4 12"/></svg> Concluir Criação</button> `;
+    html += `<button data-action="conclude-creation" class="btn-accent"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;"><polyline points="20 6 9 17 4 12"/></svg> Concluir Criação</button> `;
   }
   html += `<button data-action="open-dice" class="icon-btn" title="Rolar dados"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M5 3a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2H5zm0 2h14v14H5V5zm3 1.5a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm8 0a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm-4 4a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm-4 4a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm8 0a1.5 1.5 0 100 3 1.5 1.5 0 000-3z"/></svg></button> `;
   html += `<button data-action="export-char" data-id="${c.id}">Exportar JSON</button> `;
