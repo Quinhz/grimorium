@@ -4,9 +4,20 @@
    ============================================================ */
 
 /* ---------- Constantes ---------- */
-const APP_VERSION = '0.11.0-alpha';
+const APP_VERSION = '0.11.1-alpha';
 
 const CHANGELOG = [
+  { 
+    version: 'v0.11.1-alpha', 
+    date: '25/10/2026', 
+    changes: [
+      'Fix: Abrir livro no leitor exigia dois cliques (o primeiro caía de volta pra lista).',
+      'Fix: Estado de carregamento agora aparece enquanto o PDF é lido, em vez de voltar à lista.',
+      'Fix: "Blink" ao navegar entre páginas — render passou a ser double-buffered (offscreen canvas).',
+      'Fix: Resize disparava re-render duplicado no leitor (listeners redundantes unificados).',
+      'Fix: Resize agora tem debounce de 150ms para não re-renderizar enquanto a barra de endereço do mobile anima.'
+    ]
+  },
   { 
     version: 'v0.11.0-alpha', 
     date: '25/10/2026', 
@@ -1097,6 +1108,7 @@ async function openBook(id) {
     if (myToken !== openBookToken) return;
     if (!book) {
       alert('Livro não encontrado.');
+      state.currentBookId = null;
       if (!inSplit) { state.view = 'books'; render(); }
       else { const rc = document.getElementById('split-right-content'); if (rc) renderBookPickerInto(rc); }
       return;
@@ -1128,6 +1140,7 @@ async function openBook(id) {
     if (myToken !== openBookToken) return;
     console.error(e);
     alert('Erro ao abrir PDF: ' + e.message);
+    state.currentBookId = null;
     if (!inSplit) { state.view = 'books'; render(); }
     else { const rc = document.getElementById('split-right-content'); if (rc) renderBookPickerInto(rc); }
   }
@@ -1138,6 +1151,11 @@ function renderReader(app, target, embedded) {
   if (!currentPdf) {
     if (embedded) {
       targetEl.innerHTML = '<div class="split-empty"><p><em>Nenhum livro aberto.</em></p></div>';
+      return;
+    }
+    // Livro em processo de carregamento — mostra loading em vez de voltar pra lista
+    if (state.currentBookId) {
+      targetEl.innerHTML = '<div class="reader-wrap"><div class="reader-loading">Carregando PDF…</div></div>';
       return;
     }
     state.view = 'books';
@@ -1238,21 +1256,30 @@ async function renderCurrentPdfPage() {
 
   const dpr = window.devicePixelRatio || 1;
   const viewport = page.getViewport({ scale });
-  canvas.width = Math.round(viewport.width * dpr);
-  canvas.height = Math.round(viewport.height * dpr);
-  canvas.style.width = viewport.width + 'px';
-  canvas.style.height = viewport.height + 'px';
 
-  const ctx = canvas.getContext('2d');
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  ctx.clearRect(0, 0, viewport.width, viewport.height);
+  // Double-buffering: desenha numa canvas offscreen e só troca no visível quando estiver pronto.
+  // Evita o "blink" em que o canvas é limpo antes da nova página aparecer.
+  const off = document.createElement('canvas');
+  off.width = Math.round(viewport.width * dpr);
+  off.height = Math.round(viewport.height * dpr);
+  const offCtx = off.getContext('2d');
+  offCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
   try {
-    await page.render({ canvasContext: ctx, viewport }).promise;
+    await page.render({ canvasContext: offCtx, viewport }).promise;
   } catch (e) {
     console.error(e);
+    return;
   }
   if (myToken !== pdfRenderToken) return;
+
+  // Troca atômica: redimensiona + copia em um passo só, sem frame em branco
+  canvas.width = off.width;
+  canvas.height = off.height;
+  canvas.style.width = viewport.width + 'px';
+  canvas.style.height = viewport.height + 'px';
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(off, 0, 0);
 
   const info = document.getElementById('reader-page-info');
   if (info) info.textContent = `${currentPdfPage} / ${currentPdf.numPages}`;
@@ -1288,10 +1315,15 @@ function readerFit() {
   renderCurrentPdfPage().catch(err => console.error(err));
 }
 
+let _readerResizeTimer = null;
 window.addEventListener('resize', () => {
-  if (state.view === 'reader' && currentPdf && currentPdfFit) {
-    renderCurrentPdfPage().catch(err => console.error(err));
-  }
+  if (state.view !== 'reader' || !currentPdf || !currentPdfFit) return;
+  clearTimeout(_readerResizeTimer);
+  _readerResizeTimer = setTimeout(() => {
+    if (state.view === 'reader' && currentPdf && currentPdfFit) {
+      renderCurrentPdfPage().catch(err => console.error(err));
+    }
+  }, 150);
 });
 
 /* ---------- Modo dividido ---------- */
@@ -3182,9 +3214,6 @@ function init() {
       state.view = 'sheet';
       render();
       return;
-    }
-    if (state.view === 'reader' && currentPdf && currentPdfFit) {
-      renderCurrentPdfPage().catch(err => console.error(err));
     }
   });
 

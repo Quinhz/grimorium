@@ -2480,3 +2480,23 @@
     background: var(--accent);
     color: #000;
   }
+
+  /* =========================================
+     LEITOR — Estado de carregamento
+     ========================================= */
+  
+  .reader-loading {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #aaa;
+    font-size: 14px;
+    padding: 20px;
+    min-height: 100vh;
+  }
+  
+  body[data-theme="yuki"] .reader-loading {
+    background: var(--bg-main);
+    color: var(--text-muted);
+  }
