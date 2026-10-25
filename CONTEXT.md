@@ -111,3 +111,25 @@ O histórico de versões exibido na tela "Sobre" **não fica neste arquivo**. El
   - Setas aparecem apenas quando há página para navegar (auto-disable).
 - Versão: 0.11.0-alpha. Cache: yuki-v7.
 - Validar: swipe no mobile, setas + teclado no desktop, setas desabilitadas em primeira/última página, split view sem setas laterais.
+
+## Iteração 25/10/2026 — Refactor: 6 módulos
+
+- `app.js` monolítico dividido em 6 arquivos em `js/`.
+- Ordem de carregamento: data → modals → reader → sheet → render → app.
+- Nenhuma funcionalidade alterada. Apenas reorganização.
+- Cada módulo imprime `[Yuki] module: <nome>.js loaded` no console ao carregar.
+  Se faltar algum log, é o arquivo que não carregou.
+- `sw.js` cache atualizado para `yuki-v10` com todos os novos arquivos em ASSETS.
+- Versão: `0.11.2-alpha`.
+
+### Arquivos novos
+- `js/data.js` — constantes, state, persistência, modelos, cálculos.
+- `js/modals.js` — HTML dos modais.
+- `js/reader.js` — leitor de PDF.
+- `js/sheet.js` — ficha, abas, menu lateral, retrato.
+- `js/render.js` — home, lista, livros, split, welcome.
+- `js/app.js` — handlers de evento + init.
+
+### Regra nova
+- Cada bug tem um módulo provável. Ver "Mapa de módulos" em WORKFLOW.md.
+- Não é mais preciso enviar `app.js` inteiro quando um bug acontece.
