@@ -4,11 +4,11 @@
    ============================================================ */
 
 /* ---------- Constantes ---------- */
-const APP_VERSION = '0.8.1-alpha';
+const APP_VERSION = '0.9.0-alpha';
 
 const CHANGELOG = [
   { 
-    version: 'v0.8.1-alpha', 
+    version: 'v0.9.0-alpha', 
     date: '24/10/2026', 
     changes: [
       'Fix: Botões da home alinhados em grades responsivas nos temas Alpha e Yuki.',
@@ -219,6 +219,7 @@ let state = {
   showAbout: false,
   showDice: false,
   showPrintPreview: false,
+  sheetMenuOpen: false,
   diceSides: 6,
   diceHistory: [],
   customSpells: [],
@@ -624,17 +625,46 @@ function fieldSelect(label, bind, value, options) {
          renderList(app);
        }
      
-       // FAB de dados
+       // FAB de dados (fora da ficha) ou menu da ficha (dentro dela)
        const oldFab = document.querySelector('.dice-fab');
        if (oldFab) oldFab.remove();
        if (state.view !== 'reader' && state.view !== 'welcome') {
-       const fab = document.createElement('button');
-       fab.className = 'dice-fab';
-       fab.setAttribute('data-action', 'open-dice');
-       fab.setAttribute('title', 'Rolar dados');
-       fab.innerHTML = '<svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M5 3a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2H5zm0 2h14v14H5V5zm3 1.5a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm8 0a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm-4 4a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm-4 4a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm8 0a1.5 1.5 0 100 3 1.5 1.5 0 000-3z"/></svg>';
-       document.body.appendChild(fab);
-     }
+         const isSheetView = state.view === 'sheet' || state.view === 'split';
+         const fab = document.createElement('button');
+         if (isSheetView) {
+           fab.className = 'dice-fab menu-fab';
+           fab.setAttribute('data-action', 'toggle-sheet-menu');
+           fab.setAttribute('title', 'Menu da ficha');
+           fab.setAttribute('aria-label', 'Abrir menu da ficha');
+           fab.innerHTML = '<svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>';
+         } else {
+           fab.className = 'dice-fab';
+           fab.setAttribute('data-action', 'open-dice');
+           fab.setAttribute('title', 'Rolar dados');
+           fab.innerHTML = '<svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M5 3a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2H5zm0 2h14v14H5V5zm3 1.5a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm8 0a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm-4 4a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm-4 4a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm8 0a1.5 1.5 0 100 3 1.5 1.5 0 000-3z"/></svg>';
+         }
+         document.body.appendChild(fab);
+       }
+  
+       // Drawer do menu da ficha (abas + ações extras)
+       const oldSheetMenu = document.getElementById('sheet-menu-overlay');
+       if (oldSheetMenu) oldSheetMenu.remove();
+       if (state.sheetMenuOpen && state.view !== 'sheet' && state.view !== 'split') {
+         state.sheetMenuOpen = false;
+       }
+       if (state.sheetMenuOpen) {
+         const overlay = document.createElement('div');
+         overlay.id = 'sheet-menu-overlay';
+         overlay.className = 'sheet-menu-overlay';
+         overlay.innerHTML = sheetMenuHTML();
+         overlay.addEventListener('click', (e) => {
+           if (e.target === overlay) {
+             state.sheetMenuOpen = false;
+             overlay.remove();
+           }
+         });
+         document.body.appendChild(overlay);
+       }
    
      const oldModal = document.getElementById('settings-modal');
      if (oldModal) oldModal.remove();
@@ -1629,6 +1659,54 @@ function buildPrintSheetHTML(c) {
   return h;
 }
 
+function sheetMenuHTML() {
+  const c = getCurrent();
+  if (!c) return '';
+  const isMobile = window.innerWidth < 700;
+  const tabs = [
+    ['identidade', 'Identidade'],
+    ['atributos', 'Atributos'],
+    ['aspectos', 'Aspectos'],
+    ['sociais', 'Sociais'],
+    ['personas', 'Personas'],
+    ['equipamento', 'Equipamento'],
+    ['confidentes', 'Confidentes'],
+    ['extras', 'Extras']
+  ];
+
+  let html = '<div class="sheet-menu-panel" role="dialog" aria-label="Menu da ficha">';
+  html += '<div class="sheet-menu-header">';
+  html += '<h3>Menu da Ficha</h3>';
+  html += '<button data-action="close-sheet-menu" class="sheet-menu-close" aria-label="Fechar menu">×</button>';
+  html += '</div>';
+
+  // No mobile as abas ficam aqui (não ficam acima da ficha)
+  if (isMobile) {
+    html += '<nav class="sheet-menu-tabs">';
+    tabs.forEach(([id, label]) => {
+      const active = state.tab === id ? ' active' : '';
+      html += `<button data-action="set-tab-from-menu" data-tab="${id}" class="sheet-menu-tab${active}">${label}</button>`;
+    });
+    html += '</nav>';
+  }
+
+  // Ações extras (as mesmas que saíram do topo)
+  html += '<div class="sheet-menu-actions">';
+  html += '<h4>Ações</h4>';
+  if (c.creationMode) {
+    html += `<button data-action="conclude-creation-from-menu" class="sheet-menu-action-btn">Concluir Criação</button>`;
+  }
+  html += `<button data-action="export-char-from-menu" data-id="${c.id}" class="sheet-menu-action-btn">Exportar JSON</button>`;
+  if (canUseSplit() || state.view === 'split') {
+    const title = state.view === 'split' ? 'Fechar modo dividido' : 'Abrir modo dividido';
+    html += `<button data-action="toggle-split-from-menu" class="sheet-menu-action-btn">${title}</button>`;
+  }
+  html += '</div>';
+
+  html += '</div>';
+  return html;
+}
+
 /* ---------- Ficha (com abas) ---------- */
 function renderSheet(app, target) {
   const targetEl = target || app;
@@ -1644,12 +1722,20 @@ function renderSheet(app, target) {
     ['extras', 'Extras']
   ];
 
+  const isMobile = window.innerWidth < 700;
+  const showTabsInSheet = !isMobile;
+  const showBottomBar = isMobile;
+
   let html = '';
   if (!c.name) {
     html += `<div class="warn">Preencha as informações de <b>Identidade</b> para começar.</div>`;
   }
   html += `<div class="row-between" style="margin-top:8px;">`;
   html += `<h1 style="margin:0;">${esc(c.name) || 'Sem nome'}</h1>`;
+  if (isMobile) {
+    const currentTabLabel = (tabs.find(t => t[0] === state.tab) || [,''])[1];
+    html += `<div class="sheet-mobile-tab-label">${currentTabLabel}</div>`;
+  }
   html += `<div>`;
   html += `<button data-action="go-list">← Lista</button> `;
   if (c.creationMode) {
@@ -1667,11 +1753,13 @@ function renderSheet(app, target) {
   }
   html += `</div></div>`;
 
-  html += `<div class="tabs">`;
-  tabs.forEach(([id, label]) => {
-    html += `<div class="tab ${state.tab === id ? 'active' : ''}" data-action="set-tab" data-tab="${id}">${label}</div>`;
-  });
-  html += `</div>`;
+  if (showTabsInSheet) {
+    html += `<div class="tabs">`;
+    tabs.forEach(([id, label]) => {
+      html += `<div class="tab ${state.tab === id ? 'active' : ''}" data-action="set-tab" data-tab="${id}">${label}</div>`;
+    });
+    html += `</div>`;
+  }
 
   html += `<div class="sheet-body">`;
   html += `<div class="portrait-box" data-action="upload-portrait" title="${c.portraitImage ? 'Trocar imagem' : 'Adicionar imagem'}">`;
@@ -1697,6 +1785,24 @@ function renderSheet(app, target) {
   html += `</div>`;
   html += `</div>`;
   html += `<div class="footer">© ${new Date().getFullYear()} Yuki</div>`;
+
+  if (showBottomBar) {
+    html += `<div class="sheet-bottom-spacer"></div>`;
+    html += `<div class="sheet-bottom-bar" role="toolbar" aria-label="Ações da ficha">`;
+    html += `<button data-action="go-list" class="sheet-bottom-btn" title="Lista" aria-label="Ir para a lista">` +
+              `<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>` +
+              `<span>Lista</span></button>`;
+    html += `<button data-action="open-dice" class="sheet-bottom-btn" title="Rolar dados" aria-label="Rolar dados">` +
+              `<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M5 3a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2H5zm0 2h14v14H5V5zm3 1.5a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm8 0a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm-4 4a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm-4 4a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm8 0a1.5 1.5 0 100 3 1.5 1.5 0 000-3z"/></svg>` +
+              `<span>Dado</span></button>`;
+    html += `<button data-action="open-print-preview" class="sheet-bottom-btn" title="Exportar PDF" aria-label="Exportar PDF">` +
+              `<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>` +
+              `<span>Exportar</span></button>`;
+    html += `<button data-action="delete-char" data-id="${c.id}" class="sheet-bottom-btn danger" title="Excluir personagem" aria-label="Excluir personagem">` +
+              `<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>` +
+              `<span>Excluir</span></button>`;
+    html += `</div>`;
+  }
 
   targetEl.innerHTML = html;
   updateDerivedDisplays();
@@ -2754,10 +2860,47 @@ function handleClick(e) {
     case 'export-char':
       exportChar(el.dataset.id);
       break;
-    case 'set-tab':
-      state.tab = el.dataset.tab;
-      render();
-      break;
+      case 'set-tab':
+        state.tab = el.dataset.tab;
+        render();
+        break;
+      case 'toggle-sheet-menu':
+        state.sheetMenuOpen = !state.sheetMenuOpen;
+        render();
+        break;
+      case 'close-sheet-menu':
+        state.sheetMenuOpen = false;
+        render();
+        break;
+      case 'set-tab-from-menu':
+        state.tab = el.dataset.tab;
+        state.sheetMenuOpen = false;
+        render();
+        break;
+      case 'conclude-creation-from-menu':
+        if (!c) return;
+        c.creationMode = false;
+        state.sheetMenuOpen = false;
+        save();
+        render();
+        break;
+      case 'export-char-from-menu':
+        exportChar(el.dataset.id);
+        break;
+      case 'toggle-split-from-menu':
+        state.sheetMenuOpen = false;
+        if (state.view === 'split') {
+          state.view = 'sheet';
+        } else {
+          if (!getCurrent() || !canUseSplit()) {
+            alert('Modo dividido não disponível nesta tela.');
+            render();
+            return;
+          }
+          state.view = 'split';
+        }
+        render();
+        break;
     case 'add-persona':
       if (!c) return;
       c.personas.push(newPersona(c.level));
@@ -2916,6 +3059,11 @@ function init() {
 
   document.addEventListener('keydown', (e) => {
     if (e.key !== 'Escape') return;
+    if (state.sheetMenuOpen) {
+      state.sheetMenuOpen = false;
+      render();
+      return;
+    }
     if (state.showSettings) {
       state.showSettings = false;
       render();
@@ -2941,6 +3089,12 @@ function init() {
     }
     if (state.view === 'reader' && currentPdf && currentPdfFit) {
       renderCurrentPdfPage().catch(err => console.error(err));
+    }
+  });
+
+  window.addEventListener('orientationchange', () => {
+    if (state.view === 'sheet' || state.view === 'split') {
+      setTimeout(() => render(), 300);
     }
   });
 
