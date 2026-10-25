@@ -2422,3 +2422,61 @@
   }
   
   body[data-theme="yuki"] .sheet-mobile-tab-label { color: var(--text-muted); }
+
+  /* =========================================
+     LEITOR DE PDF — Setas laterais (desktop)
+     ========================================= */
+  
+  .reader-nav-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 96px;
+    background: rgba(0,0,0,0.5);
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    z-index: 15;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.6;
+    transition: opacity 0.2s, background 0.2s;
+    padding: 0;
+    border-radius: 4px;
+  }
+  
+  .reader-nav-arrow:hover,
+  .reader-nav-arrow:focus-visible {
+    opacity: 1;
+    background: rgba(0,0,0,0.75);
+  }
+  
+  .reader-nav-prev { left: 8px; }
+  .reader-nav-next { right: 8px; }
+  
+  .reader-nav-arrow:disabled {
+    opacity: 0.15 !important;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+  
+  /* Mobile: sem setas (usa swipe) */
+  @media (max-width: 700px) {
+    .reader-nav-arrow { display: none; }
+  }
+  
+  /* Split view: sem setas (pane estreito) */
+  .split-pane-right .reader-nav-arrow { display: none; }
+  
+  /* Tema Yuki */
+  body[data-theme="yuki"] .reader-nav-arrow {
+    background: rgba(0,0,0,0.65);
+    color: var(--text-main);
+  }
+  
+  body[data-theme="yuki"] .reader-nav-arrow:hover {
+    background: var(--accent);
+    color: #000;
+  }

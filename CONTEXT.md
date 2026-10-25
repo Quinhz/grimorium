@@ -94,3 +94,20 @@ O histórico de versões exibido na tela "Sobre" **não fica neste arquivo**. El
 - Versão planejada: 0.8.1-alpha.
 - Cache planejado: yuki-v6.
 - Validar a home, a biblioteca com e sem PDFs, os estados de carregamento/erro, o recorte de fotos e a split view.
+
+## Iteração 25/10/2026 — Menu mobile na ficha + navegação de PDF
+
+- Menu lateral (drawer) na ficha em mobile, aberto pelo FAB (que deixou de ser dado e virou menu dentro da ficha).
+- Barra inferior fixa em mobile na ficha com Lista, Dado, Exportar e Excluir.
+- Abas da ficha migraram do topo para o menu lateral em mobile.
+- Botões de ação do cabeçalho da ficha ocultados em mobile (agora acessíveis via barra/menu).
+- Retrato do personagem no mobile virou quadradinho compacto e só aparece na aba Identidade.
+- FAB de dados continua sendo dado fora da ficha (home, livros, etc.).
+- Changelog do app foi reconstruído com as versões v0.8.0, v0.8.1, v0.10.0 e v0.11.0 completas.
+- Leitor de PDF ganhou:
+  - Swipe horizontal (mobile): esquerda = próxima, direita = anterior.
+  - Setas do teclado ←/→ em desktop (só no leitor em tela cheia).
+  - Setas laterais (visuais) no leitor em desktop.
+  - Setas aparecem apenas quando há página para navegar (auto-disable).
+- Versão: 0.11.0-alpha. Cache: yuki-v7.
+- Validar: swipe no mobile, setas + teclado no desktop, setas desabilitadas em primeira/última página, split view sem setas laterais.

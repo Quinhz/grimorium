@@ -1163,10 +1163,52 @@ function renderReader(app, target, embedded) {
       <div class="reader-container" id="reader-container">
         <div class="reader-inner"><canvas id="reader-canvas"></canvas></div>
       </div>
+      <button class="reader-nav-arrow reader-nav-prev" data-action="reader-prev" aria-label="Página anterior" title="Página anterior (←)">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+      </button>
+      <button class="reader-nav-arrow reader-nav-next" data-action="reader-next" aria-label="Próxima página" title="Próxima página (→)">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+      </button>
     </div>`;
   requestAnimationFrame(() => {
     renderCurrentPdfPage().catch(err => console.error('Erro ao renderizar página:', err));
   });
+  setupReaderSwipe();
+}
+
+function setupReaderSwipe() {
+  const container = document.getElementById('reader-container');
+  if (!container) return;
+
+  let startX = 0;
+  let startY = 0;
+  let startTime = 0;
+
+  container.addEventListener('touchstart', (e) => {
+    if (e.touches.length !== 1) return;
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    startTime = Date.now();
+  }, { passive: true });
+
+  container.addEventListener('touchend', (e) => {
+    if (!currentPdf || !e.changedTouches.length) return;
+
+    const dx = e.changedTouches[0].clientX - startX;
+    const dy = e.changedTouches[0].clientY - startY;
+    const dt = Date.now() - startTime;
+
+    if (dt > 500) return;
+    if (Math.abs(dx) < 60) return;
+    if (Math.abs(dx) < Math.abs(dy) * 1.5) return;
+    if (container.scrollWidth > container.clientWidth + 4) return;
+
+    if (dx < 0) {
+      readerGoTo(1);
+    } else {
+      readerGoTo(-1);
+    }
+  }, { passive: true });
 }
 
 function getFitScale(page, container) {
@@ -1214,10 +1256,12 @@ async function renderCurrentPdfPage() {
 
   const info = document.getElementById('reader-page-info');
   if (info) info.textContent = `${currentPdfPage} / ${currentPdf.numPages}`;
-  const prevBtn = document.querySelector('[data-action="reader-prev"]');
-  const nextBtn = document.querySelector('[data-action="reader-next"]');
-  if (prevBtn) prevBtn.disabled = currentPdfPage <= 1;
-  if (nextBtn) nextBtn.disabled = currentPdfPage >= currentPdf.numPages;
+  document.querySelectorAll('[data-action="reader-prev"]').forEach(b => {
+    b.disabled = currentPdfPage <= 1;
+  });
+  document.querySelectorAll('[data-action="reader-next"]').forEach(b => {
+    b.disabled = currentPdfPage >= currentPdf.numPages;
+  });
 }
 
 function readerGoTo(delta) {
@@ -3100,6 +3144,16 @@ function init() {
   document.body.addEventListener('click', handleClick);
 
   document.addEventListener('keydown', (e) => {
+    // Navegação por setas no leitor de PDF
+    if (state.view === 'reader' && currentPdf && !e.ctrlKey && !e.metaKey && !e.altKey) {
+      const t = e.target;
+      const isTyping = t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable);
+      if (!isTyping) {
+        if (e.key === 'ArrowRight') { e.preventDefault(); readerGoTo(1); return; }
+        if (e.key === 'ArrowLeft') { e.preventDefault(); readerGoTo(-1); return; }
+      }
+    }
+
     if (e.key !== 'Escape') return;
     if (state.sheetMenuOpen) {
       state.sheetMenuOpen = false;
