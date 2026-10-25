@@ -1,6 +1,13 @@
 /* Service Worker simples — cache offline */
-const CACHE = 'yuki-v1';
-const ASSETS = ['./', './index.html', './manifest.json', './icon.svg'];
+const CACHE = 'yuki-v2';
+const ASSETS = [
+  './',
+  './index.html',
+  './manifest.json',
+  './icon.svg',
+  './css/app.css',
+  './js/app.js'
+];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)));

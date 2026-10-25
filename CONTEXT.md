@@ -27,9 +27,11 @@ App web (PWA) de ficha de personagem para o sistema de RPG **Grimório do Coraç
 
 | Arquivo | Papel |
 |---|---|
-| `index.html` | App inteiro (CSS + JS inline). Fonte única de verdade. |
+| `index.html` | Shell do app (~20 linhas). `<head>` + `<div id="app">` + links para CSS e JS. |
+| `css/app.css` | **Todo o CSS** (tema Alpha + layout + componentes). Fase 1 do split. |
+| `js/app.js` | **Todo o JS** (state, models, views, handlers). Fase 1 do split. |
 | `manifest.json` | PWA manifest. |
-| `sw.js` | Service Worker (cache offline). Cache atual: `yuki-v1`. |
+| `sw.js` | Service Worker (cache offline). Cache atual: `yuki-v2`. |
 | `favicon/favicon.ico` | Ícone. |
 | `spells.csv` | **Opcional**. Presets de magia (CSV). Se não existir, aba "Magias" fica vazia com aviso. |
 | `spells/index.json` | **Opcional**. Lista de CSVs (`["a.csv","b.csv"]`) para carregar múltiplos arquivos da pasta `spells/`. |
@@ -37,6 +39,48 @@ App web (PWA) de ficha de personagem para o sistema de RPG **Grimório do Coraç
 
 **CDN externo (única dependência de rede)**:
 - PDF.js **3.11.174** em `cdnjs.cloudflare.com` — carregado sob demanda. SW cacheia após primeiro uso.
+
+---
+
+## Plano de splitting (em fases)
+
+> Motivação: `index.html` chegou a ~2500 linhas. Vai crescer com tema próprio e multi-sistema. Separar cedo reduz risco e facilita manutenção. **Sem build step** — apenas arquivos estáticos servidos por HTTP.
+
+### Fase 1 — Split básico (concluído em v0.4.0-alpha)
+- `css/app.css` — todo o CSS
+- `js/app.js` — todo o JS (ainda monolito, mas fora do HTML)
+- `index.html` — shell
+
+### Fase 2 — Split por concern (quando começar o tema Yuki)
+
+Dividir `css/app.css` em:
+- `css/base.css` — reset, layout (body, container, h1-h4, .field, .grid)
+- `css/components.css` — botões, inputs, modais, cards, tabs, panels, .icon-btn
+- `css/alpha.css` — cores, fontes, bordas específicas do tema Alpha
+- `css/themes/yuki.css` (a criar) — overrides do tema Yuki
+
+Dividir `js/app.js` em módulos ES (`<script type="module">`):
+- `js/constants.js` — CLASSES, THEMES, ARCANA_OPTIONS, PERSONA_TYPES, etc.
+- `js/utils.js` — uid, esc, setPath, setText, getCurrent
+- `js/state.js` — `state` + save/load (chars, settings, user, custom spells)
+- `js/models.js` — factories + normalizeCharacter + defaults + copySpell
+- `js/computed.js` — recalc, updateDerivedDisplays
+- `js/fields.js` — fieldText, fieldNumber, fieldSelect
+- `js/spells.js` — CSV parser + loadSpellPresets
+- `js/pdf.js` — runtime do PDF + ensurePdfjs + openBook + renderCurrentPdfPage + readerGoTo/Zoom/Fit + leaveReader
+- `js/views.js` — renderWelcome, renderList, renderBooks, renderSheet, renderSplit, renderReader, tabs, cards, modais, `render()` top-level
+- `js/handlers.js` — handleClick, handleInput, handleChange, importChar, exportChar, uploadPortrait, uploadUserPfp, crop, rollDice
+- `js/main.js` — `init()` + exposição de handlers inline via `window.*`
+- `index.html` — `<script type="module" src="js/main.js"></script>`
+
+### Fase 3 — Multi-sistema (quando começar suporte a outros RPGs)
+
+Refatorar `Character` para `{ systemId, data }` onde `data` segue o schema do sistema. Render e regras viram plugins por sistema. **Requer planejamento prévio** — não começar sem desenhar.
+
+### Regra de ouro
+- **Fase 1 é move** — sem refactor. Se quebrar, é trivial debugar.
+- **Fase 2 é refactor** — pode quebrar imports/exports. Testar cada módulo.
+- **Fase 3 é reescrita** — não começar sem plano.
 
 ---
 
@@ -246,6 +290,7 @@ Runtime do leitor de PDF (fora de `state`, module-scoped):
 > Versões anteriores a `v0.4.0` são reconstruídas do estado documentado (sem tags formais no Git).
 
 ### v0.4.0-alpha (atual)
+- **Fase 1 do split**: CSS movido para `css/app.css`, JS para `js/app.js`. `index.html` virou shell (~20 linhas).
 - Rename oficial: **Yuki** (nome do app). Sistema permanece **Grimório do Coração**.
 - **Bug fix**: `showCropModal(img)` → `showCropModal(img, onConfirm)`. Sem isso, pfp do usuário não era salvo (caía no `else`, gravava em `c.portraitImage`).
 - Perfil do usuário (pfp + username, app-level, visível no topo da lista, editável nas Configurações)
