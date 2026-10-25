@@ -221,7 +221,7 @@ let state = {
   addSpellDraft: null
 };
 
-function canUseSplit() { return window.innerWidth >= 700; }
+function canUseSplit() { return window.innerWidth >= 700 && window.innerHeight >= 500; }
 function shouldUseSplit() { return state.settings.template === 'split' && canUseSplit(); }
 function saveSettings() {
   try { localStorage.setItem('grimorio_settings_v1', JSON.stringify(state.settings)); } catch (e) {}
@@ -833,13 +833,13 @@ function fieldSelect(label, bind, value, options) {
     html += `<div class="table-wrap"><table>`;
     html += `<thead><tr><th>Personagem</th><th>Classe</th><th>Nv.</th><th>Arcana</th><th>Jogador</th><th>Ações</th></tr></thead><tbody>`;
     state.characters.forEach(c => {
-      html += `<tr>`;
-      html += `<td>${esc(c.name) || '<em>sem nome</em>'}</td>`;
-      html += `<td>${esc(c.class) || '—'}</td>`;
-      html += `<td>${esc(c.level)}</td>`;
-      html += `<td>${esc(c.arcana) || '—'}</td>`;
-      html += `<td>${esc(c.player) || '—'}</td>`;
-      html += `<td>`;
+          html += `<tr>`;
+          html += `<td data-label="Personagem">${esc(c.name) || '<em>sem nome</em>'}</td>`;
+          html += `<td data-label="Classe">${esc(c.class) || '—'}</td>`;
+          html += `<td data-label="Nível">${esc(c.level)}</td>`;
+          html += `<td data-label="Arcana">${esc(c.arcana) || '—'}</td>`;
+          html += `<td data-label="Jogador">${esc(c.player) || '—'}</td>`;
+          html += `<td data-label="Ações">`;
       html += `<button data-action="open-char" data-id="${c.id}">Abrir</button> `;
       html += `<button data-action="export-char" data-id="${c.id}">Exportar JSON</button> `;
       html += `<button class="danger" data-action="delete-char" data-id="${c.id}">Excluir</button>`;
@@ -888,10 +888,10 @@ async function renderBooks(app) {
       const sizeMB = b.blob && b.blob.size ? (b.blob.size / (1024 * 1024)).toFixed(1) + ' MB' : '—';
       const dt = b.addedAt ? new Date(b.addedAt).toLocaleDateString('pt-BR') : '—';
       html += `<tr>`;
-      html += `<td>${esc(b.name) || '<em>sem nome</em>'}</td>`;
-      html += `<td>${sizeMB}</td>`;
-      html += `<td>${dt}</td>`;
-      html += `<td><button data-action="open-book" data-id="${b.id}">Abrir</button> ` +
+      html += `<td data-label="Nome">${esc(b.name) || '<em>sem nome</em>'}</td>`;
+      html += `<td data-label="Tamanho">${sizeMB}</td>`;
+      html += `<td data-label="Adicionado">${dt}</td>`;
+      html += `<td data-label="Ações"><button data-action="open-book" data-id="${b.id}">Abrir</button> ` +
               `<button class="danger" data-action="delete-book" data-id="${b.id}">Excluir</button></td>`;
       html += `</tr>`;
     });
@@ -1739,10 +1739,10 @@ function renderSociais(c) {
   SOCIAL_SKILLS.forEach(k => {
     const maxAttr = c.creationMode ? '' : 'max="25"';
     html += `<tr>`;
-    html += `<td><b>${esc(k)}</b></td>`;
-    html += `<td><input type="number" data-bind="social.${k}" value="${c.social[k]}" min="-2" ${maxAttr} style="width:80px;"></td>`;
-    html += `<td><b id="tier-${k}">${Math.max(0, Math.floor(Number(c.social[k] || 0) / 5))}</b></td>`;
-    html += `<td><input type="text" data-bind="socialTitles.${k}" value="${esc(c.socialTitles[k])}" style="width:100%;"></td>`;
+    html += `<td data-label="Habilidade"><b>${esc(k)}</b></td>`;
+    html += `<td data-label="Pontos"><input type="number" data-bind="social.${k}" value="${c.social[k]}" min="-2" ${maxAttr} style="width:100%;"></td>`;
+    html += `<td data-label="Tier"><b id="tier-${k}">${Math.max(0, Math.floor(Number(c.social[k] || 0) / 5))}</b></td>`;
+    html += `<td data-label="Título"><input type="text" data-bind="socialTitles.${k}" value="${esc(c.socialTitles[k])}" style="width:100%;"></td>`;
     html += `</tr>`;
   });
   html += `</tbody></table></div>`;

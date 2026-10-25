@@ -1248,3 +1248,297 @@
     background-color: #fff; /* Garante fundo claro pro ícone aparecer */
     border: 2px solid var(--border, #ccc);
   }
+
+  /* =========================================
+     RESPONSIVIDADE MOBILE — Correções globais
+     ========================================= */
+  
+  /* Evita estouro horizontal geral */
+  html, body { overflow-x: hidden; }
+  
+  /* iOS: inputs com <16px fazem zoom automático ao focar.
+     Forçar 16px no mobile evita isso. */
+  @media (max-width: 768px) {
+    input, select, textarea {
+      font-size: 16px !important;
+    }
+  }
+  
+  /* Alvos de toque confortáveis (mín. 40px) */
+  @media (max-width: 768px) {
+    button, .btn {
+      min-height: 40px;
+    }
+    .icon-btn {
+      min-width: 40px;
+      min-height: 40px;
+    }
+    .tab {
+      min-height: 38px;
+      display: inline-flex;
+      align-items: center;
+    }
+  }
+  
+  /* Modais: cabem em telas pequenas */
+  @media (max-width: 480px) {
+    .modal {
+      min-width: 0;
+      width: 94vw;
+      max-width: 94vw;
+      padding: 12px;
+    }
+    .modal-actions {
+      flex-wrap: wrap;
+    }
+    .modal-actions button {
+      flex: 1 1 auto;
+    }
+  }
+  
+  /* dvh: altura que respeita a barra de endereço do mobile */
+  @supports (height: 100dvh) {
+    .modal { max-height: 90dvh; }
+    .print-preview-modal { max-height: 92dvh; }
+    .about-changelog { max-height: 40dvh; }
+    .add-spell-content { max-height: 55dvh; }
+  }
+  @media (max-width: 600px) {
+    /* Modais fullscreen no mobile — usa dvh se suportado */
+    .print-preview-modal {
+      height: 100vh; max-height: 100vh;
+    }
+    .add-spell-modal {
+      height: 100vh; max-height: 100vh;
+    }
+  }
+  @supports (height: 100dvh) {
+    @media (max-width: 600px) {
+      .print-preview-modal,
+      .add-spell-modal {
+        height: 100dvh; max-height: 100dvh;
+      }
+    }
+  }
+  
+  /* Em telas muito estreitas, label do campo vai pra cima */
+  @media (max-width: 480px) {
+    .field {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 3px;
+    }
+    .field > label,
+    .field.vtop > label {
+      min-width: 0;
+      padding-top: 0;
+    }
+  }
+  
+  /* Ficha — botões do cabeçalho empilham bonito */
+  @media (max-width: 700px) {
+    .row-between {
+      align-items: stretch;
+    }
+    .row-between > div:not(.muted) {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      width: 100%;
+    }
+    .row-between > div > button {
+      flex: 1 1 auto;
+    }
+  }
+  
+  /* Tela de boas-vindas */
+  @media (max-width: 480px) {
+    .welcome-screen {
+      padding: 12px;
+      align-items: flex-start;
+      padding-top: 20px;
+    }
+    .welcome-card {
+      padding: 22px 18px;
+      max-width: 100%;
+    }
+    .welcome-title { font-size: 32px; }
+    .welcome-greeting { font-size: 18px; }
+    .welcome-enter { width: 100%; }
+  }
+  
+  /* Reader — toolbar mais limpo no mobile */
+  @media (max-width: 700px) {
+    .reader-toolbar {
+      gap: 2px;
+      padding: 4px 6px;
+    }
+    .reader-title {
+      order: -1;
+      flex-basis: 100%;
+      text-align: center;
+      min-width: 0;
+      margin-bottom: 4px;
+      font-size: 13px;
+    }
+    .reader-toolbar button {
+      min-height: 40px;
+      min-width: 40px;
+    }
+  }
+  
+  /* FAB respeitando safe-area (notch / home indicator) */
+  .dice-fab {
+    bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+    right: calc(24px + env(safe-area-inset-right, 0px));
+  }
+  
+  /* Grid do Tema Yuki: cards "vazios" decorativos somem no mobile */
+  @media (max-width: 768px) {
+    .yuki-card.empty { display: none; }
+  }
+  
+  /* =========================================
+     TABELAS → CARDS no mobile (via data-label)
+     ========================================= */
+  @media (max-width: 700px) {
+    .table-wrap table,
+    .table-wrap thead,
+    .table-wrap tbody,
+    .table-wrap th,
+    .table-wrap td,
+    .table-wrap tr {
+      display: block;
+      width: 100%;
+    }
+    .table-wrap thead {
+      position: absolute;
+      left: -9999px;
+      top: -9999px;
+    }
+    .table-wrap table { border-collapse: separate; border-spacing: 0; }
+    .table-wrap tr {
+      background: #fff;
+      border: 2px solid #808080;
+      margin-bottom: 10px;
+      padding: 4px 8px;
+    }
+    .table-wrap td {
+      border: none;
+      border-bottom: 1px dotted #ccc;
+      padding: 6px 0 6px 110px;
+      position: relative;
+      min-height: 32px;
+    }
+    .table-wrap td:last-child { border-bottom: none; }
+    .table-wrap td[data-label]::before {
+      content: attr(data-label);
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 100px;
+      font-weight: bold;
+      font-size: 11px;
+      color: #555;
+    }
+    /* Yuki */
+    body[data-theme="yuki"] .table-wrap tr {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+    }
+    body[data-theme="yuki"] .table-wrap td {
+      border-bottom: 1px dotted var(--border);
+    }
+    body[data-theme="yuki"] .table-wrap td[data-label]::before {
+      color: var(--text-muted);
+    }
+  }
+
+  /* =========================================
+     FIX: Overflow horizontal no layout Yuki
+     (cards sendo cortados no mobile)
+     ========================================= */
+  
+  /* Regra global — em qualquer largura, permite o grid
+     encolher abaixo do min-content dos filhos */
+  .yuki-layout > .yuki-sidebar,
+  .yuki-layout > .yuki-main {
+    min-width: 0;
+  }
+  
+  .yuki-grid {
+    min-width: 0;
+    max-width: 100%;
+  }
+  
+  .yuki-card {
+    min-width: 0;
+    overflow: hidden;
+  }
+  
+  @media (max-width: 768px) {
+    /* Permite a coluna do grid ser MENOR que o conteúdo */
+    .yuki-layout {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  
+    .yuki-sidebar {
+      min-width: 0;
+      max-width: 100%;
+      overflow: hidden;
+      gap: 10px !important;
+    }
+  
+    .yuki-main {
+      min-width: 0;
+      max-width: 100%;
+      overflow: hidden;
+      padding: 16px 12px;
+    }
+  
+    .yuki-profile {
+      min-width: 0;
+      flex-shrink: 1;
+      overflow: hidden;
+    }
+  
+    /* Nome do usuário truncado — não empurra o nav */
+    .yuki-username {
+      max-width: 110px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  
+    .yuki-nav {
+      flex-shrink: 0;
+      gap: 2px !important;
+    }
+  
+    .yuki-nav button {
+      padding: 8px !important;
+      min-width: 40px;
+      min-height: 40px;
+      justify-content: center;
+    }
+  
+    /* auto-fit colapsa tracks vazios: com poucos personagens,
+       os cards ESTICAM em vez de ficarem presos na coluna 1 */
+    .yuki-grid {
+      width: 100%;
+      gap: 10px;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    }
+  
+    .yuki-card {
+      padding: 10px;
+      gap: 8px;
+    }
+  
+    .yuki-card-title,
+    .yuki-card-class {
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
