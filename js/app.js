@@ -4,16 +4,53 @@
    ============================================================ */
 
 /* ---------- Constantes ---------- */
-const APP_VERSION = '0.9.0-alpha';
+const APP_VERSION = '0.11.0-alpha';
 
 const CHANGELOG = [
   { 
-    version: 'v0.9.0-alpha', 
+    version: 'v0.11.0-alpha', 
+    date: '25/10/2026', 
+    changes: [
+      'Adicionado: Navegação por swipe horizontal no leitor de PDF (mobile).',
+      'Adicionado: Navegação por setas do teclado (← / →) no leitor de PDF (desktop).',
+      'Adicionado: Botões laterais de navegação (setas) no leitor de PDF em desktop.'
+    ]
+  },
+  { 
+    version: 'v0.10.0-alpha', 
+    date: '25/10/2026', 
+    changes: [
+      'Adicionado: Menu lateral (drawer) na ficha em mobile, aberto pelo FAB.',
+      'Adicionado: Barra inferior fixa na ficha em mobile (Lista, Dado, Exportar, Excluir).',
+      'Adicionado: Rótulo da aba atual no topo da ficha em mobile.',
+      'Alterado: No mobile, as abas da ficha migraram do topo para o menu lateral.',
+      'Alterado: No mobile, os botões de ação do cabeçalho da ficha foram ocultados.',
+      'Alterado: FAB de dados virou FAB de menu dentro da ficha.',
+      'Fix: Retrato do personagem no mobile virou quadradinho compacto.',
+      'Fix: Retrato só aparece na aba Identidade em mobile.'
+    ]
+  },
+  { 
+    version: 'v0.8.1-alpha', 
     date: '24/10/2026', 
     changes: [
       'Fix: Botões da home alinhados em grades responsivas nos temas Alpha e Yuki.',
       'Fix: Navegação da home reorganizada para telas estreitas e celulares.',
-      'Fix: Altura, espaçamento e quebra de texto dos botões padronizados.'
+      'Fix: Altura, espaçamento e quebra de texto dos botões padronizados.',
+      'Fix: Contraste do botão "Sobre o App" no tema Yuki.',
+      'Fix: Contraste do botão "Cortar e usar" no modal de recorte.',
+      'Fix: Alinhamento do contador e do botão "Novo" no cabeçalho da home.',
+      'Adicionado: Sidebar do Yuki reaproveitada na aba Livros.',
+      'Fix: Cores do tema Yuki aplicadas à split view.'
+    ]
+  },
+  { 
+    version: 'v0.8.0-alpha', 
+    date: '24/10/2026', 
+    changes: [
+      'Adicionado: Home responsiva com botões alinhados em grids.',
+      'Adicionado: Navegação da home reorganizada para mobile.',
+      'Fix: Altura mínima dos botões padronizada.'
     ]
   },
   { 
@@ -1731,27 +1768,32 @@ function renderSheet(app, target) {
     html += `<div class="warn">Preencha as informações de <b>Identidade</b> para começar.</div>`;
   }
   html += `<div class="row-between" style="margin-top:8px;">`;
+  html += `<div>`;
   html += `<h1 style="margin:0;">${esc(c.name) || 'Sem nome'}</h1>`;
   if (isMobile) {
     const currentTabLabel = (tabs.find(t => t[0] === state.tab) || [,''])[1];
     html += `<div class="sheet-mobile-tab-label">${currentTabLabel}</div>`;
   }
-  html += `<div>`;
-  html += `<button data-action="go-list">← Lista</button> `;
-  if (c.creationMode) {
-    html += `<button data-action="conclude-creation" class="btn-accent"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;"><polyline points="20 6 9 17 4 12"/></svg> Concluir Criação</button> `;
+  html += `</div>`;
+  if (!isMobile) {
+    html += `<div>`;
+    html += `<button data-action="go-list">← Lista</button> `;
+    if (c.creationMode) {
+      html += `<button data-action="conclude-creation" class="btn-accent"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;"><polyline points="20 6 9 17 4 12"/></svg> Concluir Criação</button> `;
+    }
+    html += `<button data-action="open-dice" class="icon-btn" title="Rolar dados"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M5 3a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2H5zm0 2h14v14H5V5zm3 1.5a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm8 0a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm-4 4a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm-4 4a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm8 0a1.5 1.5 0 100 3 1.5 1.5 0 000-3z"/></svg></button> `;
+    html += `<button data-action="export-char" data-id="${c.id}">Exportar JSON</button> `;
+    html += `<button data-action="open-print-preview">Exportar PDF</button> `;
+    html += `<button class="danger" data-action="delete-char" data-id="${c.id}">Excluir</button>`;
+    if (canUseSplit() || state.view === 'split') {
+      const title = state.view === 'split' ? 'Fechar modo dividido' : 'Abrir modo dividido';
+      html += ` <button data-action="toggle-split" class="icon-btn" title="${title}">` +
+        `<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="2" width="6" height="12"/><rect x="9" y="2" width="6" height="12"/></svg>` +
+        `</button>`;
+    }
+    html += `</div>`;
   }
-  html += `<button data-action="open-dice" class="icon-btn" title="Rolar dados"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M5 3a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2H5zm0 2h14v14H5V5zm3 1.5a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm8 0a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm-4 4a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm-4 4a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm8 0a1.5 1.5 0 100 3 1.5 1.5 0 000-3z"/></svg></button> `;
-  html += `<button data-action="export-char" data-id="${c.id}">Exportar JSON</button> `;
-  html += `<button data-action="open-print-preview">Exportar PDF</button> `;
-  html += `<button class="danger" data-action="delete-char" data-id="${c.id}">Excluir</button>`;
-  if (canUseSplit() || state.view === 'split') {
-    const title = state.view === 'split' ? 'Fechar modo dividido' : 'Abrir modo dividido';
-    html += ` <button data-action="toggle-split" class="icon-btn" title="${title}">` +
-      `<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="2" width="6" height="12"/><rect x="9" y="2" width="6" height="12"/></svg>` +
-      `</button>`;
-  }
-  html += `</div></div>`;
+  html += `</div>`;
 
   if (showTabsInSheet) {
     html += `<div class="tabs">`;

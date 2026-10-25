@@ -862,11 +862,19 @@
   
     body[data-theme="yuki"] .sheet-body {
       flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
     }
-    
-    body[data-theme="yuki"] .portrait-box {
+
+    body[data-theme="yuki"] .sheet-body .panel {
       width: 100%;
-      height: 240px;
+      align-self: stretch;
+    }
+
+    body[data-theme="yuki"] .portrait-box {
+      width: 72px;
+      height: 72px;
+      align-self: flex-start;
     }
   }
 
