@@ -1,0 +1,15 @@
+PATCH DE RESPONSIVIDADE DA HOME — YUKI
+
+Arquivos incluídos com os caminhos esperados pelo projeto:
+- css/app.css  -> substitua o arquivo css/app.css existente
+- js/app.js    -> substitua o arquivo js/app.js existente
+- sw.js        -> substitua o arquivo sw.js existente
+- CONTEXT.md   -> contexto atualizado desta iteração
+
+Ajustes:
+- Botões da home Alpha com larguras e espaçamentos uniformes e quebra responsiva.
+- Navegação, cabeçalho e botões dos cards Yuki alinhados em notebook e celular.
+- CSS compartilhado sem fixar cores, preservando os temas.
+- Versão atualizada para 0.8.0-alpha e cache do Service Worker para yuki-v5.
+
+Mantenha os demais arquivos/recursos do projeto (ícones, favicon, CSVs etc.) como estão.

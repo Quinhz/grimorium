@@ -4,12 +4,21 @@
    ============================================================ */
 
 /* ---------- Constantes ---------- */
-const APP_VERSION = '0.7.0-alpha';
+const APP_VERSION = '0.8.1-alpha';
 
 const CHANGELOG = [
   { 
+    version: 'v0.8.1-alpha', 
+    date: '24/10/2026', 
+    changes: [
+      'Fix: Botões da home alinhados em grades responsivas nos temas Alpha e Yuki.',
+      'Fix: Navegação da home reorganizada para telas estreitas e celulares.',
+      'Fix: Altura, espaçamento e quebra de texto dos botões padronizados.'
+    ]
+  },
+  { 
     version: 'v0.7.0-alpha', 
-    date: 'Atual', 
+    date: 'Anterior', 
     changes: [
       'Adicionado: Tela "Sobre" com Changelog integrado.',
       'Adicionado: Histórico completo de versões no Changelog.',
@@ -737,6 +746,36 @@ function fieldSelect(label, bind, value, options) {
      html += `</div></div>`;
      app.innerHTML = html;
    }
+
+   function yukiSidebarHTML() {
+     const hasPfp = !!state.user.pfp;
+     const uname = state.user.username ? esc(state.user.username) : 'Sem nome';
+   
+     return `
+       <aside class="yuki-sidebar">
+         <div class="yuki-profile" data-action="edit-user">
+           ${hasPfp
+             ? `<img src="${state.user.pfp}" class="yuki-avatar" alt="Perfil">`
+             : `<div class="yuki-avatar"><svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>`}
+           <div class="yuki-username">${uname}</div>
+         </div>
+   
+         <nav class="yuki-nav">
+           <button data-action="go-books" aria-label="Livros de referência" title="Livros de referência">
+             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V4a2 2 0 00-2-2zm-1 18H7V4h10v16z"/></svg>
+             Livros
+           </button>
+           <button aria-label="Importar ficha" title="Importar ficha" onclick="document.getElementById('import-file').click()">
+             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+             Importar
+           </button>
+           <button data-action="open-settings" aria-label="Configurações" title="Configurações">
+             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96a7.03 7.03 0 00-1.62-.94l-.36-2.54a.484.484 0 00-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6  -1.62 3.6-3.6 3.6z"/></svg>
+             Configs.
+           </button>
+         </nav>
+       </aside>`;
+   }
    
    /* ---------- Lista de personagens ---------- */
    function renderList(app) {
@@ -748,22 +787,10 @@ function fieldSelect(label, bind, value, options) {
        let html = `<div class="yuki-layout">`;
        
        // Sidebar
-       html += `<aside class="yuki-sidebar">`;
-       html += `<div class="yuki-profile" data-action="edit-user">`;
-       if (hasPfp) {
-         html += `<img src="${state.user.pfp}" class="yuki-avatar" alt="Perfil">`;
-       } else {
-         html += `<div class="yuki-avatar"><svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>`;
-       }
-       html += `<div class="yuki-username">${uname}</div>`;
-       html += `</div>`;
-
-       html += `<nav class="yuki-nav">`;
-       html += `<button data-action="go-books"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V4a2 2 0 00-2-2zm-1 18H7V4h10v16z"/></svg> Livros</button>`;
-       html += `<button onclick="document.getElementById('import-file').click()"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> Importar</button>`;
-       html += `<button data-action="open-settings"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96a7.03 7.03 0 00-1.62-.94l-.36-2.54a.484.484 0 00-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg> Configs.</button>`;
-       html += `</nav></aside>`;
+       html += yukiSidebarHTML();
        html += `<input type="file" id="import-file" accept=".json,application/json" style="display:none" onchange="importChar(event)">`;
+
+       // Main Content
 
        // Main Content
        html += `<main class="yuki-main">`;
@@ -815,8 +842,8 @@ function fieldSelect(label, bind, value, options) {
      html += `</div>`;
      html += `</div>`;
      html += `<hr>`;
-  html += `<div class="panel row-between">`;
-  html += `<div>`;
+  html += `<div class="panel row-between home-actions-panel">`;
+  html += `<div class="home-actions">`;
   html += `<button data-action="new-char">+ Novo Personagem</button> `;
   html += `<button onclick="document.getElementById('import-file').click()">Importar Ficha (.json)</button>`;
   html += `<button data-action="go-books"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;"><path d="M18 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V4a2 2 0 00-2-2zm-1 18H7V4h10v16z"/></svg> Livros de Referência</button>`;
@@ -854,18 +881,42 @@ function fieldSelect(label, bind, value, options) {
 
 /* ---------- Livros de Referência ---------- */
 async function renderBooks(app) {
-  app.innerHTML = `<h1>Livros de Referência</h1><div class="muted">Carregando…</div>`;
+  const isYuki = state.settings.theme === 'yuki';
+  
+  if (isYuki) {
+    app.innerHTML = `
+      <div class="yuki-layout">
+        ${yukiSidebarHTML()}
+        <input type="file" id="import-file" accept=".json,application/json" style="display:none" onchange="importChar(event)">
+        <main class="yuki-main yuki-books-main" id="yuki-books-content">
+          <h2 class="yuki-title">Livros de Referência</h2>
+          <p class="muted">Carregando…</p>
+        </main>
+      </div>`;
+  } else {
+    app.innerHTML = `<h1>Livros de Referência</h1><div class="muted">Carregando…</div>`;
+  }
   let books = [];
   try {
     books = await booksDBList();
   } catch (e) {
     console.error(e);
-    app.innerHTML = `<h1>Livros de Referência</h1>` +
-      `<div class="warn">Erro ao acessar o armazenamento de livros. Seu navegador pode ter bloqueado IndexedDB.</div>`;
+    if (isYuki) {
+      const target = document.getElementById('yuki-books-content');
+      if (target) {
+        target.innerHTML = `<h2 class="yuki-title">Livros de Referência</h2>
+          <div class="warn">Erro ao acessar o armazenamento de livros. Seu navegador pode ter bloqueado IndexedDB.</div>`;
+      }
+    } else {
+      app.innerHTML = `<h1>Livros de Referência</h1>
+        <div class="warn">Erro ao acessar o armazenamento de livros. Seu navegador pode ter bloqueado IndexedDB.</div>`;
+    }
     return;
   }
 
-  let html = `<h1>Livros de Referência</h1>`;
+  let html = isYuki
+    ? `<h2 class="yuki-title">Livros de Referência</h2>`
+    : `<h1>Livros de Referência</h1>`;
   html += `<div class="muted">PDFs salvos localmente (IndexedDB). Depois de carregar uma vez, funciona offline.</div>`;
   html += `<hr>`;
   html += `<div class="panel row-between">`;
@@ -899,7 +950,13 @@ async function renderBooks(app) {
   }
 
   html += `<div class="footer">© ${new Date().getFullYear()} Yuki</div>`;
-  app.innerHTML = html;
+  
+  if (isYuki) {
+    const target = document.getElementById('yuki-books-content');
+    if (target) target.innerHTML = html;
+  } else {
+    app.innerHTML = html;
+  }
 }
 
 async function addBook(e) {
@@ -1326,7 +1383,7 @@ function settingsModalHTML() {
       <div style="margin-top:8px;"><button data-action="preview-welcome">Ver boas-vindas agora</button></div>
       ${charSection}
       <div class="modal-actions" style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border, #ccc); padding-top: 16px; margin-top: 20px;">
-        <button data-action="open-about" style="background: transparent; border: 1px solid var(--border, #ccc);">Sobre o App</button>
+        <button data-action="open-about" class="about-open-btn">Sobre o App</button>
         <button data-action="close-settings" class="btn-accent">Fechar</button>
       </div>
     </div>`;
@@ -1409,7 +1466,7 @@ function printPreviewModalHTML() {
       </div>
       <div class="print-sheet" id="print-sheet">${buildPrintSheetHTML(c)}</div>
       <div class="print-preview-actions no-print">
-        <button data-action="print-pdf" style="background:#ccffcc;">Salvar PDF</button>
+        <button data-action="print-pdf" class="btn-accent">Salvar PDF</button>
         <button data-action="close-print-preview">Cancelar</button>
       </div>
     </div>`;
@@ -1952,7 +2009,7 @@ function renderSpellDraftForm() {
           `<textarea data-bind="addSpellDraft.effect" rows="3" style="flex:1;">${esc(d.effect)}</textarea></div>`;
   html += '<div style="display:flex;gap:6px;justify-content:flex-end;margin-top:10px;">';
   html += '<button data-action="add-spell-cancel-create">Cancelar</button>';
-  html += '<button data-action="add-spell-save-create" style="background:#ccffcc;">Salvar e Adicionar</button>';
+  html += '<button data-action="add-spell-save-create" class="btn-accent">Salvar e Adicionar</button>';
   html += '</div>';
   html += '</div>';
   return html;
@@ -2174,7 +2231,7 @@ function showCropModal(img, onConfirm) {
       </div>
       <div class="modal-actions">
         <button id="crop-cancel">Cancelar</button>
-        <button id="crop-confirm" style="background:#ccffcc;">Cortar e usar</button>
+        <button id="crop-confirm" class="btn-accent">Cortar e usar</button>
       </div>
     </div>
   `;

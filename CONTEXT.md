@@ -61,3 +61,36 @@ O histórico de versões exibido na tela "Sobre" **não fica neste arquivo**. El
 - Ajustar o design do Tema Yuki.
 - Multi-sistema (suporte a outros RPGs no futuro).
 - Banco de habilidades pré-carregadas.
+
+## Iteração 24/10/2026 — Home responsiva
+
+- Alinhamento dos botões da home nos temas Alpha e Yuki, com CSS compartilhado e sem cores fixas.
+- No Alpha, as quatro ações usam uma grade equilibrada: quatro colunas em telas largas, duas em telas menores e uma em celulares estreitos.
+- No Yuki, cabeçalho e botões dos cards têm altura mínima consistente; a navegação vira uma linha de três ícones em celulares estreitos, com rótulos acessíveis.
+- Versão atualizada para `v0.8.0-alpha`; cache do Service Worker atualizado para `yuki-v5`.
+
+
+## Iteração 25/10/2026 — Refinamento do tema Yuki
+
+- Yuki é o tema oficial provisório e deve receber prioridade nas próximas iterações visuais.
+- Refinar a home: alinhamento do cabeçalho, navegação, cards e botões.
+- Melhorar a responsividade em notebook, tablet e mobile, incluindo telas estreitas.
+- Padronizar o contraste dos botões de confirmação e salvamento.
+- Preferir classes CSS a estilos inline no JavaScript, respeitando a troca de temas.
+- Manter HTML, CSS e JavaScript puros, sem frameworks ou etapa de build.
+- Ao concluir a alteração, sincronizar APP_VERSION, CHANGELOG e cache do Service Worker.
+- Versão planejada: 0.8.0-alpha.
+- Cache planejado: yuki-v5.
+- Próxima verificação: testar home com zero, um e vários personagens, além dos botões dos modais e da navegação mobile.
+
+## Iteração 25/10/2026 — Correções visuais e navegação Yuki
+
+- Corrigir o contraste do botão "Sobre o App", removendo seu estilo inline e aplicando uma classe específica.
+- Alinhar o contador de fichas e o botão "Novo" no cabeçalho da home.
+- Reforçar o contraste do botão "Cortar e usar" no modal de recorte.
+- Reutilizar a sidebar Yuki na aba Livros, mantendo perfil, navegação e importação acessíveis.
+- Aplicar cores do tema Yuki ao fundo e à divisória da split view.
+- Atualizar APP_VERSION, CHANGELOG e cache do Service Worker após validação.
+- Versão planejada: 0.8.1-alpha.
+- Cache planejado: yuki-v6.
+- Validar a home, a biblioteca com e sem PDFs, os estados de carregamento/erro, o recorte de fotos e a split view.
