@@ -1,0 +1,1324 @@
+  /* =========================================
+     Tela Sobre (About) e Changelog
+     ========================================= */
+  .about-modal {
+    width: 90vw;
+    max-width: 400px;
+    text-align: center;
+    padding: 24px;
+  }
+  
+  .about-header {
+    margin-bottom: 20px;
+  }
+  
+  .about-icon {
+    width: 96px;
+    height: 96px;
+    object-fit: contain; /* Melhor para SVGs do que cover */
+    margin: 0 auto 12px;
+    display: block;
+    background-color: #fff; /* Fundo branco para o traço preto aparecer */
+    border: 2px solid var(--border, #808080);
+    border-radius: 4px;
+    padding: 8px;
+  }
+  
+  .about-header h2 {
+    margin: 0;
+    font-size: 24px;
+  }
+  
+  .about-version {
+    font-size: 13px;
+    color: var(--text-muted, #666);
+    margin-top: 4px;
+  }
+  
+  .about-changelog-title {
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+  
+  .about-changelog {
+    max-height: 40vh;
+    overflow-y: auto;
+    overscroll-behavior: contain; /* Impede scroll do fundo */
+    text-align: left;
+    padding: 12px;
+    background: var(--bg-input, #f4f4f4);
+    border: 1px solid var(--border, #808080);
+    border-radius: 2px;
+  }
+  
+  .changelog-block {
+    margin-bottom: 16px;
+  }
+  
+  .changelog-block h4 {
+    margin: 0 0 4px;
+    font-size: 14px;
+    color: var(--accent, #000080);
+  }
+  
+  .changelog-block ul {
+    margin: 0;
+    padding-left: 20px;
+    font-size: 13px;
+  }
+  
+  .changelog-block li {
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+
+  .about-icon {
+    width: 96px;
+    height: 96px;
+    object-fit: cover;
+    margin: 0 auto 12px;
+    display: block;
+    background-color: #fff; /* Garante fundo claro pro ícone aparecer */
+    border: 2px solid var(--border, #ccc);
+  }
+
+  /* =========================================
+     RESPONSIVIDADE MOBILE — Correções globais
+     ========================================= */
+  
+  /* Evita estouro horizontal geral */
+  html, body { overflow-x: hidden; }
+  
+  /* iOS: inputs com <16px fazem zoom automático ao focar.
+     Forçar 16px no mobile evita isso. */
+  @media (max-width: 768px) {
+    input, select, textarea {
+      font-size: 16px !important;
+    }
+  }
+  
+  /* Alvos de toque confortáveis (mín. 40px) */
+  @media (max-width: 768px) {
+    button, .btn {
+      min-height: 40px;
+    }
+    .icon-btn {
+      min-width: 40px;
+      min-height: 40px;
+    }
+    .tab {
+      min-height: 38px;
+      display: inline-flex;
+      align-items: center;
+    }
+  }
+  
+  /* Modais: cabem em telas pequenas */
+  @media (max-width: 480px) {
+    .modal {
+      min-width: 0;
+      width: 94vw;
+      max-width: 94vw;
+      padding: 12px;
+    }
+    .modal-actions {
+      flex-wrap: wrap;
+    }
+    .modal-actions button {
+      flex: 1 1 auto;
+    }
+  }
+  
+  /* dvh: altura que respeita a barra de endereço do mobile */
+  @supports (height: 100dvh) {
+    .modal { max-height: 90dvh; }
+    .print-preview-modal { max-height: 92dvh; }
+    .about-changelog { max-height: 40dvh; }
+    .add-spell-content { max-height: 55dvh; }
+  }
+  @media (max-width: 600px) {
+    /* Modais fullscreen no mobile — usa dvh se suportado */
+    .print-preview-modal {
+      height: 100vh; max-height: 100vh;
+    }
+    .add-spell-modal {
+      height: 100vh; max-height: 100vh;
+    }
+  }
+  @supports (height: 100dvh) {
+    @media (max-width: 600px) {
+      .print-preview-modal,
+      .add-spell-modal {
+        height: 100dvh; max-height: 100dvh;
+      }
+    }
+  }
+  
+  /* Em telas muito estreitas, label do campo vai pra cima */
+  @media (max-width: 480px) {
+    .field {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 3px;
+    }
+    .field > label,
+    .field.vtop > label {
+      min-width: 0;
+      padding-top: 0;
+    }
+  }
+  
+  /* Ficha — botões do cabeçalho empilham bonito */
+  @media (max-width: 700px) {
+    .row-between {
+      align-items: stretch;
+    }
+    .row-between > div:not(.muted) {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      width: 100%;
+    }
+    .row-between > div > button {
+      flex: 1 1 auto;
+    }
+  }
+  
+  /* Tela de boas-vindas */
+  @media (max-width: 480px) {
+    .welcome-screen {
+      padding: 12px;
+      align-items: flex-start;
+      padding-top: 20px;
+    }
+    .welcome-card {
+      padding: 22px 18px;
+      max-width: 100%;
+    }
+    .welcome-title { font-size: 32px; }
+    .welcome-greeting { font-size: 18px; }
+    .welcome-enter { width: 100%; }
+  }
+  
+  /* Reader — toolbar mais limpo no mobile */
+  @media (max-width: 700px) {
+    .reader-toolbar {
+      gap: 2px;
+      padding: 4px 6px;
+    }
+    .reader-title {
+      order: -1;
+      flex-basis: 100%;
+      text-align: center;
+      min-width: 0;
+      margin-bottom: 4px;
+      font-size: 13px;
+    }
+    .reader-toolbar button {
+      min-height: 40px;
+      min-width: 40px;
+    }
+  }
+  
+  /* FAB respeitando safe-area (notch / home indicator) */
+  .dice-fab {
+    bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+    right: calc(24px + env(safe-area-inset-right, 0px));
+  }
+  
+  /* Grid do Tema Yuki: cards "vazios" decorativos somem no mobile */
+  @media (max-width: 768px) {
+    .yuki-card.empty { display: none; }
+  }
+  
+  /* =========================================
+     TABELAS → CARDS no mobile (via data-label)
+     ========================================= */
+  @media (max-width: 700px) {
+    .table-wrap table,
+    .table-wrap thead,
+    .table-wrap tbody,
+    .table-wrap th,
+    .table-wrap td,
+    .table-wrap tr {
+      display: block;
+      width: 100%;
+    }
+    .table-wrap thead {
+      position: absolute;
+      left: -9999px;
+      top: -9999px;
+    }
+    .table-wrap table { border-collapse: separate; border-spacing: 0; }
+    .table-wrap tr {
+      background: #fff;
+      border: 2px solid #808080;
+      margin-bottom: 10px;
+      padding: 4px 8px;
+    }
+    .table-wrap td {
+      border: none;
+      border-bottom: 1px dotted #ccc;
+      padding: 6px 0 6px 110px;
+      position: relative;
+      min-height: 32px;
+    }
+    .table-wrap td:last-child { border-bottom: none; }
+    .table-wrap td[data-label]::before {
+      content: attr(data-label);
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 100px;
+      font-weight: bold;
+      font-size: 11px;
+      color: #555;
+    }
+    /* Yuki */
+    body[data-theme="yuki"] .table-wrap tr {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+    }
+    body[data-theme="yuki"] .table-wrap td {
+      border-bottom: 1px dotted var(--border);
+    }
+    body[data-theme="yuki"] .table-wrap td[data-label]::before {
+      color: var(--text-muted);
+    }
+  }
+
+  /* =========================================
+     FIX: Overflow horizontal no layout Yuki
+     (cards sendo cortados no mobile)
+     ========================================= */
+  
+  /* Regra global — em qualquer largura, permite o grid
+     encolher abaixo do min-content dos filhos */
+  .yuki-layout > .yuki-sidebar,
+  .yuki-layout > .yuki-main {
+    min-width: 0;
+  }
+  
+  .yuki-grid {
+    min-width: 0;
+    max-width: 100%;
+  }
+  
+  .yuki-card {
+    min-width: 0;
+    overflow: hidden;
+  }
+  
+  @media (max-width: 768px) {
+    /* Permite a coluna do grid ser MENOR que o conteúdo */
+    .yuki-layout {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  
+    .yuki-sidebar {
+      min-width: 0;
+      max-width: 100%;
+      overflow: hidden;
+      gap: 10px !important;
+    }
+  
+    .yuki-main {
+      min-width: 0;
+      max-width: 100%;
+      overflow: hidden;
+      padding: 16px 12px;
+    }
+  
+    .yuki-profile {
+      min-width: 0;
+      flex-shrink: 1;
+      overflow: hidden;
+    }
+  
+    /* Nome do usuário truncado — não empurra o nav */
+    .yuki-username {
+      max-width: 110px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  
+    .yuki-nav {
+      flex-shrink: 0;
+      gap: 2px !important;
+    }
+  
+    .yuki-nav button {
+      padding: 8px !important;
+      min-width: 40px;
+      min-height: 40px;
+      justify-content: center;
+    }
+  
+    /* auto-fit colapsa tracks vazios: com poucos personagens,
+       os cards ESTICAM em vez de ficarem presos na coluna 1 */
+    .yuki-grid {
+      width: 100%;
+      gap: 10px;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    }
+  
+    .yuki-card {
+      padding: 10px;
+      gap: 8px;
+    }
+  
+    .yuki-card-title,
+    .yuki-card-class {
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  /* =========================================
+     HOME — alinhamento responsivo dos botões
+     Compartilhado pelos temas Alpha e Yuki.
+     Não define cores: herda o tema ativo.
+     ========================================= */
+
+  /* Ações do tema Alpha: botões alinhados em colunas iguais. */
+  .home-actions-panel {
+    display: flex;
+    align-items: center;
+    gap: 12px 16px;
+    min-width: 0;
+  }
+
+  .home-actions {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 8px;
+    flex: 1 1 700px;
+    min-width: 0;
+  }
+
+  .home-actions > button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-width: 0;
+    min-height: 44px;
+    width: 100%;
+    margin: 0;
+    padding: 8px 10px;
+    line-height: 1.3;
+    text-align: center;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .home-actions-panel > .muted {
+    flex: 0 0 auto;
+    text-align: right;
+  }
+
+  /* Yuki: mantém cabeçalho e ações consistentes em qualquer largura. */
+  .yuki-header,
+  .yuki-grid {
+    min-width: 0;
+    width: 100%;
+  }
+
+  /* [Fase 2a] .yuki-header-bar consolidado — ver regra única no fim do CSS */
+
+  .yuki-header-bar > span {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .yuki-header-bar > button {
+    flex: 0 0 auto;
+    min-width: 96px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .yuki-nav {
+    min-width: 0;
+  }
+
+  .yuki-nav button {
+    min-height: 44px;
+    min-width: 0;
+    line-height: 1.35;
+  }
+
+  .yuki-card {
+    min-width: 0;
+    height: 100%;
+  }
+
+  .yuki-card-title,
+  .yuki-card-class {
+    width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .yuki-card button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    margin-top: auto;
+    line-height: 1.3;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  /* Até notebook estreito/tablet: ações ficam em linha própria. */
+  @media (max-width: 900px) {
+    .home-actions {
+      flex: 1 1 100%;
+    }
+
+    .home-actions-panel > .muted {
+      flex: 1 0 100%;
+      text-align: right;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .home-actions {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .home-actions > button {
+      min-height: 46px;
+      padding: 8px 6px;
+    }
+
+    .yuki-main {
+      padding: 16px 12px;
+    }
+
+    .yuki-header {
+      margin-bottom: 24px;
+    }
+
+    .yuki-title {
+      margin-bottom: 20px;
+      font-size: clamp(22px, 6vw, 28px);
+    }
+
+    .yuki-grid {
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 140px), 1fr));
+      gap: 12px;
+    }
+
+    .yuki-card {
+      padding: 10px;
+      gap: 8px;
+    }
+  }
+
+  /* Em celulares estreitos, a navegação vai para uma linha própria. */
+  @media (max-width: 520px) {
+    .yuki-sidebar {
+      flex-wrap: wrap;
+      align-items: center;
+      padding: 12px;
+      gap: 12px;
+    }
+
+    .yuki-profile {
+      flex: 1 1 140px;
+      min-width: 0;
+      max-width: 100%;
+    }
+
+    .yuki-username {
+      min-width: 0;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .yuki-nav {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      flex: 1 1 100%;
+      width: 100%;
+      gap: 8px;
+    }
+
+    .yuki-nav button {
+      width: 100%;
+      min-width: 0;
+      min-height: 44px;
+      padding: 8px !important;
+      justify-content: center;
+    }
+
+    .yuki-nav button svg {
+      flex: 0 0 auto;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .home-actions {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .home-actions > button {
+      min-height: 44px;
+    }
+
+    .yuki-main {
+      padding-right: 10px;
+      padding-left: 10px;
+    }
+  }
+
+
+  /* =========================================
+     YUKI — HOME REFINADA + RESPONSIVIDADE
+     ========================================= */
+  
+  body[data-theme="yuki"] .yuki-layout {
+    grid-template-columns: 240px minmax(0, 1fr);
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+  
+  body[data-theme="yuki"] .yuki-sidebar,
+  body[data-theme="yuki"] .yuki-main,
+  body[data-theme="yuki"] .yuki-header,
+  body[data-theme="yuki"] .yuki-header-bar,
+  body[data-theme="yuki"] .yuki-card {
+    min-width: 0;
+  }
+  
+  body[data-theme="yuki"] .yuki-sidebar {
+    position: sticky;
+    top: 0;
+    align-self: start;
+    min-height: 100vh;
+    min-height: 100dvh;
+    gap: 32px;
+  }
+  
+  body[data-theme="yuki"] .yuki-profile {
+    width: 100%;
+    overflow-wrap: anywhere;
+  }
+  
+  body[data-theme="yuki"] .yuki-username {
+    overflow-wrap: anywhere;
+  }
+  
+  body[data-theme="yuki"] .yuki-nav {
+    width: 100%;
+    gap: 8px;
+  }
+  
+  body[data-theme="yuki"] .yuki-nav button {
+    width: 100%;
+    min-height: 44px;
+    padding: 10px 12px;
+    border: 1px solid transparent;
+    justify-content: flex-start;
+    text-align: left;
+  }
+  
+  body[data-theme="yuki"] .yuki-nav button:hover,
+  body[data-theme="yuki"] .yuki-nav button:focus-visible {
+    background: var(--bg-card);
+    border-color: var(--border);
+  }
+  
+  body[data-theme="yuki"] .yuki-main {
+    padding: clamp(20px, 4vw, 48px);
+  }
+  
+  body[data-theme="yuki"] .yuki-header {
+    margin-bottom: 28px;
+  }
+  
+  body[data-theme="yuki"] .yuki-title {
+    margin-bottom: 24px;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+  }
+  
+  /* [Fase 2a] .yuki-header-bar consolidado — ver regra única no fim do CSS */
+  
+  body[data-theme="yuki"] .yuki-grid {
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(min(100%, 190px), 1fr)
+    );
+    align-items: stretch;
+    gap: clamp(12px, 2vw, 20px);
+  }
+  
+  body[data-theme="yuki"] .yuki-card {
+    align-items: stretch;
+    gap: 12px;
+    padding: 14px;
+  }
+  
+  body[data-theme="yuki"] .yuki-card-img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    border-radius: 2px;
+  }
+  
+  body[data-theme="yuki"] .yuki-card-title {
+    width: 100%;
+    overflow-wrap: anywhere;
+    line-height: 1.4;
+  }
+  
+  body[data-theme="yuki"] .yuki-card-class {
+    width: 100%;
+    overflow-wrap: anywhere;
+    line-height: 1.4;
+  }
+  
+  body[data-theme="yuki"] .yuki-card button {
+    width: 100%;
+    min-height: 42px;
+    margin-top: auto;
+    white-space: normal;
+  }
+  
+  /* Contraste consistente nas ações de confirmação.
+     Sobrescreve também fundos claros definidos inline no JS. */
+  
+  body[data-theme="yuki"] button[style*="background"],
+  body[data-theme="yuki"] button[style*="background-color"] {
+    color: #111 !important;
+  }
+  
+  body[data-theme="yuki"] button[style*="#ccffcc"],
+  body[data-theme="yuki"] button[style*="#CCFFCC"] {
+    background: var(--accent) !important;
+    border-color: var(--accent) !important;
+    color: #111 !important;
+    font-weight: 600;
+  }
+  
+  body[data-theme="yuki"] .btn-accent {
+    min-height: 42px;
+    padding: 10px 14px !important;
+    line-height: 1.35;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  
+  /* Notebook estreito e tablet */
+  
+  @media (min-width: 769px) and (max-width: 1050px) {
+    body[data-theme="yuki"] .yuki-layout {
+      grid-template-columns: 200px minmax(0, 1fr);
+    }
+  
+    body[data-theme="yuki"] .yuki-sidebar {
+      padding: 24px 14px;
+    }
+  
+    body[data-theme="yuki"] .yuki-main {
+      padding: 24px 20px;
+    }
+  }
+  
+  /* Mobile */
+  
+  @media (max-width: 768px) {
+    body[data-theme="yuki"] .yuki-layout {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  
+    body[data-theme="yuki"] .yuki-sidebar {
+      position: static;
+      min-height: 0;
+      padding: 12px 16px;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+  
+    body[data-theme="yuki"] .yuki-profile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1 1 0;
+      min-width: 0;
+      text-align: left;
+    }
+  
+    body[data-theme="yuki"] .yuki-avatar {
+      flex: 0 0 44px;
+      width: 44px;
+      height: 44px;
+      margin: 0;
+    }
+  
+    body[data-theme="yuki"] .yuki-username {
+      max-width: 100%;
+      font-size: 13px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  
+    body[data-theme="yuki"] .yuki-nav {
+      display: flex;
+      flex: 0 1 auto;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 4px;
+    }
+  
+    body[data-theme="yuki"] .yuki-nav button {
+      width: 42px;
+      min-width: 42px;
+      min-height: 42px;
+      padding: 8px;
+      justify-content: center;
+    }
+  
+    body[data-theme="yuki"] .yuki-nav button svg {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+  
+    body[data-theme="yuki"] .yuki-main {
+      padding: 20px 16px;
+    }
+  
+    body[data-theme="yuki"] .yuki-title {
+      margin-bottom: 20px;
+      font-size: clamp(22px, 5vw, 28px);
+    }
+  
+    body[data-theme="yuki"] .yuki-header {
+      margin-bottom: 24px;
+    }
+  
+    body[data-theme="yuki"] .yuki-header-bar {
+      align-items: center;
+    }
+  
+    body[data-theme="yuki"] .yuki-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+  
+    body[data-theme="yuki"] .yuki-card {
+      padding: 10px;
+      gap: 10px;
+    }
+  
+    body[data-theme="yuki"] .yuki-card-img {
+      aspect-ratio: 4 / 5;
+    }
+  
+    body[data-theme="yuki"] .yuki-card-title {
+      font-size: 13px;
+    }
+  
+    body[data-theme="yuki"] .yuki-card-class {
+      font-size: 11px;
+    }
+  
+    body[data-theme="yuki"] .container {
+      padding: 12px;
+    }
+  }
+  
+  /* Celulares muito estreitos */
+  
+  @media (max-width: 360px) {
+    body[data-theme="yuki"] .yuki-sidebar {
+      padding: 10px;
+      gap: 6px;
+    }
+  
+    body[data-theme="yuki"] .yuki-avatar {
+      flex-basis: 36px;
+      width: 36px;
+      height: 36px;
+    }
+  
+    body[data-theme="yuki"] .yuki-nav button {
+      width: 38px;
+      min-width: 38px;
+      min-height: 42px;
+    }
+  
+    body[data-theme="yuki"] .yuki-main {
+      padding: 16px 10px;
+    }
+  
+    body[data-theme="yuki"] .yuki-grid {
+      gap: 8px;
+    }
+  
+    body[data-theme="yuki"] .yuki-card {
+      padding: 8px;
+    }
+  }
+
+  /* Yuki — botão Sobre com contraste correto */
+  body[data-theme="yuki"] .about-open-btn {
+    background: transparent !important;
+    border: 1px solid var(--border) !important;
+    color: var(--text-main) !important;
+  }
+  
+  body[data-theme="yuki"] .about-open-btn:hover {
+    background: var(--bg-card) !important;
+    color: var(--accent) !important;
+  }
+
+  /* Yuki — alinhamento do contador e botão Novo */
+  /* [Fase 2a] .yuki-header-bar — regra única consolidada.
+     Antes eram 4 definições concorrentes. Agora: 1 definitiva.
+     Grid 2 colunas (contagem / botão), altura consistente em mobile. */
+  body[data-theme="yuki"] .yuki-header-bar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    min-height: 40px;
+  }
+  
+  body[data-theme="yuki"] .yuki-header-bar > span {
+    min-width: 0;
+    margin: 0;
+    line-height: 1.35;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    min-height: 40px;
+  }
+  
+  body[data-theme="yuki"] .yuki-header-bar > button {
+    align-self: center;
+    justify-self: end;
+    margin: 0;
+    min-width: 96px;
+    min-height: 40px;
+  }
+
+  /* Yuki — confirmação do recorte de foto */
+  body[data-theme="yuki"] .crop-modal #crop-confirm {
+    background: var(--accent) !important;
+    color: #111 !important;
+    border: 1px solid var(--accent) !important;
+    font-family: inherit !important;
+    font-weight: 700 !important;
+  }
+  
+  body[data-theme="yuki"] .crop-modal #crop-confirm:hover {
+    background: #9ee02b !important;
+    color: #111 !important;
+  }
+
+  /* Yuki — conteúdo da biblioteca */
+  body[data-theme="yuki"] .yuki-books-main {
+    align-items: center;
+    text-align: left;
+  }
+  
+  body[data-theme="yuki"] .yuki-books-main > * {
+    width: 100%;
+    max-width: 1000px;
+  }
+  
+  body[data-theme="yuki"] .yuki-books-main > .yuki-title {
+    text-align: left;
+    margin-bottom: 20px;
+  }
+
+  /* Yuki — split view coerente com o tema escuro */
+  body[data-theme="yuki"] .split-wrap,
+  body[data-theme="yuki"] .split-pane,
+  body[data-theme="yuki"] .split-pane-left .container {
+    background: var(--bg-main) !important;
+    color: var(--text-main);
+  }
+  
+  body[data-theme="yuki"] .split-divider {
+    background: var(--border);
+  }
+  
+  body[data-theme="yuki"] .split-divider:hover,
+  body[data-theme="yuki"] .split-divider:active {
+    background: var(--accent);
+  }
+  
+  body[data-theme="yuki"] .split-empty {
+    background: var(--bg-main);
+    color: var(--text-muted);
+  }
+  
+  body[data-theme="yuki"] .split-pane-right .reader-wrap {
+    background: var(--bg-main);
+  }
+  
+  body[data-theme="yuki"] .split-pane-right .reader-container {
+    background: #171717;
+  }
+
+  /* =========================================
+     SHEET MENU (drawer) + BOTTOM BAR
+     ========================================= */
+  
+  .sheet-menu-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 210;
+    display: flex;
+    justify-content: flex-end;
+    overscroll-behavior: contain;
+  }
+  
+  .sheet-menu-panel {
+    width: 300px;
+    max-width: 88vw;
+    height: 100%;
+    background: #d4d0c8;
+    border-left: 2px solid #808080;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    animation: sheetMenuSlideIn 0.2s ease-out;
+  }
+  
+  @keyframes sheetMenuSlideIn {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+  }
+  
+  .sheet-menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    border-bottom: 2px solid #808080;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  
+  .sheet-menu-header h3 {
+    margin: 0;
+    font-size: 16px;
+  }
+  
+  .sheet-menu-close {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    font-size: 24px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    cursor: pointer;
+  }
+  
+  .sheet-menu-close:hover { background: #ffcccc; }
+  
+  .sheet-menu-tabs {
+    display: flex;
+    flex-direction: column;
+    padding: 8px 0;
+    flex-shrink: 0;
+  }
+  
+  .sheet-menu-tab {
+    text-align: left;
+    padding: 12px 16px;
+    font-size: 14px;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    cursor: pointer;
+    color: #000;
+    font-family: inherit;
+    min-height: 44px;
+  }
+  
+  .sheet-menu-tab:hover { background: #e8e8e8; }
+  
+  .sheet-menu-tab.active {
+    background: #ffffcc;
+    font-weight: bold;
+    border-left: 4px solid #000080;
+    padding-left: 12px;
+  }
+  
+  .sheet-menu-actions {
+    padding: 12px 16px;
+    border-top: 2px solid #808080;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex-shrink: 0;
+    margin-top: auto;
+  }
+  
+  .sheet-menu-actions h4 {
+    margin: 0 0 6px;
+    font-size: 12px;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .sheet-menu-action-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 10px 12px;
+    font-size: 13px;
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    cursor: pointer;
+    font-family: inherit;
+    min-height: 44px;
+  }
+  
+  .sheet-menu-action-btn:hover { background: #e0e0e0; }
+  
+  /* Rótulo da aba atual no header (mobile) */
+  .sheet-mobile-tab-label {
+    font-size: 12px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 4px 0 0;
+  }
+  
+  /* Barra inferior (só mobile) */
+  .sheet-bottom-bar { display: none; }
+  .sheet-bottom-spacer { display: none; }
+  
+  @media (max-width: 700px) {
+    .sheet-bottom-bar {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      background: #d4d0c8;
+      border-top: 2px solid #808080;
+      z-index: 80;
+      padding-bottom: env(safe-area-inset-bottom, 0);
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.15);
+    }
+  
+    .sheet-bottom-spacer {
+      display: block;
+      height: 70px;
+    }
+  
+    .sheet-bottom-btn {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      padding: 6px 4px;
+      font-size: 11px;
+      min-height: 58px;
+      background: transparent;
+      border: none;
+      border-right: 1px solid rgba(0,0,0,0.1);
+      cursor: pointer;
+      color: #000;
+      font-family: inherit;
+    }
+  
+    .sheet-bottom-btn:last-child { border-right: none; }
+    .sheet-bottom-btn:hover,
+    .sheet-bottom-btn:active { background: #e8e8e8; }
+    .sheet-bottom-btn.danger { color: #cc0000; }
+    .sheet-bottom-btn svg { flex-shrink: 0; }
+  
+    /* FAB de menu sobe pra não encostar na barra */
+    .dice-fab.menu-fab {
+      bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+    }
+  }
+  
+  /* ==== Tema Yuki ==== */
+  body[data-theme="yuki"] .sheet-menu-overlay {
+    background: rgba(0,0,0,0.8);
+  }
+  
+  body[data-theme="yuki"] .sheet-menu-panel {
+    background: var(--bg-sidebar);
+    border-left: 1px solid var(--border);
+    color: var(--text-main);
+  }
+  
+  body[data-theme="yuki"] .sheet-menu-header { border-bottom-color: var(--border); }
+  body[data-theme="yuki"] .sheet-menu-header h3 { color: var(--accent); }
+  
+  body[data-theme="yuki"] .sheet-menu-close {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+  }
+  body[data-theme="yuki"] .sheet-menu-close:hover { background: #3a1a1a; }
+  
+  body[data-theme="yuki"] .sheet-menu-tab {
+    color: var(--text-main);
+    border-bottom-color: var(--border);
+    background: transparent;
+  }
+  body[data-theme="yuki"] .sheet-menu-tab:hover { background: var(--bg-card); }
+  body[data-theme="yuki"] .sheet-menu-tab.active {
+    background: var(--bg-card);
+    color: var(--accent);
+    border-left-color: var(--accent);
+  }
+  
+  body[data-theme="yuki"] .sheet-menu-actions { border-top-color: var(--border); }
+  body[data-theme="yuki"] .sheet-menu-actions h4 { color: var(--text-muted); }
+  
+  body[data-theme="yuki"] .sheet-menu-action-btn {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+  }
+  body[data-theme="yuki"] .sheet-menu-action-btn:hover {
+    background: #333;
+    border-color: var(--accent);
+  }
+  
+  body[data-theme="yuki"] .sheet-bottom-bar {
+    background: var(--bg-sidebar);
+    border-top: 1px solid var(--border);
+    box-shadow: 0 -4px 12px rgba(0,0,0,0.4);
+  }
+  
+  body[data-theme="yuki"] .sheet-bottom-btn {
+    color: var(--text-main);
+    border-right-color: var(--border);
+  }
+  body[data-theme="yuki"] .sheet-bottom-btn:hover,
+  body[data-theme="yuki"] .sheet-bottom-btn:active { background: var(--bg-card); }
+  body[data-theme="yuki"] .sheet-bottom-btn.danger { color: #ff5b5b; }
+  
+  body[data-theme="yuki"] .dice-fab.menu-fab {
+    background: var(--bg-card);
+    color: var(--text-main);
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  }
+  body[data-theme="yuki"] .dice-fab.menu-fab:hover {
+    background: var(--accent);
+    color: #000;
+    border-color: var(--accent);
+  }
+  
+  body[data-theme="yuki"] .sheet-mobile-tab-label { color: var(--text-muted); }
+
+  /* =========================================
+     LEITOR DE PDF — Setas laterais (desktop)
+     ========================================= */
+  
+  .reader-nav-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 96px;
+    background: rgba(0,0,0,0.5);
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    z-index: 15;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.6;
+    transition: opacity 0.2s, background 0.2s;
+    padding: 0;
+    border-radius: 4px;
+  }
+  
+  .reader-nav-arrow:hover,
+  .reader-nav-arrow:focus-visible {
+    opacity: 1;
+    background: rgba(0,0,0,0.75);
+  }
+  
+  .reader-nav-prev { left: 8px; }
+  .reader-nav-next { right: 8px; }
+  
+  .reader-nav-arrow:disabled {
+    opacity: 0.15 !important;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+  
+  /* Mobile: sem setas (usa swipe) */
+  @media (max-width: 700px) {
+    .reader-nav-arrow { display: none; }
+  }
+  
+  /* Split view: sem setas (pane estreito) */
+  .split-pane-right .reader-nav-arrow { display: none; }
+  
+  /* Tema Yuki */
+  body[data-theme="yuki"] .reader-nav-arrow {
+    background: rgba(0,0,0,0.65);
+    color: var(--text-main);
+  }
+  
+  body[data-theme="yuki"] .reader-nav-arrow:hover {
+    background: var(--accent);
+    color: #000;
+  }
+
+  /* =========================================
+     LEITOR — Estado de carregamento
+     ========================================= */
+  
+  .reader-loading {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #aaa;
+    font-size: 14px;
+    padding: 20px;
+    min-height: 100vh;
+  }
+  
+  body[data-theme="yuki"] .reader-loading {
+    background: var(--bg-main);
+    color: var(--text-muted);
+  }

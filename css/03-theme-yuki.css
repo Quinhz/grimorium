@@ -1,0 +1,649 @@
+  /* =========================================
+     TEMA YUKI - Dark Brutalist
+     ========================================= */
+  
+  body[data-theme="yuki"] {
+    --bg-main: #1a1a1a;
+    --bg-sidebar: #222222;
+    --bg-card: #2a2a2a;
+    --bg-input: #111111;
+    --text-main: #e0e0e0;
+    --text-muted: #888888;
+    --accent: #8ac926;
+    --border: #444444;
+    
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    font-family: 'IBM Plex Mono', monospace;
+    display: block; /* Sobrescreve o flex do body do Alpha */
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Layout da Tela Inicial */
+  .yuki-layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    min-height: 100vh;
+  }
+  
+  .yuki-sidebar {
+    background: var(--bg-sidebar);
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    border-right: 1px solid var(--border);
+  }
+  
+  .yuki-profile {
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  .yuki-avatar {
+    width: 140px;
+    height: 140px;
+    object-fit: cover;
+    background: var(--bg-input);
+    margin: 0 auto 12px;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+  }
+  
+  .yuki-username {
+    font-size: 18px;
+    font-weight: 600;
+  }
+  
+  .yuki-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .yuki-nav button {
+    background: transparent;
+    border: none;
+    color: var(--text-main);
+    text-align: left;
+    font-family: inherit;
+    font-size: 16px;
+    padding: 8px 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: color 0.2s;
+  }
+  
+  .yuki-nav button:hover {
+    color: var(--accent);
+  }
+  
+  .yuki-main {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+  }
+  
+  .yuki-header {
+    width: 100%;
+    max-width: 900px;
+    margin-bottom: 40px;
+  }
+  
+  .yuki-title {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 600;
+    margin: 0 0 30px 0;
+    color: var(--text-main);
+    border: none;
+  }
+  
+  /* [Fase 2a] .yuki-header-bar consolidado — ver regra única no fim do CSS */
+  
+  .btn-accent {
+    background: #8ac926 !important;
+    color: #000 !important;
+    border: 1px solid #8ac926 !important;
+    padding: 4px 10px !important;
+    font-family: inherit !important;
+    font-weight: 600 !important;
+    cursor: pointer;
+    font-size: 12px !important;
+    border-radius: 0 !important;
+  }
+  
+  .btn-accent:hover {
+    background: #9ee02b !important;
+  }
+  
+  .yuki-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 20px;
+    width: 100%;
+    max-width: 900px;
+  }
+  
+  .yuki-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .yuki-card.empty {
+    opacity: 0.15;
+    min-height: 260px;
+    background: #222;
+  }
+  
+  .yuki-card-img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    background: #000;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-size: 12px;
+  }
+  
+  .yuki-card-title {
+    font-weight: 600;
+    font-size: 15px;
+    margin-top: 4px;
+    text-align: center;
+  }
+  
+  .yuki-card-class {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-align: center;
+    margin-top: -8px;
+  }
+  
+  .yuki-card button {
+    width: 100%;
+    margin-top: auto;
+  }
+  
+  /* Overrides para o resto do app (Fichas, Modais, etc) */
+  body[data-theme="yuki"] .container {
+    max-width: 100%;
+    padding: 40px;
+    background: var(--bg-main);
+  }
+  
+  body[data-theme="yuki"] .panel {
+    background: var(--bg-sidebar);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+  }
+  
+  body[data-theme="yuki"] h1,
+  body[data-theme="yuki"] h2,
+  body[data-theme="yuki"] h3,
+  body[data-theme="yuki"] h4 {
+    color: var(--accent);
+    border-color: var(--border);
+    font-family: inherit;
+  }
+  
+  body[data-theme="yuki"] input,
+  body[data-theme="yuki"] select,
+  body[data-theme="yuki"] textarea {
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+    font-family: inherit;
+  }
+  
+  body[data-theme="yuki"] button {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+    font-family: inherit;
+  }
+  
+  body[data-theme="yuki"] button:hover {
+    background: #333;
+  }
+  
+  body[data-theme="yuki"] button.btn-accent,
+  body[data-theme="yuki"] .btn-accent {
+    background: var(--accent) !important;
+    color: #000 !important;
+  }
+  
+  body[data-theme="yuki"] .tab {
+    background: var(--bg-sidebar);
+    border: 1px solid var(--border);
+    border-bottom: none;
+    color: var(--text-muted);
+  }
+  
+  body[data-theme="yuki"] .tab.active {
+    background: var(--bg-main);
+    color: var(--accent);
+    border-color: var(--border);
+  }
+  
+  body[data-theme="yuki"] .persona-card,
+  body[data-theme="yuki"] .spell-card,
+  body[data-theme="yuki"] .user-edit-row,
+  body[data-theme="yuki"] .modal {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+  }
+  
+  body[data-theme="yuki"] .modal-overlay {
+    background: rgba(0,0,0,0.8);
+  }
+  
+  body[data-theme="yuki"] .footer {
+    color: var(--text-muted);
+    padding-bottom: 20px;
+  }
+  
+  /* FAB de dados no tema Yuki */
+  body[data-theme="yuki"] .dice-fab {
+    background: var(--accent);
+    color: #000;
+    border: none;
+    box-shadow: 0 4px 15px rgba(138, 201, 38, 0.4);
+  }
+  
+  body[data-theme="yuki"] .dice-fab:hover {
+    background: #9ee02b;
+  }
+  
+  /* RESPONSIVIDADE (Mobile) - Sidebar vira Navbar no topo */
+  @media (max-width: 768px) {
+    .yuki-layout {
+      grid-template-columns: 1fr;
+    }
+    
+    .yuki-sidebar {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      border-right: none;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .yuki-profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-align: left;
+    }
+    
+    .yuki-avatar {
+      width: 45px;
+      height: 45px;
+      margin: 0;
+    }
+    
+    .yuki-username {
+      font-size: 14px;
+    }
+    
+    .yuki-nav {
+      flex-direction: row;
+      gap: 5px;
+    }
+    
+    .yuki-nav button {
+      font-size: 0; /* Esconde texto, mantém ícone */
+      padding: 10px;
+    }
+    
+    .yuki-nav button svg {
+      width: 22px;
+      height: 22px;
+    }
+    
+    .yuki-main {
+      padding: 20px 15px;
+    }
+    
+    .yuki-grid {
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 12px;
+    }
+    
+    .yuki-card {
+      padding: 10px;
+    }
+    
+    body[data-theme="yuki"] .container {
+      padding: 10px;
+    }
+  
+    body[data-theme="yuki"] .sheet-body {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    body[data-theme="yuki"] .sheet-body .panel {
+      width: 100%;
+      align-self: stretch;
+    }
+
+    body[data-theme="yuki"] .portrait-box {
+      width: 72px;
+      height: 72px;
+      align-self: flex-start;
+    }
+  }
+
+  /* =========================================
+     TEMA YUKI — Overrides complementares
+     (elementos com cores claras hardcoded
+      que a primeira versão não cobriu)
+     ========================================= */
+  
+  /* Scrollbar, checkboxes e inputs nativos em modo dark */
+  body[data-theme="yuki"] {
+    color-scheme: dark;
+  }
+  
+  body[data-theme="yuki"] input[type=checkbox],
+  body[data-theme="yuki"] input[type=radio],
+  body[data-theme="yuki"] input[type=range] {
+    accent-color: var(--accent);
+  }
+  
+  body[data-theme="yuki"] input::placeholder,
+  body[data-theme="yuki"] textarea::placeholder {
+    color: var(--text-muted);
+    opacity: 0.6;
+  }
+  
+  body[data-theme="yuki"] input:focus,
+  body[data-theme="yuki"] select:focus,
+  body[data-theme="yuki"] textarea:focus {
+    outline: 1px solid var(--accent);
+    border-color: var(--accent);
+  }
+  
+  body[data-theme="yuki"] select option {
+    background: var(--bg-input);
+    color: var(--text-main);
+  }
+  
+  body[data-theme="yuki"] input[readonly] {
+    background: var(--bg-sidebar);
+    color: var(--text-muted);
+  }
+  
+  /* Avisos (warn amarelo claro do Alpha) */
+  body[data-theme="yuki"] .warn {
+    background: #3d3200;
+    border: 1px solid #665200;
+    color: #ffd54f;
+  }
+  
+  /* Painéis internos */
+  body[data-theme="yuki"] .panel-inset {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+  }
+  
+  /* Botões radio do modal de configurações */
+  body[data-theme="yuki"] .modal-radio {
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+  }
+  
+  body[data-theme="yuki"] .modal-radio:hover {
+    background: var(--bg-card);
+    border-color: var(--border);
+  }
+  
+  body[data-theme="yuki"] .modal-radio.selected {
+    background: var(--bg-card);
+    border: 1px solid var(--accent);
+    color: var(--text-main);
+  }
+  
+  body[data-theme="yuki"] .modal-radio.disabled {
+    opacity: 0.4;
+  }
+  
+  /* Modal de dados */
+  body[data-theme="yuki"] .dice-result {
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+  }
+  
+  body[data-theme="yuki"] .dice-result > div[style*="font-size:32px"] {
+    color: var(--accent) !important;
+  }
+  
+  body[data-theme="yuki"] .dice-history {
+    color: var(--text-muted);
+  }
+  
+  body[data-theme="yuki"] .dice-history div {
+    border-bottom: 1px dotted var(--border);
+  }
+  
+  body[data-theme="yuki"] .dice-type-btn.selected {
+    background: var(--accent);
+    color: #000;
+    border-color: var(--accent);
+  }
+  
+  /* Lista de magias */
+  body[data-theme="yuki"] .spell-preset-item {
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+  }
+  
+  body[data-theme="yuki"] .spell-preset-item:hover {
+    background: var(--bg-card);
+    border-color: var(--accent);
+  }
+  
+  body[data-theme="yuki"] .spell-preset-title b {
+    color: var(--accent);
+  }
+  
+  body[data-theme="yuki"] .spell-preset-desc {
+    color: var(--text-muted);
+  }
+  
+  body[data-theme="yuki"] .spell-draft-form {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+  }
+  
+  /* Perfil e retrato do personagem */
+  body[data-theme="yuki"] .user-edit-pfp,
+  body[data-theme="yuki"] .user-chip-pfp,
+  body[data-theme="yuki"] .portrait-box {
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+  }
+  
+  body[data-theme="yuki"] .portrait-box:hover {
+    background: var(--bg-card);
+  }
+  
+  body[data-theme="yuki"] .portrait-placeholder {
+    color: var(--text-muted);
+  }
+  
+  body[data-theme="yuki"] .portrait-remove {
+    background: var(--bg-card);
+    border-color: var(--border);
+    color: var(--text-main);
+  }
+  
+  body[data-theme="yuki"] .portrait-remove:hover {
+    background: #3a1a1a;
+  }
+  
+  body[data-theme="yuki"] .user-edit-row {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+  }
+  
+  body[data-theme="yuki"] .user-chip {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+  }
+  
+  body[data-theme="yuki"] .user-chip-empty .user-chip-name {
+    color: var(--text-muted);
+  }
+  
+  /* Leitor de PDF (toolbar e preview de exportação) */
+  body[data-theme="yuki"] .reader-toolbar {
+    background: var(--bg-sidebar);
+    border-bottom: 1px solid var(--border);
+    color: var(--text-main);
+  }
+  
+  body[data-theme="yuki"] .reader-page-info,
+  body[data-theme="yuki"] .reader-title {
+    color: var(--text-main);
+  }
+  
+  body[data-theme="yuki"] .print-preview-header,
+  body[data-theme="yuki"] .print-preview-actions {
+    background: var(--bg-sidebar);
+    border-color: var(--border);
+    color: var(--text-main);
+  }
+  
+  /* Modal de adicionar magia */
+  body[data-theme="yuki"] .add-spell-content {
+    background: var(--bg-sidebar);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+  }
+  
+  body[data-theme="yuki"] .add-spell-tab {
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-bottom: none;
+    color: var(--text-muted);
+  }
+  
+  body[data-theme="yuki"] .add-spell-tab.active {
+    background: var(--bg-sidebar);
+    color: var(--accent);
+    border-color: var(--border);
+  }
+  
+  /* Tela de boas-vindas */
+  body[data-theme="yuki"] .welcome-card {
+    background: var(--bg-sidebar);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+  }
+  
+  body[data-theme="yuki"] .welcome-title,
+  body[data-theme="yuki"] .welcome-greeting {
+    color: var(--accent);
+  }
+  
+  body[data-theme="yuki"] .welcome-desc,
+  body[data-theme="yuki"] .welcome-version,
+  body[data-theme="yuki"] .welcome-checkbox {
+    color: var(--text-muted);
+  }
+  
+  body[data-theme="yuki"] .welcome-enter {
+    background: var(--accent);
+    color: #000;
+    border: none;
+    font-family: inherit;
+    font-weight: 600;
+  }
+  
+  body[data-theme="yuki"] .welcome-enter:hover {
+    background: #9ee02b;
+  }
+  
+  /* Textos, links e estados */
+  body[data-theme="yuki"] .muted {
+    color: var(--text-muted);
+  }
+  
+  body[data-theme="yuki"] .ok {
+    color: var(--accent);
+  }
+  
+  body[data-theme="yuki"] .bad {
+    color: #ff5b5b;
+  }
+  
+  body[data-theme="yuki"] .tag {
+    background: var(--accent);
+    color: #000;
+  }
+  
+  body[data-theme="yuki"] a {
+    color: var(--accent);
+  }
+  
+  body[data-theme="yuki"] a:visited {
+    color: #6ea020;
+  }
+  
+  body[data-theme="yuki"] hr {
+    border-top: 1px solid var(--border);
+    border-bottom: none;
+  }
+  
+  body[data-theme="yuki"] .split-empty {
+    color: var(--text-muted);
+  }
+  
+  /* Tabelas */
+  body[data-theme="yuki"] table th,
+  body[data-theme="yuki"] table td {
+    border: 1px solid var(--border);
+  }
+  
+  body[data-theme="yuki"] table th {
+    background: var(--bg-sidebar);
+    color: var(--text-main);
+  }
+  
+  body[data-theme="yuki"] .table-wrap {
+    color: var(--text-main);
+  }
+  
+  /* Títulos dentro de modais */
+  body[data-theme="yuki"] .modal h2,
+  body[data-theme="yuki"] .modal h3,
+  body[data-theme="yuki"] .modal h4 {
+    color: var(--accent);
+  }

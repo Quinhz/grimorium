@@ -1,0 +1,96 @@
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 13px; line-height: 1.4;
+    background: #c0c0c0; color: #000;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  .container { flex: 1; display: flex; flex-direction: column; max-width: 1100px; width: 100%; margin: 0 auto; padding: 12px 12px 40px; }
+  h1, h2, h3, h4 { font-family: "Times New Roman", Times, serif; color: #000080; margin: 10px 0 6px; }
+  h1 { font-size: 26px; }
+  h2 { font-size: 19px; border-bottom: 2px solid #000080; padding-bottom: 3px; }
+  h3 { font-size: 16px; }
+  h4 { font-size: 14px; margin: 10px 0 4px; }
+  a { color: #0000ee; }
+  a:visited { color: #551a8b; }
+  hr { border: 0; border-top: 1px solid #808080; border-bottom: 1px solid #fff; margin: 10px 0; }
+
+  .panel {
+    background: #d4d0c8;
+    border: 2px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    padding: 10px; margin: 10px 0;
+  }
+  .panel-inset {
+    background: #ffffff;
+    border: 2px solid;
+    border-color: #808080 #ffffff #ffffff #808080;
+    padding: 8px;
+  }
+  .warn { background: #ffffcc; border: 1px solid #cccc00; padding: 6px 8px; margin: 6px 0; }
+
+  button, .btn {
+    font-family: Verdana, Arial, sans-serif; font-size: 12px;
+    background: #c0c0c0; color: #000;
+    border: 2px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    padding: 4px 10px; cursor: pointer; text-decoration: none; display: inline-block;
+  }
+  button:active { border-color: #808080 #ffffff #ffffff #808080; }
+  button:hover { background: #d4d0c8; }
+  button.danger:hover { background: #ffcccc; }
+
+  input, select, textarea {
+    font-family: Verdana, Arial, sans-serif; font-size: 12px;
+    background: #ffffff; color: #000;
+    border: 2px solid;
+    border-color: #808080 #ffffff #ffffff #808080;
+    padding: 3px 5px;
+  }
+  input:focus, select:focus, textarea:focus { outline: 1px dotted #000080; }
+  input[readonly] { background: #e8e8e8; }
+  textarea { resize: vertical; vertical-align: top; }
+
+  .field { display: flex; align-items: center; gap: 6px; margin: 4px 0; flex-wrap: wrap; }
+  .field > label { min-width: 110px; font-weight: bold; font-size: 12px; }
+  .field.vtop { align-items: flex-start; }
+  .field.vtop > label { padding-top: 4px; }
+  .field input[type=text], .field input[type=number], .field select, .field textarea { flex: 1; min-width: 100px; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 4px 12px; }
+
+  .tabs { display: flex; flex-wrap: wrap; gap: 2px; margin: 12px 0 0; }
+  .tab {
+    padding: 5px 12px; font-size: 12px; cursor: pointer;
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    border-bottom: none; user-select: none;
+  }
+  .tab.active {
+    background: #d4d0c8;
+    border-color: #808080 #ffffff #ffffff #808080;
+    font-weight: bold;
+    position: relative; top: 1px; z-index: 1;
+  }
+
+  .table-wrap { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; margin: 6px 0; }
+  th, td { border: 1px solid #808080; padding: 4px 6px; font-size: 12px; text-align: left; }
+  th { background: #c0c0c0; }
+
+  .persona-card { background: #e8e8e8; border: 1px solid #808080; padding: 8px; margin: 8px 0; }
+  .spell-card { background: #f4f4f4; border: 1px dashed #808080; padding: 6px; margin: 6px 0; }
+  .row-between { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px; }
+  .muted { color: #555; font-size: 11px; }
+  .tag { background: #000080; color: #fff; padding: 1px 6px; font-size: 11px; border-radius: 2px; }
+  .ok { color: #006600; }
+  .bad { color: #cc0000; }
+  .footer { text-align: center; font-size: 11px; color: #666; margin-top: auto; padding-top: 30px; }
+  @media (max-width: 600px) {
+    .field > label { min-width: 90px; }
+    h1 { font-size: 22px; }
+  }

@@ -1,0 +1,334 @@
+  /* [Fase 2a-2] Desktop: alinhamento header-bar ↔ grid + remove fillers */
+  body[data-theme="yuki"] .yuki-header,
+  body[data-theme="yuki"] .yuki-grid {
+    width: 100%;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    min-width: 0;
+  }
+  
+  body[data-theme="yuki"] .yuki-header-bar > button {
+    justify-self: end;
+    margin-right: 0;
+  }
+  
+  /* Os 3 cards ".empty" (filler visual) só fazem sentido quando NÃO há
+     nenhum personagem. Com 1+ fichas reais, eles entopem o grid e criam
+     a sensação de cards "desalinhados" com o header. */
+  body[data-theme="yuki"] .yuki-grid:has(.yuki-card:not(.empty)) .yuki-card.empty,
+  body[data-theme="sibyl"] .yuki-grid:has(.yuki-card:not(.empty)) .yuki-card.empty {
+    display: none;
+  }
+
+  /* [Fase 2a-3] Header-bar: alinhamento estrutural compartilhado Yuki + Sibyl.
+     Sibyl não tinha min-height nem alinhamento nos filhos, por isso botão "Novo"
+     e o "Fichas: N" não batiam verticalmente em desktop. */
+  body[data-theme="yuki"] .yuki-header-bar,
+  body[data-theme="sibyl"] .yuki-header-bar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    min-height: 40px;
+  }
+  
+  body[data-theme="yuki"] .yuki-header-bar > span,
+  body[data-theme="sibyl"] .yuki-header-bar > span {
+    min-width: 0;
+    margin: 0;
+    line-height: 1.35;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    min-height: 40px;
+  }
+  
+  body[data-theme="yuki"] .yuki-header-bar > button,
+  body[data-theme="sibyl"] .yuki-header-bar > button {
+    align-self: center;
+    justify-self: end;
+    margin: 0;
+    min-width: 96px;
+    min-height: 40px;
+  }
+  
+  /* Header e grid compartilham a mesma coluna visual nos dois temas chrome. */
+  body[data-theme="yuki"] .yuki-header,
+  body[data-theme="yuki"] .yuki-grid,
+  body[data-theme="sibyl"] .yuki-header,
+  body[data-theme="sibyl"] .yuki-grid {
+    width: 100%;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    min-width: 0;
+  }
+
+  /* =========================================
+     [Fase 2b] .yuki-grid — regra única por breakpoint
+     ----------------------------------------------------------------
+     Substitui (por cascata + especificidade) as ~12 definições
+     espalhadas pelo arquivo. As mortas ficam para limpeza física
+     na Fase 4 (componentes.css). Aqui é consolidação de comportamento.
+  
+     Estrutura final:
+     - Base compartilhada (yuki + sibyl): display grid, max-width 900px, centrado
+     - Desktop: 1 regra por tema (só muda minmax + gap)
+     - ≤768px: repeat(2) para ambos
+     - ≤480px: 1 coluna para ambos
+     - ≤360px: gap menor só no Yuki
+     ========================================= */
+  
+  /* Base — ambos os temas chrome */
+  body[data-theme="yuki"] .yuki-grid,
+  body[data-theme="sibyl"] .yuki-grid {
+    display: grid;
+    width: 100%;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    min-width: 0;
+    align-items: stretch;
+  }
+  
+  /* Desktop — Yuki */
+  body[data-theme="yuki"] .yuki-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr));
+    gap: clamp(12px, 2vw, 20px);
+  }
+  
+  /* Desktop — Sibyl */
+  body[data-theme="sibyl"] .yuki-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+    gap: 24px;
+  }
+  
+  /* Tablet / mobile landscape — mesmo layout para os dois */
+  @media (max-width: 768px) {
+    body[data-theme="yuki"] .yuki-grid,
+    body[data-theme="sibyl"] .yuki-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+  }
+  
+  /* Mobile retrato — 1 coluna para os dois */
+  @media (max-width: 480px) {
+    body[data-theme="yuki"] .yuki-grid,
+    body[data-theme="sibyl"] .yuki-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+  
+  /* Muito estreito — só Yuki aperta o gap */
+  @media (max-width: 360px) {
+    body[data-theme="yuki"] .yuki-grid {
+      gap: 8px;
+    }
+  }
+
+  /* =========================================
+     [Fase 2c] .yuki-card + .yuki-card-img — regra única
+     ----------------------------------------------------------------
+     Antes: .yuki-card tinha 10 definições, .yuki-card-img tinha 4.
+     Agora: estrutura compartilhada + visual por tema + breakpoints.
+  
+     Regra de escopo:
+     - "Estrutura" (display, flex, overflow, height, position) = compartilhada
+     - "Visual" (background, border, shadow, blur, aspect-ratio) = por tema
+     - Breakpoints mudam só padding/gap/aspect-ratio
+  
+     Não mexe em .yuki-card-title, .yuki-card-class, .yuki-card button
+     (ficam para Fase 4).
+     ========================================= */
+  
+  /* ---------- Estrutura compartilhada ---------- */
+  body[data-theme="yuki"] .yuki-card,
+  body[data-theme="sibyl"] .yuki-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    height: 100%;
+    min-width: 0;
+    overflow: hidden;
+  }
+  
+  /* ---------- Yuki: visual + spacing desktop ---------- */
+  body[data-theme="yuki"] .yuki-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 14px;
+    gap: 12px;
+    transition: none;
+  }
+  
+  /* ---------- Sibyl: visual + spacing desktop ---------- */
+  body[data-theme="sibyl"] .yuki-card {
+    background: rgba(4,10,12,.78);
+    border: 1px solid var(--sb-line);
+    padding: 16px;
+    gap: 12px;
+    backdrop-filter: blur(6px) saturate(1.1);
+    -webkit-backdrop-filter: blur(6px) saturate(1.1);
+    box-shadow:
+      0 0 0 1px rgba(0,0,0,.65),
+      0 16px 40px rgba(0,0,0,.55),
+      inset 0 0 60px rgba(86,242,216,.04);
+    transition: border-color .3s, box-shadow .3s;
+  }
+  
+  /* ---------- Card vazio (filler) ---------- */
+  body[data-theme="yuki"] .yuki-card.empty {
+    opacity: 0.15;
+    min-height: 260px;
+    background: #222;
+  }
+  
+  body[data-theme="sibyl"] .yuki-card.empty {
+    display: none;
+  }
+  
+  /* ---------- Imagem: estrutura compartilhada ---------- */
+  body[data-theme="yuki"] .yuki-card-img,
+  body[data-theme="sibyl"] .yuki-card-img {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    object-fit: cover;
+    min-width: 0;
+  }
+  
+  /* ---------- Imagem: visual Yuki ---------- */
+  body[data-theme="yuki"] .yuki-card-img {
+    aspect-ratio: 1;
+    background: #000;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 12px;
+    border-radius: 2px;
+  }
+  
+  /* ---------- Imagem: visual Sibyl ---------- */
+  body[data-theme="sibyl"] .yuki-card-img {
+    aspect-ratio: 1;
+    background: #060b0d;
+    border: 1px solid var(--sb-line);
+    filter: saturate(1.05) contrast(1.06) brightness(.92);
+    border-radius: 0;
+  }
+  
+  /* ---------- Mobile 768: padding/gap ---------- */
+  @media (max-width: 768px) {
+    body[data-theme="yuki"] .yuki-card {
+      padding: 10px;
+      gap: 10px;
+    }
+  
+    body[data-theme="yuki"] .yuki-card-img {
+      aspect-ratio: 4 / 5;
+    }
+  
+    /* Sibyl mantém 16px no mobile por ora (comportamento atual).
+       Reduzir para 12px é decisão de design da fase "Wired" — fica
+       como uma linha a mudar depois, não como bug. */
+  }
+  
+  /* ---------- Mobile 360: Yuki aperta mais ---------- */
+  @media (max-width: 360px) {
+    body[data-theme="yuki"] .yuki-card {
+      padding: 8px;
+    }
+  }
+
+  /* =========================================
+     [Fase 2d] .yuki-main + .yuki-title — regra única
+     ----------------------------------------------------------------
+     Último passo do alinhamento espacial antes da Fase 3.
+     Antes: .yuki-main (10 defs), .yuki-title (6 defs).
+     Agora: estrutura compartilhada + padding/tamanho por tema + breakpoints.
+     ========================================= */
+  
+  /* ---------- .yuki-main — estrutura compartilhada ---------- */
+  body[data-theme="yuki"] .yuki-main,
+  body[data-theme="sibyl"] .yuki-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+    max-width: 100%;
+  }
+  
+  /* Desktop — Yuki */
+  body[data-theme="yuki"] .yuki-main {
+    padding: clamp(20px, 4vw, 48px);
+  }
+  
+  /* Desktop — Sibyl */
+  body[data-theme="sibyl"] .yuki-main {
+    padding: clamp(24px, 4vw, 48px);
+    background: transparent;
+  }
+  
+  /* Mobile ≤768 — padding igual para os dois */
+  @media (max-width: 768px) {
+    body[data-theme="yuki"] .yuki-main,
+    body[data-theme="sibyl"] .yuki-main {
+      padding: 20px 16px;
+      overflow: hidden;
+    }
+  }
+  
+  /* Mobile ≤360 — Yuki aperta lateralmente, Sibyl mantém */
+  @media (max-width: 360px) {
+    body[data-theme="yuki"] .yuki-main {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  }
+  
+  /* ---------- .yuki-title — estrutura compartilhada ---------- */
+  body[data-theme="yuki"] .yuki-title,
+  body[data-theme="sibyl"] .yuki-title {
+    font-weight: 600;
+    border: none;
+    margin: 0 0 24px 0;
+    overflow-wrap: anywhere;
+  }
+  
+  /* Yuki — título centrado, 28px */
+  body[data-theme="yuki"] .yuki-title {
+    text-align: center;
+    font-size: 28px;
+    line-height: 1.2;
+    color: var(--text-main);
+  }
+  
+  /* Sibyl — título à esquerda, caps, cyan com glow */
+  body[data-theme="sibyl"] .yuki-title {
+    font-family: inherit;
+    font-size: clamp(14px, 2.4vw, 18px);
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    text-align: left;
+    color: #e6fffb;
+    text-shadow: 0 0 14px rgba(86,242,216,.55);
+  }
+  
+  /* Mobile ≤768 — Yuki reduz tamanho e margem */
+  @media (max-width: 768px) {
+    body[data-theme="yuki"] .yuki-title {
+      font-size: clamp(22px, 5vw, 28px);
+      margin-bottom: 20px;
+    }
+  }
+  
+  /* Exceção: na tela de Livros o título vai à esquerda */
+  body[data-theme="yuki"] .yuki-books-main > .yuki-title {
+    text-align: left;
+    margin-bottom: 20px;
+  }
