@@ -299,9 +299,10 @@ function renderList(app) {
 }
 
 async function renderBooks(app) {
-  const isYuki = state.settings.theme === 'yuki';
+  const currentTheme = THEMES.find(t => t.id === state.settings.theme) || THEMES[0];
+  const isChrome = currentTheme.chroma === 'chrome';
 
-  if (isYuki) {
+  if (isChrome) {
     app.innerHTML = `
       <div class="yuki-layout">
         ${yukiSidebarHTML()}
@@ -319,7 +320,7 @@ async function renderBooks(app) {
     books = await booksDBList();
   } catch (e) {
     console.error(e);
-    if (isYuki) {
+    if (isChrome) {
       const target = document.getElementById('yuki-books-content');
       if (target) {
         target.innerHTML = `<h2 class="yuki-title">Livros de Referência</h2>
@@ -332,7 +333,7 @@ async function renderBooks(app) {
     return;
   }
 
-  let html = isYuki
+  let html = isChrome
     ? `<h2 class="yuki-title">Livros de Referência</h2>`
     : `<h1>Livros de Referência</h1>`;
   html += `<div class="muted">PDFs salvos localmente (IndexedDB). Depois de carregar uma vez, funciona offline.</div>`;
@@ -369,7 +370,7 @@ async function renderBooks(app) {
 
   html += `<div class="footer">© ${new Date().getFullYear()} Yuki</div>`;
 
-  if (isYuki) {
+  if (isChrome) {
     const target = document.getElementById('yuki-books-content');
     if (target) target.innerHTML = html;
   } else {
