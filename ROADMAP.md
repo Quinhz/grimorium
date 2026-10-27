@@ -17,20 +17,20 @@
 
 ## 1. Situação atual (Out/2026)
 
-- Versão: `0.11.2-alpha`.
-- Temas: Alpha (clássico), Yuki (dark brutalist), Sibyl (CRT/glitch,
-  será renomeado para **Wired** — previsto na Fase 3).
-- Sibyl compartilha markup com Yuki
-  (`renderList` unifica via `theme === 'yuki' || theme === 'sibyl'`).
-- Fase 2a aplicada: `.yuki-header-bar` consolidado em 1 regra (grid).
-  Mobile alinhado.
-- Fase 2a-3 aplicada: regras de alinhamento de header-bar estendidas ao
-  Sibyl (min-height, justify-self, max-width 900px). Desktop alinhado nos
-  dois temas.
-- **Próximo:** Fase 2b (`.yuki-grid`, 7 → 2 regras).
-- **Decisão de workflow:** chats separados por área (tema / performance /
-  dados) só a partir da Fase 3, quando os arquivos estiverem desacoplados.
-  Até lá, tudo neste chat.
+- Versão: `0.12.0-alpha`. Cache: `yuki-v11`.
+- Temas: Alpha (clássico, chroma `classic`), Yuki (dark brutalist, chroma
+  `chrome`), Sibyl (CRT/glitch, chroma `chrome`).
+- `renderList` e `renderBooks` consultam `theme.chroma`, nunca ID.
+  Adicionar tema futuro = 1 linha em `THEMES` + 1 arquivo em
+  `css/0X-theme-novo.css`.
+- **Fase 3 concluída.** CSS monolítico dividido em 6 camadas.
+  `applyTheme`/parallax/burst isolados em `js/theme.js`. Nenhuma
+  funcionalidade perdida.
+- **Decisão de workflow:** chats separados por área (tema / performance
+  / dados) **liberados a partir de agora** — os arquivos estão
+  desacoplados o suficiente para trabalhar em paralelo sem colisão.
+- **Próximo:** Fase 4 (componentes limpos — remover regras mortas,
+  reduzir `!important`, preparar tokens CSS).
 
 ## 2. Problema raiz
 
@@ -197,17 +197,16 @@ Fase 2d — .yuki-main + .yuki-title
 Arquivo: css/app.css.
 Meta: 4+4 → 1+1 por breakpoint.
 Validar: espaçamento uniforme entre home, livros, ficha.
-Fase 3 — Desacoplar temas do JS
-
-Arquivos: js/data.js, js/render.js, index.html.
-
-    THEMES ganha chroma.
-
-    renderList() consulta chroma.
-
-    index.html carrega CSS em camadas.
-
-    Zero mudança de comportamento visível.
+  Fase 3 — Desacoplar temas do JS ✅
+  
+  Aplicada em 27/10/2026.
+  - 3a: `THEMES` ganhou `chroma` (`classic` | `chrome`).
+  - 3b: `renderList` usa `chroma`. `renderBooks` também (fix de sidebar
+    ausente no Sibyl).
+  - 3c: `js/theme.js` isolado. `js/data.js` ficou agnóstico de tema.
+  - 3d: CSS dividido em 6 camadas (`01-base` a `06-consolidation`).
+  - 3e: bump `0.12.0-alpha`, cache `yuki-v11`, `theme.js` adicionado ao
+    Service Worker ASSETS.
 
 Fase 4 — Componentes limpos
 
@@ -368,6 +367,8 @@ Adicionar tema novo	3 arquivos	1 arquivo
     
 - **26/10/2026 (2)** — Fase 2a-2 e 2a-3 concluídas.
   Alinhamento desktop fechado em Yuki e Sibyl.
-  Sibyl será renomeado para Wired na Fase 3 (não antes, para não misturar diffs).
   Decisão de workflow: chats separados por área só a partir da Fase 3.
-  Até lá, tudo neste chat.
+
+- **27/10/2026** — Fase 3 concluída (3a a 3e). Versão `0.12.0-alpha`,
+  cache `yuki-v11`. Sibyl mantém o nome (era referência a Psycho-Pass,
+  decisão confirmada pelo autor). Chats paralelos liberados.

@@ -14,16 +14,22 @@ App web (PWA) de ficha de personagem para o sistema de RPG **Grimório do Coraç
 
 | Arquivo | Papel |
 |---|---|
-| `index.html` | Shell do app (~20 linhas). |
-| `css/app.css` | Todo o CSS (Alpha + Yuki + Sibyl + componentes + modais). |
+| `index.html` | Shell do app — 6 CSS + 7 JS em ordem. |
+| `css/01-base.css` | Reset, tipografia, `.container`, `.panel`, `.field`, `.tabs`, `.table`, utilitários. |
+| `css/02-components.css` | Modais, split view, reader, dice, portrait, crop, print, add-spell, welcome, user-chip. |
+| `css/03-theme-yuki.css` | Tema Yuki: variáveis, sidebar, grid, cards, overrides complementares. |
+| `css/04-overrides.css` | Responsividade global mobile + ajustes Alpha/Yuki home, sheet menu, reader. |
+| `css/05-theme-sibyl.css` | Tema Sibyl: variáveis, fundo parallax, FX burst, layout, cards, overrides mobile. |
+| `css/06-consolidation.css` | Consolidações Fases 2a–2d (header-bar, grid, card, main/title, alinhamento desktop). |
 | `js/data.js` | Constantes, state, persistência, modelos, cálculos, **CHANGELOG**. |
+| `js/theme.js` | `applyTheme`, parallax Sibyl, burst, tile updater. |
 | `js/modals.js` | HTML dos modais. |
 | `js/reader.js` | Leitor de PDF. |
 | `js/sheet.js` | Ficha, abas, menu lateral, retrato. |
 | `js/render.js` | Home, lista de fichas, livros, split, welcome. |
 | `js/app.js` | Handlers de evento + init. |
 | `manifest.json` | PWA manifest. |
-| `sw.js` | Service Worker. Cache atual: `yuki-v10`. |
+| `sw.js` | Service Worker. Cache atual: `yuki-v11`. |
 | `ROADMAP.md` | Plano de reestruturação (Fases 0–8). |
 | `WORKFLOW.md` | Regras de trabalho. |
 | `spells.csv` | Opcional. Presets de magia. |

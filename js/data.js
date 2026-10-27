@@ -4,9 +4,22 @@
    ============================================================ */
 console.log('[Yuki] module: data.js loaded');
 
-const APP_VERSION = '0.11.2-alpha';
+const APP_VERSION = '0.12.0-alpha';
 
 const CHANGELOG = [
+  {
+    version: 'v0.12.0-alpha',
+    date: '27/10/2026',
+    changes: [
+      'Refactor: CSS monolítico (3500+ linhas) dividido em 6 camadas — 01-base, 02-components, 03-theme-yuki, 04-overrides, 05-theme-sibyl, 06-consolidation.',
+      'Refactor: js/theme.js isolado — applyTheme, parallax Sibyl, burst e tile updater fora do data.js.',
+      'Refactor: THEMES ganhou campo chroma (classic | chrome). renderList e renderBooks consultam chroma, nunca ID de tema.',
+      'Refactor: header-bar, grid, card e main/title consolidados — 1 regra por tema por breakpoint.',
+      'Fix: Livros no tema Sibyl agora exibe a sidebar (antes só Yuki tinha).',
+      'Fix: theme.js ausente do Service Worker ASSETS — modo offline reportaria 404.',
+      'Adicionado: ROADMAP.md com plano de reestruturação (Fases 0–8).'
+    ]
+  },
   {
     version: 'v0.11.2-alpha',
     date: '25/10/2026',

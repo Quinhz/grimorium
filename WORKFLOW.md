@@ -28,15 +28,22 @@
 - Um chat = uma tarefa
 
 ## Estrutura do projeto
-index.html # shell — só carrega os scripts na ordem
+index.html # shell — 6 CSS + 7 JS em ordem
 manifest.json
-sw.js # service worker
+sw.js # service worker — CACHE atual: yuki-v11
 CONTEXT.md
 WORKFLOW.md
 ROADMAP.md # plano de reestruturação (Fases 0–8)
-css/app.css # TODO o CSS (vai ser dividido na Fase 3)
+css/
+01-base.css # reset, tipografia, container, panels, fields, tabs, tabelas
+02-components.css # modais, split, reader, dice, portrait, crop, print, welcome
+03-theme-yuki.css # tema Yuki
+04-overrides.css # responsividade global + ajustes Alpha/Yuki
+05-theme-sibyl.css # tema Sibyl
+06-consolidation.css # consolidações Fases 2a–2d
 js/
-data.js # camada 0 — constantes, state, persistência, modelos, cálculos
+data.js # camada 0 — constantes, state, persistência, modelos, CHANGELOG
+theme.js # camada 0.5 — applyTheme, parallax Sibyl, burst
 modals.js # camada 1 — HTML dos modais
 reader.js # camada 2 — leitor de PDF
 sheet.js # camada 3 — ficha, abas, menu lateral, retrato
@@ -59,7 +66,7 @@ app.js # camada 5 — handlers de evento + init
 
 ## Ordem dos scripts (não muda)
 
-`data → modals → reader → sheet → render → app`
+`data → theme → modals → reader → sheet → render → app`
 
 Cada camada usa só as anteriores. Nunca o contrário.
 

@@ -1,12 +1,18 @@
 /* Service Worker simples — cache offline */
-const CACHE = 'yuki-v10';
+const CACHE = 'yuki-v11';
 const ASSETS = [
   './',
   './index.html',
   './manifest.json',
   './icon.svg',
-  './css/app.css',
+  './css/01-base.css',
+  './css/02-components.css',
+  './css/03-theme-yuki.css',
+  './css/04-overrides.css',
+  './css/05-theme-sibyl.css',
+  './css/06-consolidation.css',
   './js/data.js',
+  './js/theme.js',
   './js/modals.js',
   './js/reader.js',
   './js/sheet.js',
