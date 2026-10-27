@@ -15,13 +15,19 @@ App web (PWA) de ficha de personagem para o sistema de RPG **Grimório do Coraç
 | Arquivo | Papel |
 |---|---|
 | `index.html` | Shell do app (~20 linhas). |
-| `css/app.css` | Todo o CSS (Tema Alpha + Componentes + Tema Yuki + Modais). |
-| `js/app.js` | Todo o JS (state, views, handlers, **array do Changelog**). |
+| `css/app.css` | Todo o CSS (Alpha + Yuki + Sibyl + componentes + modais). |
+| `js/data.js` | Constantes, state, persistência, modelos, cálculos, **CHANGELOG**. |
+| `js/modals.js` | HTML dos modais. |
+| `js/reader.js` | Leitor de PDF. |
+| `js/sheet.js` | Ficha, abas, menu lateral, retrato. |
+| `js/render.js` | Home, lista de fichas, livros, split, welcome. |
+| `js/app.js` | Handlers de evento + init. |
 | `manifest.json` | PWA manifest. |
-| `sw.js` | Service Worker. Cache atual: `yuki-v4`. |
+| `sw.js` | Service Worker. Cache atual: `yuki-v10`. |
+| `ROADMAP.md` | Plano de reestruturação (Fases 0–8). |
+| `WORKFLOW.md` | Regras de trabalho. |
 | `spells.csv` | Opcional. Presets de magia. |
 | `spells/index.json` | Opcional. Lista de múltiplos CSVs. |
-| `CONTEXT.md` | Este arquivo. |
 
 **CDNs**: Google Fonts (IBM Plex Mono) e PDF.js (3.11.174).
 
@@ -33,8 +39,7 @@ App web (PWA) de ficha de personagem para o sistema de RPG **Grimório do Coraç
 2. **Sem frameworks/build step**. HTML/CSS/JS puro.
 3. **Sem estilos inline no JS** (exceto casos ultra-específicos). Use classes CSS. Isso quebra a troca de temas.
 4. **Usar `overscroll-behavior: contain;`** em modais com scroll interno para não vazar pro fundo.
-5. **Ao subir a versão**: Atualizar `APP_VERSION` e adicionar o novo objeto no topo do array `CHANGELOG` no `js/app.js`.
-
+5. **Ao subir a versão**: Atualizar `APP_VERSION` e adicionar o novo objeto no topo do array `CHANGELOG` em `js/data.js`.
 ---
 
 ## Chaves de Persistência
@@ -52,7 +57,7 @@ App web (PWA) de ficha de personagem para o sistema de RPG **Grimório do Coraç
 
 ## Onde fica o Changelog?
 
-O histórico de versões exibido na tela "Sobre" **não fica neste arquivo**. Ele está implementado como uma constante `CHANGELOG` no topo do `js/app.js` (um array de objetos). A função `aboutModalHTML()` lê esse array e renderiza o modal.
+O histórico de versões exibido na tela "Sobre" **não fica neste arquivo**. Ele está implementado como uma constante `CHANGELOG` no topo do `js/data.js` (um array de objetos). A função `aboutModalHTML()` (em `js/modals.js`) lê esse array e renderiza o modal.
 
 ---
 
@@ -133,3 +138,18 @@ O histórico de versões exibido na tela "Sobre" **não fica neste arquivo**. El
 ### Regra nova
 - Cada bug tem um módulo provável. Ver "Mapa de módulos" em WORKFLOW.md.
 - Não é mais preciso enviar `app.js` inteiro quando um bug acontece.
+
+
+## Iteração 26/10/2026 — Fase 2a do ROADMAP
+
+- Fase 2a: `.yuki-header-bar` consolidado. 4 definições concorrentes → 1 regra única (grid). Mobile alinhado no Yuki.
+- Fase 2a-3: alinhamento de header-bar estendido ao Sibyl (min-height compartilhado, justify-self, max-width 900px). Desktop alinhado nos dois temas.
+- `.yuki-card.empty` (fillers decorativos) passam a sumir quando há 1+ fichas reais (`:has()`).
+- Bug conhecido removido: `.yuki-header-bar` no Sibyl não herdava as regras do Yuki.
+- Versão: sem bump (Fase 8 consolida).
+
+## Pendente no ROADMAP
+- Fase 2b: `.yuki-grid` (7 → 2 regras).
+- Fase 2c: `.yuki-card` + `.yuki-card-img`.
+- Fase 2d: `.yuki-main` + `.yuki-title`.
+- Fases 3–8.

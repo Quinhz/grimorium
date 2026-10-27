@@ -18,12 +18,19 @@
 ## 1. Situação atual (Out/2026)
 
 - Versão: `0.11.2-alpha`.
-- Temas: Alpha (clássico), Yuki (dark brutalist), Sibyl (CRT/glitch).
+- Temas: Alpha (clássico), Yuki (dark brutalist), Sibyl (CRT/glitch,
+  será renomeado para **Wired** — previsto na Fase 3).
 - Sibyl compartilha markup com Yuki
   (`renderList` unifica via `theme === 'yuki' || theme === 'sibyl'`).
 - Fase 2a aplicada: `.yuki-header-bar` consolidado em 1 regra (grid).
-  **Mobile alinhado.**
-- **Pendente:** alinhamento desktop entre header-bar e grid (§7).
+  Mobile alinhado.
+- Fase 2a-3 aplicada: regras de alinhamento de header-bar estendidas ao
+  Sibyl (min-height, justify-self, max-width 900px). Desktop alinhado nos
+  dois temas.
+- **Próximo:** Fase 2b (`.yuki-grid`, 7 → 2 regras).
+- **Decisão de workflow:** chats separados por área (tema / performance /
+  dados) só a partir da Fase 3, quando os arquivos estiverem desacoplados.
+  Até lá, tudo neste chat.
 
 ## 2. Problema raiz
 
@@ -165,10 +172,16 @@ Feita em 26/10/2026. Ver §2.1.
 Fase 2a — .yuki-header-bar consolidado ✅
 
 Aplicado: 4 regras → 1. Mobile alinhado.
-Fase 2a-2 — Alinhamento desktop ⏳
-
-Aplicado o fix de 3 regras (ver §7). Validar.
-Se não resolver, próxima sessão começa com screenshot.
+  Fase 2a-2 — Alinhamento desktop ✅
+  
+  Fix aplicado em 26/10/2026. Ver §7.
+  
+  Fase 2a-3 — Alinhamento compartilhado Yuki + Sibyl ✅
+  
+  Header-bar ganhou regras estruturais compartilhadas (display grid,
+  grid-template-columns, align-items, gap, min-height 40px) e
+  max-width 900px no header e grid, nos dois temas chrome.
+  Mobile validado.
 Fase 2b — .yuki-grid consolidado
 
 Arquivo: css/app.css.
@@ -350,3 +363,11 @@ Adicionar tema novo	3 arquivos	1 arquivo
     Mobile promovido a prioridade máxima.
     Personalização redefinida como movimento, não cor.
     Proibição de scripts Console adicionada (§9).
+
+
+    
+- **26/10/2026 (2)** — Fase 2a-2 e 2a-3 concluídas.
+  Alinhamento desktop fechado em Yuki e Sibyl.
+  Sibyl será renomeado para Wired na Fase 3 (não antes, para não misturar diffs).
+  Decisão de workflow: chats separados por área só a partir da Fase 3.
+  Até lá, tudo neste chat.

@@ -33,7 +33,8 @@ manifest.json
 sw.js # service worker
 CONTEXT.md
 WORKFLOW.md
-css/app.css # TODO o CSS
+ROADMAP.md # plano de reestruturação (Fases 0–8)
+css/app.css # TODO o CSS (vai ser dividido na Fase 3)
 js/
 data.js # camada 0 — constantes, state, persistência, modelos, cálculos
 modals.js # camada 1 — HTML dos modais
