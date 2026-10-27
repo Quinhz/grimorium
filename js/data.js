@@ -144,9 +144,9 @@ const ATTR_INFO = [
   ['SOR', 'Sorte']
 ];
 const THEMES = [
-  { id: 'alpha', name: 'Alpha', description: 'Tema clássico — visual de "web antiga", funcional e leve.' },
-  { id: 'yuki', name: 'Yuki', description: 'Tema oficial — não é oficial oficial, a IA meteu o loko, mas relaxa, o designer aqui tá cooking.' },
-  { id: 'sibyl', name: 'Sibyl', description: 'Monitor CRT, glitch sutil, grid infinito de identidades. Inspirado em Serial Experiments Lain e Psycho-Pass.' }
+  { id: 'alpha', name: 'Alpha', chroma: 'classic', description: 'Tema clássico — visual de "web antiga", funcional e leve.' },
+  { id: 'yuki', name: 'Yuki', chroma: 'chrome', description: 'Tema oficial — não é oficial oficial, a IA meteu o loko, mas relaxa, o designer aqui tá cooking.' },
+  { id: 'sibyl', name: 'Sibyl', chroma: 'chrome', description: 'Monitor CRT, glitch sutil, grid infinito de identidades. Inspirado em Serial Experiments Lain e Psycho-Pass.' }
 ];
 
 const SPELL_HEADER_MAP = {
