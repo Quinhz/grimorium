@@ -627,12 +627,7 @@
     border: none;
   }
   
-  .yuki-header-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 14px;
-  }
+  /* [Fase 2a] .yuki-header-bar consolidado — ver regra única no fim do CSS */
   
   .btn-accent {
     background: #8ac926 !important;
@@ -1602,12 +1597,7 @@
     width: 100%;
   }
 
-  .yuki-header-bar {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 10px 14px;
-  }
+  /* [Fase 2a] .yuki-header-bar consolidado — ver regra única no fim do CSS */
 
   .yuki-header-bar > span {
     flex: 1 1 auto;
@@ -1834,13 +1824,7 @@
     overflow-wrap: anywhere;
   }
   
-  body[data-theme="yuki"] .yuki-header-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
+  /* [Fase 2a] .yuki-header-bar consolidado — ver regra única no fim do CSS */
   
   body[data-theme="yuki"] .yuki-grid {
     grid-template-columns: repeat(
@@ -2078,12 +2062,16 @@
   }
 
   /* Yuki — alinhamento do contador e botão Novo */
+  /* [Fase 2a] .yuki-header-bar — regra única consolidada.
+     Antes eram 4 definições concorrentes. Agora: 1 definitiva.
+     Grid 2 colunas (contagem / botão), altura consistente em mobile. */
   body[data-theme="yuki"] .yuki-header-bar {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
     gap: 12px;
     width: 100%;
+    min-height: 40px;
   }
   
   body[data-theme="yuki"] .yuki-header-bar > span {
@@ -2091,6 +2079,9 @@
     margin: 0;
     line-height: 1.35;
     text-align: left;
+    display: flex;
+    align-items: center;
+    min-height: 40px;
   }
   
   body[data-theme="yuki"] .yuki-header-bar > button {
@@ -2098,6 +2089,7 @@
     justify-self: end;
     margin: 0;
     min-width: 96px;
+    min-height: 40px;
   }
 
   /* Yuki — confirmação do recorte de foto */
@@ -2499,4 +2491,847 @@
   body[data-theme="yuki"] .reader-loading {
     background: var(--bg-main);
     color: var(--text-muted);
+  }
+
+  /* =========================================
+     TEMA SIBYL — Monitor CRT / WIRED
+     Inspirado em Serial Experiments Lain e Psycho-Pass
+     ========================================= */
+  
+  body[data-theme="sibyl"] {
+    --sb-bg: #04070a;
+    --sb-cyan: #56f2d8;
+    --sb-magenta: #ff3d81;
+    --sb-text: #cfe9e6;
+    --sb-text-dim: rgba(207,233,230,.55);
+    --sb-line: rgba(86,242,216,.28);
+    --sb-line-soft: rgba(86,242,216,.14);
+  
+    background: var(--sb-bg);
+    color: var(--sb-text);
+    font-family: 'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace;
+    overflow-x: hidden;
+    display: block;
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+  
+  /* ---------- Fundo parallax ---------- */
+  #sibyl-bg {
+    position: fixed; inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 50% 40%, #071417 0%, #04070a 70%);
+    pointer-events: none;
+  }
+  #sibyl-bg[hidden] { display: none; }
+  
+  #sibyl-bg .sibyl-layer {
+    position: absolute; inset: -30%;
+    background-image: var(--sibyl-tile, none);
+    background-repeat: repeat;
+    background-size: var(--size, 128px);
+    opacity: var(--op, .15);
+    filter: blur(var(--blur, 1px)) saturate(var(--sat, 1)) hue-rotate(var(--hue, 0deg)) contrast(1.08);
+    animation: sibylDrift var(--dur, 120s) linear infinite;
+    animation-direction: var(--dir, normal);
+    will-change: transform, background-position;
+    transform: translate3d(0,0,0);
+  }
+  #sibyl-bg .sibyl-layer:nth-child(1) { --size: 260px; --op: .10; --blur: 4px;   --hue: 200deg; --sat: .7;  --dur: 200s; }
+  #sibyl-bg .sibyl-layer:nth-child(2) { --size: 180px; --op: .14; --blur: 2px;   --hue: 300deg; --sat: .9;  --dur: 150s; --dir: reverse; }
+  #sibyl-bg .sibyl-layer:nth-child(3) { --size: 128px; --op: .18; --blur: .6px;  --hue: 175deg; --sat: 1;   --dur: 110s; }
+  #sibyl-bg .sibyl-layer:nth-child(4) { --size: 86px;  --op: .22; --blur: 0px;   --hue: 330deg; --sat: 1.1; --dur: 80s;  --dir: reverse; }
+  
+  @keyframes sibylDrift {
+    from { background-position: 0 0; }
+    to   { background-position: calc(var(--size) * 7) calc(var(--size) * 7); }
+  }
+  
+  #sibyl-bg .sibyl-vignette {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 45%,
+      rgba(0,0,0,0) 0%, rgba(2,7,9,.55) 52%, rgba(2,5,7,.96) 100%);
+  }
+  #sibyl-bg .sibyl-scanlines {
+    position: absolute; inset: 0; opacity: .30;
+    background: repeating-linear-gradient(to bottom,
+      rgba(0,0,0,.55) 0px, rgba(0,0,0,.55) 1px,
+      rgba(0,0,0,0) 1px, rgba(0,0,0,0) 3px);
+  }
+  #sibyl-bg .sibyl-noise {
+    position: absolute; inset: 0; opacity: .05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+    animation: sibylNoiseShift .5s steps(2) infinite;
+  }
+  @keyframes sibylNoiseShift {
+    0%   { transform: translate(0,0); }
+    50%  { transform: translate(-3%, 2%); }
+    100% { transform: translate(2%, -3%); }
+  }
+  #sibyl-bg .sibyl-glitchbar {
+    position: absolute; left: 0; right: 0; height: 150px;
+    background: linear-gradient(to bottom,
+      rgba(86,242,216,0) 0%, rgba(86,242,216,.05) 44%,
+      rgba(255,61,129,.09) 50%, rgba(86,242,216,.05) 56%,
+      rgba(86,242,216,0) 100%);
+    animation: sibylSweep 11s linear infinite;
+  }
+  @keyframes sibylSweep {
+    from { transform: translateY(-170px); }
+    to   { transform: translateY(100vh); }
+  }
+  
+  /* FX overlay (burst ao trocar de tema) */
+  #sibyl-fx {
+    position: fixed; inset: 0; z-index: 9999;
+    pointer-events: none; opacity: 0;
+  }
+  #sibyl-fx .sibyl-tear {
+    position: absolute; inset: -10% 0;
+    background: repeating-linear-gradient(to bottom,
+      transparent 0 6px,
+      rgba(86,242,216,.30) 6px 7px,
+      transparent 7px 14px,
+      rgba(255,61,129,.24) 14px 15px,
+      transparent 15px 24px);
+    mix-blend-mode: screen; opacity: 0;
+  }
+  #sibyl-fx .sibyl-flash {
+    position: absolute; top: 50%; left: 0; right: 0; height: 3px; margin-top: -1.5px;
+    background: #d9fffb; opacity: 0;
+    box-shadow: 0 0 34px 8px rgba(86,242,216,.9), 0 0 70px 20px rgba(255,61,129,.35);
+  }
+  #sibyl-fx.sibyl-burst { opacity: 1; }
+  #sibyl-fx.sibyl-burst .sibyl-tear  { animation: sibylTear  .5s steps(2) forwards; }
+  #sibyl-fx.sibyl-burst .sibyl-flash { animation: sibylFlash .55s ease-out forwards; }
+  @keyframes sibylTear {
+    0%   { opacity: .9; transform: translateY(-14%) scaleY(1.25); }
+    45%  { opacity: .6; transform: translateY(5%)   scaleY(.92);  }
+    100% { opacity: 0;  transform: translateY(0)    scaleY(1);    }
+  }
+  @keyframes sibylFlash {
+    0%   { opacity: 0;   transform: scaleX(.15); }
+    26%  { opacity: 1;   transform: scaleX(1);   }
+    62%  { opacity: .95; transform: scaleX(1) scaleY(7); }
+    100% { opacity: 0;   transform: scaleX(1) scaleY(1); }
+  }
+  
+  /* ---------- Layout (reaproveita markup Yuki) ---------- */
+  body[data-theme="sibyl"] .container {
+    position: relative; z-index: 2;
+    max-width: 100%;
+    padding: 40px;
+    background: transparent;
+  }
+  
+  body[data-theme="sibyl"] .yuki-layout {
+    position: relative; z-index: 2;
+    grid-template-columns: 220px minmax(0, 1fr);
+    min-height: 100vh;
+    background: transparent;
+  }
+  
+  body[data-theme="sibyl"] .yuki-sidebar {
+    background: rgba(4,10,12,.65);
+    border-right: 1px solid var(--sb-line);
+    backdrop-filter: blur(6px) saturate(1.2);
+    -webkit-backdrop-filter: blur(6px) saturate(1.2);
+    padding: 24px 18px;
+    gap: 24px;
+    position: sticky; top: 0; align-self: start;
+    min-height: 100vh;
+  }
+  body[data-theme="sibyl"] .yuki-profile {
+    padding-bottom: 20px;
+    border-bottom: 1px dashed var(--sb-line);
+  }
+  body[data-theme="sibyl"] .yuki-avatar {
+    width: 100px; height: 100px;
+    background: rgba(86,242,216,.04);
+    border: 1px solid var(--sb-line);
+    border-radius: 0;
+    color: var(--sb-cyan);
+    filter: saturate(1.1) contrast(1.05);
+    box-shadow: 0 0 24px rgba(86,242,216,.15);
+  }
+  body[data-theme="sibyl"] .yuki-username {
+    font-family: inherit;
+    font-size: 13px;
+    letter-spacing: .18em;
+    color: var(--sb-cyan);
+    text-transform: uppercase;
+    text-shadow: 0 0 10px rgba(86,242,216,.4);
+  }
+  body[data-theme="sibyl"] .yuki-nav button {
+    color: var(--sb-text-dim);
+    font-family: inherit;
+    font-size: 12px;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    border: 1px solid transparent;
+    padding: 10px 12px;
+  }
+  body[data-theme="sibyl"] .yuki-nav button:hover,
+  body[data-theme="sibyl"] .yuki-nav button:focus-visible {
+    background: rgba(86,242,216,.06);
+    border-color: var(--sb-line);
+    color: var(--sb-cyan);
+    box-shadow: 0 0 20px rgba(86,242,216,.12);
+  }
+  
+  body[data-theme="sibyl"] .yuki-main {
+    padding: clamp(24px, 4vw, 48px);
+    background: transparent;
+  }
+  body[data-theme="sibyl"] .yuki-header { margin-bottom: 28px; }
+  body[data-theme="sibyl"] .yuki-title {
+    font-family: inherit;
+    font-size: clamp(14px, 2.4vw, 18px);
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: #e6fffb;
+    text-shadow: 0 0 14px rgba(86,242,216,.55);
+    border: none;
+    margin-bottom: 24px;
+    text-align: left;
+  }
+  body[data-theme="sibyl"] .yuki-header-bar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--sb-line);
+    font-size: 11px;
+    letter-spacing: .22em;
+    color: var(--sb-text-dim);
+    text-transform: uppercase;
+  }
+  
+  /* Cartões de ficha — estilo monitor WIRED */
+  body[data-theme="sibyl"] .yuki-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+    gap: 24px;
+  }
+  body[data-theme="sibyl"] .yuki-card {
+    position: relative;
+    background: rgba(4,10,12,.78);
+    border: 1px solid var(--sb-line);
+    padding: 16px;
+    backdrop-filter: blur(6px) saturate(1.1);
+    -webkit-backdrop-filter: blur(6px) saturate(1.1);
+    box-shadow:
+      0 0 0 1px rgba(0,0,0,.65),
+      0 16px 40px rgba(0,0,0,.55),
+      inset 0 0 60px rgba(86,242,216,.04);
+    align-items: stretch;
+    transition: border-color .3s, box-shadow .3s;
+  }
+  body[data-theme="sibyl"] .yuki-card::before,
+  body[data-theme="sibyl"] .yuki-card::after {
+    content: ""; position: absolute; width: 14px; height: 14px;
+    border: 2px solid var(--sb-cyan); opacity: .7; pointer-events: none;
+  }
+  body[data-theme="sibyl"] .yuki-card::before { top: -1px; left: -1px; border-right: 0; border-bottom: 0; }
+  body[data-theme="sibyl"] .yuki-card::after  { bottom: -1px; right: -1px; border-left: 0; border-top: 0; }
+  body[data-theme="sibyl"] .yuki-card:hover {
+    border-color: rgba(255,61,129,.55);
+    box-shadow: 0 0 40px rgba(255,61,129,.22), 0 16px 40px rgba(0,0,0,.55);
+  }
+  body[data-theme="sibyl"] .yuki-card.empty { display: none; }
+  
+  body[data-theme="sibyl"] .yuki-card-img {
+    width: 100%;
+    aspect-ratio: 1;
+    border: 1px solid var(--sb-line);
+    background: #060b0d;
+    filter: saturate(1.05) contrast(1.06) brightness(.92);
+    object-fit: cover;
+  }
+  body[data-theme="sibyl"] .yuki-card-title {
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    color: #f2fffd;
+    text-shadow: 0 0 12px rgba(86,242,216,.35);
+    text-align: left;
+    width: 100%;
+    margin-top: 10px;
+  }
+  body[data-theme="sibyl"] .yuki-card-class {
+    font-family: inherit;
+    font-size: 9px;
+    letter-spacing: .24em;
+    color: var(--sb-cyan);
+    text-transform: uppercase;
+    display: inline-block;
+    padding: 2px 6px;
+    border: 1px solid rgba(86,242,216,.35);
+    text-align: left;
+    margin-top: 6px;
+    width: auto;
+  }
+  body[data-theme="sibyl"] .yuki-card button {
+    width: 100%;
+    margin-top: auto;
+    font-family: inherit;
+    font-size: 9px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    padding: 8px 12px;
+    background: rgba(86,242,216,.1);
+    border: 1px solid rgba(86,242,216,.55);
+    color: var(--sb-cyan);
+    transition: background .18s, box-shadow .18s, color .18s;
+  }
+  body[data-theme="sibyl"] .yuki-card button:hover {
+    background: var(--sb-cyan);
+    color: #02110f;
+    box-shadow: 0 0 20px rgba(86,242,216,.6);
+  }
+  
+  /* ROTAÇÃO OPCIONAL — descomente para testar fichas giradas.
+     O card gira no próprio lugar (sem "célula quadrada" envolvendo),
+     então pode haver leve sobreposição visual entre cards vizinhos. */
+  /*
+  body[data-theme="sibyl"] .yuki-grid > .yuki-card:nth-child(4n+2) { transform: rotate(90deg); }
+  body[data-theme="sibyl"] .yuki-grid > .yuki-card:nth-child(4n+4) { transform: rotate(-90deg); }
+  */
+  
+  /* Botões em geral */
+  body[data-theme="sibyl"] button,
+  body[data-theme="sibyl"] .btn {
+    font-family: inherit;
+    background: rgba(86,242,216,.04);
+    border: 1px solid var(--sb-line);
+    color: var(--sb-cyan);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    transition: background .18s, box-shadow .18s, color .18s;
+  }
+  body[data-theme="sibyl"] button:hover {
+    background: rgba(86,242,216,.12);
+    box-shadow: 0 0 20px rgba(86,242,216,.2);
+  }
+  body[data-theme="sibyl"] button.danger {
+    color: var(--sb-magenta);
+    border-color: rgba(255,61,129,.5);
+  }
+  body[data-theme="sibyl"] button.danger:hover {
+    background: rgba(255,61,129,.15);
+    box-shadow: 0 0 20px rgba(255,61,129,.3);
+  }
+  body[data-theme="sibyl"] .btn-accent,
+  body[data-theme="sibyl"] button.btn-accent {
+    background: var(--sb-cyan) !important;
+    color: #02110f !important;
+    border: 1px solid var(--sb-cyan) !important;
+    font-weight: 700 !important;
+    font-family: inherit !important;
+    letter-spacing: .2em !important;
+    text-transform: uppercase;
+  }
+  body[data-theme="sibyl"] .btn-accent:hover {
+    background: #8dfff0 !important;
+    box-shadow: 0 0 24px rgba(86,242,216,.5);
+  }
+  body[data-theme="sibyl"] .dice-fab {
+    background: var(--sb-cyan);
+    color: #02110f;
+    border: none;
+    box-shadow: 0 0 30px rgba(86,242,216,.5);
+  }
+  body[data-theme="sibyl"] .dice-fab:hover {
+    background: #8dfff0;
+    box-shadow: 0 0 40px rgba(86,242,216,.7);
+  }
+  
+  /* Inputs */
+  body[data-theme="sibyl"] input,
+  body[data-theme="sibyl"] select,
+  body[data-theme="sibyl"] textarea {
+    font-family: inherit;
+    background: rgba(4,10,12,.85);
+    border: 1px solid var(--sb-line);
+    color: var(--sb-text);
+    letter-spacing: .04em;
+  }
+  body[data-theme="sibyl"] input:focus,
+  body[data-theme="sibyl"] select:focus,
+  body[data-theme="sibyl"] textarea:focus {
+    outline: none;
+    border-color: var(--sb-cyan);
+    box-shadow: 0 0 12px rgba(86,242,216,.3);
+  }
+  body[data-theme="sibyl"] input::placeholder { color: var(--sb-text-dim); opacity: .7; }
+  body[data-theme="sibyl"] select option { background: #0a1214; color: var(--sb-text); }
+  
+  /* Painéis e modais */
+  body[data-theme="sibyl"] .panel,
+  body[data-theme="sibyl"] .panel-inset,
+  body[data-theme="sibyl"] .persona-card,
+  body[data-theme="sibyl"] .spell-card,
+  body[data-theme="sibyl"] .modal,
+  body[data-theme="sibyl"] .user-edit-row,
+  body[data-theme="sibyl"] .spell-draft-form {
+    background: rgba(4,10,12,.78);
+    border: 1px solid var(--sb-line);
+    color: var(--sb-text);
+    backdrop-filter: blur(7px) saturate(1.15);
+    -webkit-backdrop-filter: blur(7px) saturate(1.15);
+    box-shadow:
+      0 0 0 1px rgba(0,0,0,.5),
+      0 20px 50px rgba(0,0,0,.5),
+      inset 0 0 60px rgba(86,242,216,.03);
+  }
+  body[data-theme="sibyl"] .modal-overlay {
+    background: rgba(0,4,6,.78);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+  }
+  
+  body[data-theme="sibyl"] h1,
+  body[data-theme="sibyl"] h2,
+  body[data-theme="sibyl"] h3,
+  body[data-theme="sibyl"] h4 {
+    font-family: inherit;
+    color: var(--sb-cyan);
+    text-shadow: 0 0 12px rgba(86,242,216,.4);
+    border-color: var(--sb-line);
+    letter-spacing: .1em;
+  }
+  body[data-theme="sibyl"] h2 { border-bottom: 1px solid var(--sb-line); padding-bottom: 6px; }
+  
+  body[data-theme="sibyl"] .muted { color: var(--sb-text-dim); }
+  body[data-theme="sibyl"] .ok    { color: var(--sb-cyan); }
+  body[data-theme="sibyl"] .bad   { color: var(--sb-magenta); }
+  body[data-theme="sibyl"] .warn {
+    background: rgba(255,61,129,.12);
+    border: 1px solid rgba(255,61,129,.4);
+    color: #ffb3cb;
+  }
+  body[data-theme="sibyl"] a          { color: var(--sb-cyan); }
+  body[data-theme="sibyl"] a:visited  { color: #3fb9a8; }
+  body[data-theme="sibyl"] hr {
+    border-top: 1px solid var(--sb-line);
+    border-bottom: none;
+  }
+  
+  body[data-theme="sibyl"] .tab {
+    background: rgba(4,10,12,.6);
+    border: 1px solid var(--sb-line);
+    border-bottom: none;
+    color: var(--sb-text-dim);
+    font-family: inherit;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    font-size: 10px;
+  }
+  body[data-theme="sibyl"] .tab.active {
+    background: rgba(86,242,216,.08);
+    color: var(--sb-cyan);
+    border-color: var(--sb-line);
+    box-shadow: inset 0 0 12px rgba(86,242,216,.1);
+  }
+  
+  body[data-theme="sibyl"] table th,
+  body[data-theme="sibyl"] table td { border: 1px solid var(--sb-line-soft); }
+  body[data-theme="sibyl"] table th {
+    background: rgba(86,242,216,.06);
+    color: var(--sb-cyan);
+    font-family: inherit;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    font-size: 10px;
+  }
+  
+  body[data-theme="sibyl"] .tag {
+    background: var(--sb-cyan);
+    color: #02110f;
+    font-family: inherit;
+  }
+  body[data-theme="sibyl"] .user-chip {
+    background: rgba(4,10,12,.7);
+    border: 1px solid var(--sb-line);
+    color: var(--sb-text);
+  }
+  body[data-theme="sibyl"] .user-chip:hover { background: rgba(86,242,216,.08); }
+  body[data-theme="sibyl"] .user-chip-pfp {
+    background: #060b0d;
+    border: 1px solid var(--sb-line);
+  }
+  
+  body[data-theme="sibyl"] .portrait-box {
+    background: rgba(4,10,12,.85);
+    border: 1px solid var(--sb-line);
+    color: var(--sb-text-dim);
+  }
+  body[data-theme="sibyl"] .portrait-box:hover {
+    background: rgba(86,242,216,.06);
+    border-color: var(--sb-cyan);
+  }
+  body[data-theme="sibyl"] .portrait-remove {
+    background: rgba(4,10,12,.9);
+    border: 1px solid var(--sb-line);
+    color: var(--sb-text);
+  }
+  body[data-theme="sibyl"] .portrait-remove:hover {
+    background: rgba(255,61,129,.25);
+    border-color: var(--sb-magenta);
+  }
+  
+  /* Sheet menu / bottom bar */
+  body[data-theme="sibyl"] .sheet-menu-overlay { background: rgba(0,4,6,.85); }
+  body[data-theme="sibyl"] .sheet-menu-panel {
+    background: rgba(4,10,12,.95);
+    border-left: 1px solid var(--sb-line);
+    color: var(--sb-text);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  body[data-theme="sibyl"] .sheet-menu-header { border-bottom-color: var(--sb-line); }
+  body[data-theme="sibyl"] .sheet-menu-header h3 { color: var(--sb-cyan); }
+  body[data-theme="sibyl"] .sheet-menu-close {
+    background: rgba(86,242,216,.06);
+    border: 1px solid var(--sb-line);
+    color: var(--sb-cyan);
+  }
+  body[data-theme="sibyl"] .sheet-menu-close:hover { background: rgba(255,61,129,.2); }
+  body[data-theme="sibyl"] .sheet-menu-tab {
+    color: var(--sb-text-dim);
+    border-bottom-color: var(--sb-line-soft);
+    font-family: inherit;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    font-size: 11px;
+  }
+  body[data-theme="sibyl"] .sheet-menu-tab:hover { background: rgba(86,242,216,.05); }
+  body[data-theme="sibyl"] .sheet-menu-tab.active {
+    background: rgba(86,242,216,.1);
+    color: var(--sb-cyan);
+    border-left-color: var(--sb-cyan);
+  }
+  body[data-theme="sibyl"] .sheet-menu-actions { border-top-color: var(--sb-line); }
+  body[data-theme="sibyl"] .sheet-menu-actions h4 { color: var(--sb-text-dim); }
+  body[data-theme="sibyl"] .sheet-menu-action-btn {
+    background: rgba(86,242,216,.04);
+    border: 1px solid var(--sb-line);
+    color: var(--sb-text);
+    font-family: inherit;
+  }
+  body[data-theme="sibyl"] .sheet-menu-action-btn:hover {
+    background: rgba(86,242,216,.12);
+    color: var(--sb-cyan);
+    border-color: var(--sb-cyan);
+  }
+  body[data-theme="sibyl"] .sheet-bottom-bar {
+    background: rgba(4,10,12,.92);
+    border-top: 1px solid var(--sb-line);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  body[data-theme="sibyl"] .sheet-bottom-btn {
+    color: var(--sb-text-dim);
+    border-right-color: var(--sb-line-soft);
+    font-family: inherit;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    font-size: 10px;
+  }
+  body[data-theme="sibyl"] .sheet-bottom-btn:hover,
+  body[data-theme="sibyl"] .sheet-bottom-btn:active {
+    background: rgba(86,242,216,.06);
+    color: var(--sb-cyan);
+  }
+  body[data-theme="sibyl"] .sheet-bottom-btn.danger { color: var(--sb-magenta); }
+  
+  /* Welcome */
+  body[data-theme="sibyl"] .welcome-screen {
+    position: relative; z-index: 2;
+    min-height: 100vh;
+  }
+  body[data-theme="sibyl"] .welcome-card {
+    background: rgba(4,10,12,.82);
+    border: 1px solid var(--sb-line);
+    color: var(--sb-text);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow:
+      0 0 0 1px rgba(0,0,0,.6),
+      0 30px 90px rgba(0,0,0,.7),
+      inset 0 0 70px rgba(86,242,216,.04);
+    position: relative;
+  }
+  body[data-theme="sibyl"] .welcome-card::before,
+  body[data-theme="sibyl"] .welcome-card::after {
+    content: ""; position: absolute; width: 18px; height: 18px;
+    border: 2px solid var(--sb-cyan); opacity: .8;
+  }
+  body[data-theme="sibyl"] .welcome-card::before { top: -1px; left: -1px; border-right: 0; border-bottom: 0; }
+  body[data-theme="sibyl"] .welcome-card::after  { bottom: -1px; right: -1px; border-left: 0; border-top: 0; }
+  body[data-theme="sibyl"] .welcome-title {
+    font-family: inherit;
+    color: #e6fffb;
+    text-shadow: 0 0 22px rgba(86,242,216,.6);
+    letter-spacing: .18em;
+    text-transform: uppercase;
+  }
+  body[data-theme="sibyl"] .welcome-version { color: var(--sb-text-dim); letter-spacing: .2em; }
+  body[data-theme="sibyl"] .welcome-greeting {
+    font-family: inherit;
+    color: var(--sb-cyan);
+    text-shadow: 0 0 12px rgba(86,242,216,.5);
+    letter-spacing: .08em;
+  }
+  body[data-theme="sibyl"] .welcome-desc     { color: var(--sb-text-dim); }
+  body[data-theme="sibyl"] .welcome-checkbox { color: var(--sb-text-dim); }
+  body[data-theme="sibyl"] .welcome-enter {
+    background: var(--sb-cyan);
+    color: #02110f;
+    border: none;
+    font-family: inherit;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  body[data-theme="sibyl"] .welcome-enter:hover {
+    background: #8dfff0;
+    box-shadow: 0 0 30px rgba(86,242,216,.6);
+  }
+  
+  body[data-theme="sibyl"] .modal-radio {
+    background: rgba(4,10,12,.6);
+    border: 1px solid var(--sb-line);
+    color: var(--sb-text);
+  }
+  body[data-theme="sibyl"] .modal-radio:hover { background: rgba(86,242,216,.06); }
+  body[data-theme="sibyl"] .modal-radio.selected {
+    background: rgba(86,242,216,.08);
+    border-color: var(--sb-cyan);
+  }
+  
+  /* Dados */
+  body[data-theme="sibyl"] .dice-result {
+    background: rgba(4,10,12,.85);
+    border: 1px solid var(--sb-line);
+    color: var(--sb-text);
+  }
+  body[data-theme="sibyl"] .dice-result > div[style*="font-size:32px"] {
+    color: var(--sb-cyan) !important;
+    text-shadow: 0 0 20px rgba(86,242,216,.6);
+  }
+  body[data-theme="sibyl"] .dice-history { color: var(--sb-text-dim); }
+  body[data-theme="sibyl"] .dice-history div { border-bottom-color: var(--sb-line-soft); }
+  body[data-theme="sibyl"] .dice-type-btn.selected {
+    background: var(--sb-cyan);
+    color: #02110f;
+    border-color: var(--sb-cyan);
+  }
+  
+  /* Leitor PDF */
+  body[data-theme="sibyl"] .reader-toolbar {
+    background: rgba(4,10,12,.92);
+    border-bottom: 1px solid var(--sb-line);
+    color: var(--sb-text);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  body[data-theme="sibyl"] .reader-page-info,
+  body[data-theme="sibyl"] .reader-title {
+    color: var(--sb-text);
+    font-family: inherit;
+    letter-spacing: .1em;
+  }
+  body[data-theme="sibyl"] .reader-container { background: #020507; }
+  body[data-theme="sibyl"] .reader-nav-arrow {
+    background: rgba(0,0,0,.6);
+    color: var(--sb-cyan);
+  }
+  body[data-theme="sibyl"] .reader-nav-arrow:hover {
+    background: var(--sb-cyan);
+    color: #02110f;
+  }
+  
+  /* Split */
+  body[data-theme="sibyl"] .split-wrap,
+  body[data-theme="sibyl"] .split-pane {
+    background: var(--sb-bg) !important;
+    color: var(--sb-text);
+  }
+  body[data-theme="sibyl"] .split-divider { background: var(--sb-line); }
+  body[data-theme="sibyl"] .split-divider:hover,
+  body[data-theme="sibyl"] .split-divider:active { background: var(--sb-cyan); }
+  body[data-theme="sibyl"] .split-empty {
+    background: var(--sb-bg);
+    color: var(--sb-text-dim);
+  }
+  body[data-theme="sibyl"] .split-pane-right .reader-wrap     { background: var(--sb-bg); }
+  body[data-theme="sibyl"] .split-pane-right .reader-container { background: #020507; }
+  
+  /* Magias */
+  body[data-theme="sibyl"] .spell-preset-item {
+    background: rgba(4,10,12,.6);
+    border: 1px solid var(--sb-line);
+    color: var(--sb-text);
+  }
+  body[data-theme="sibyl"] .spell-preset-item:hover {
+    background: rgba(86,242,216,.06);
+    border-color: var(--sb-cyan);
+  }
+  body[data-theme="sibyl"] .spell-preset-title b { color: var(--sb-cyan); }
+  body[data-theme="sibyl"] .spell-preset-desc    { color: var(--sb-text-dim); }
+  body[data-theme="sibyl"] .add-spell-content {
+    background: rgba(4,10,12,.85);
+    border: 1px solid var(--sb-line);
+    color: var(--sb-text);
+  }
+  body[data-theme="sibyl"] .add-spell-tab {
+    background: rgba(4,10,12,.6);
+    border: 1px solid var(--sb-line);
+    border-bottom: none;
+    color: var(--sb-text-dim);
+  }
+  body[data-theme="sibyl"] .add-spell-tab.active {
+    background: rgba(86,242,216,.08);
+    color: var(--sb-cyan);
+  }
+  
+  /* About */
+  body[data-theme="sibyl"] .about-modal .about-icon {
+    background: #060b0d;
+    border: 1px solid var(--sb-line);
+    filter: invert(.9) hue-rotate(160deg) saturate(2);
+  }
+  body[data-theme="sibyl"] .about-changelog {
+    background: rgba(4,10,12,.85);
+    border: 1px solid var(--sb-line);
+    color: var(--sb-text);
+  }
+  body[data-theme="sibyl"] .changelog-block h4 { color: var(--sb-cyan); }
+  
+  /* Footer */
+  body[data-theme="sibyl"] .footer {
+    color: var(--sb-text-dim);
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    font-size: 10px;
+  }
+  
+  /* Reduce motion */
+  @media (prefers-reduced-motion: reduce) {
+    #sibyl-bg .sibyl-layer     { animation-duration: 420s !important; }
+    #sibyl-bg .sibyl-glitchbar,
+    #sibyl-bg .sibyl-noise     { animation: none; }
+  }
+  
+  /* Mobile */
+  @media (max-width: 768px) {
+    body[data-theme="sibyl"] .yuki-layout { grid-template-columns: minmax(0, 1fr); }
+    body[data-theme="sibyl"] .yuki-sidebar {
+      position: static; min-height: 0;
+      padding: 12px 16px;
+      flex-direction: row; align-items: center; justify-content: space-between;
+      gap: 12px;
+      border-right: none;
+      border-bottom: 1px solid var(--sb-line);
+    }
+    body[data-theme="sibyl"] .yuki-profile {
+      display: flex; align-items: center; gap: 10px;
+      flex: 1 1 0; min-width: 0;
+      text-align: left; padding-bottom: 0; border-bottom: none;
+    }
+    body[data-theme="sibyl"] .yuki-avatar { flex: 0 0 40px; width: 40px; height: 40px; }
+    body[data-theme="sibyl"] .yuki-username {
+      max-width: 100%; font-size: 11px;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    body[data-theme="sibyl"] .yuki-nav {
+      display: flex; flex: 0 1 auto; flex-direction: row; flex-wrap: wrap;
+      justify-content: flex-end; gap: 4px;
+    }
+    body[data-theme="sibyl"] .yuki-nav button {
+      width: 40px; min-width: 40px; min-height: 40px;
+      padding: 8px; justify-content: center; font-size: 0;
+    }
+    body[data-theme="sibyl"] .yuki-nav button svg { width: 20px; height: 20px; }
+    body[data-theme="sibyl"] .yuki-main { padding: 20px 16px; }
+    body[data-theme="sibyl"] .yuki-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    body[data-theme="sibyl"] .container { padding: 12px; }
+  }
+  
+  @media (max-width: 480px) {
+    body[data-theme="sibyl"] .yuki-grid { grid-template-columns: minmax(0, 1fr); }
+  }
+
+  /* [Fase 2a-2] Desktop: alinhamento header-bar ↔ grid + remove fillers */
+  body[data-theme="yuki"] .yuki-header,
+  body[data-theme="yuki"] .yuki-grid {
+    width: 100%;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    min-width: 0;
+  }
+  
+  body[data-theme="yuki"] .yuki-header-bar > button {
+    justify-self: end;
+    margin-right: 0;
+  }
+  
+  /* Os 3 cards ".empty" (filler visual) só fazem sentido quando NÃO há
+     nenhum personagem. Com 1+ fichas reais, eles entopem o grid e criam
+     a sensação de cards "desalinhados" com o header. */
+  body[data-theme="yuki"] .yuki-grid:has(.yuki-card:not(.empty)) .yuki-card.empty,
+  body[data-theme="sibyl"] .yuki-grid:has(.yuki-card:not(.empty)) .yuki-card.empty {
+    display: none;
+  }
+
+  /* [Fase 2a-3] Header-bar: alinhamento estrutural compartilhado Yuki + Sibyl.
+     Sibyl não tinha min-height nem alinhamento nos filhos, por isso botão "Novo"
+     e o "Fichas: N" não batiam verticalmente em desktop. */
+  body[data-theme="yuki"] .yuki-header-bar,
+  body[data-theme="sibyl"] .yuki-header-bar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    min-height: 40px;
+  }
+  
+  body[data-theme="yuki"] .yuki-header-bar > span,
+  body[data-theme="sibyl"] .yuki-header-bar > span {
+    min-width: 0;
+    margin: 0;
+    line-height: 1.35;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    min-height: 40px;
+  }
+  
+  body[data-theme="yuki"] .yuki-header-bar > button,
+  body[data-theme="sibyl"] .yuki-header-bar > button {
+    align-self: center;
+    justify-self: end;
+    margin: 0;
+    min-width: 96px;
+    min-height: 40px;
+  }
+  
+  /* Header e grid compartilham a mesma coluna visual nos dois temas chrome. */
+  body[data-theme="yuki"] .yuki-header,
+  body[data-theme="yuki"] .yuki-grid,
+  body[data-theme="sibyl"] .yuki-header,
+  body[data-theme="sibyl"] .yuki-grid {
+    width: 100%;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    min-width: 0;
   }

@@ -261,6 +261,7 @@ function handleClick(e) {
     state.settings.theme = el.dataset.theme;
     saveSettings();
     applyTheme();
+    if (state.settings.theme === 'sibyl') triggerSibylBurst();
     render();
     break;
   case 'toggle-welcome-setting':

@@ -208,7 +208,7 @@ function renderList(app) {
   const hasPfp = !!state.user.pfp;
   const uname = state.user.username ? esc(state.user.username) : 'Sem nome';
 
-  if (state.settings.theme === 'yuki') {
+  if (state.settings.theme === 'yuki' || state.settings.theme === 'sibyl') {
     let html = `<div class="yuki-layout">`;
     html += yukiSidebarHTML();
     html += `<input type="file" id="import-file" accept=".json,application/json" style="display:none" onchange="importChar(event)">`;
